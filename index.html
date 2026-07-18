@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f766e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Health App" />
+  <meta name="description" content="Offline six-day exercise, vegetarian meal planning and progress tracking app." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Health App</title>
+</head>
+<body>
+  <div id="appShell">
+    <header class="app-header">
+      <div class="brand-wrap">
+        <div class="brand-mark" aria-hidden="true">♥</div>
+        <div>
+          <h1>Health App</h1>
+          <p id="headerSubtitle">Six-day complete body plan</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="networkBadge" class="status-badge">Offline ready</span>
+        <button id="updateBtn" class="icon-btn" type="button" aria-label="Check for app update">↻</button>
+      </div>
+    </header>
+
+    <main id="mainContent" tabindex="-1">
+      <section id="page-home" class="page active" data-page="home">
+        <div class="hero-card">
+          <div>
+            <p class="eyebrow">TODAY'S HEALTH PLAN</p>
+            <h2 id="todayTitle">Day 1 · Full Body Foundation</h2>
+            <p id="todaySummary">Build strength, movement control and confidence.</p>
+            <div class="pill-row">
+              <span class="pill">60 minutes</span>
+              <span id="todayIntensity" class="pill">Moderate</span>
+              <span id="todayGoalPill" class="pill">General fitness</span>
+            </div>
+          </div>
+          <div class="hero-ring" aria-hidden="true"><span id="weekProgressRing">0%</span></div>
+        </div>
+
+        <div class="action-grid">
+          <button id="startTodayBtn" class="primary action-card" type="button">
+            <span class="action-icon">▶</span>
+            <span><strong>Start today</strong><small>Guided timer + animation</small></span>
+          </button>
+          <button id="openMealBtn" class="action-card" type="button">
+            <span class="action-icon">🥗</span>
+            <span><strong>Today's meals</strong><small>Vegetarian plan</small></span>
+          </button>
+        </div>
+
+        <section class="panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">WEEKLY OVERVIEW</p><h3>Your 6-day program</h3></div>
+            <button class="text-btn" data-go="plan" type="button">View all</button>
+          </div>
+          <div id="weekStrip" class="week-strip"></div>
+        </section>
+
+        <section class="panel goal-guide-panel">
+          <div class="section-heading"><div><p class="eyebrow">HOW RESULTS HAPPEN</p><h3 id="goalGuideTitle">Balanced fitness</h3></div><button class="text-btn" data-go="settings" type="button">Change goal</button></div>
+          <p id="goalGuideText" class="goal-guide-text"></p>
+          <div class="result-grid">
+            <article><span>🔥</span><strong>Reduce fat</strong><p>Train consistently, walk regularly, manage portions and avoid extreme crash diets. Fat loss occurs across the body, not from one exercise.</p></article>
+            <article><span>🫁</span><strong>Build stamina</strong><p>Use the easier version first, keep a sustainable pace and gradually spend more time at moderate intensity.</p></article>
+            <article><span>💪</span><strong>Shape the body</strong><p>Strengthen every major muscle group, use controlled technique and progress resistance or difficulty over time.</p></article>
+            <article><span>🌙</span><strong>Recover</strong><p>Use Day 7 for light activity and aim for regular, good-quality sleep so training can be repeated safely.</p></article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-heading"><div><p class="eyebrow">PROGRESS</p><h3>This week</h3></div></div>
+          <div class="metric-grid">
+            <article class="metric"><span id="completedCount">0</span><small>Workouts</small></article>
+            <article class="metric"><span id="activeMinutes">0</span><small>Minutes</small></article>
+            <article class="metric"><span id="currentStreak">0</span><small>Day streak</small></article>
+          </div>
+        </section>
+
+        <section class="notice safe-notice">
+          <strong>Train safely</strong>
+          <p>Stop if you feel chest pain, faintness, severe breathlessness or sharp pain. Use the easier variation whenever form starts to break down.</p>
+        </section>
+      </section>
+
+      <section id="page-plan" class="page" data-page="plan">
+        <div class="page-title">
+          <div><p class="eyebrow">YOUR PROGRAM</p><h2>Six-day complete body plan</h2></div>
+          <span class="pill">Day 7 recovery</span>
+        </div>
+        <div id="planList" class="stack"></div>
+      </section>
+
+      <section id="page-workout" class="page" data-page="workout">
+        <div id="workoutEmpty" class="empty-state">
+          <div class="empty-icon">🏃</div>
+          <h2>Choose a workout</h2>
+          <p>Open any day from the plan or start today's session.</p>
+          <button class="primary-btn" data-go="plan" type="button">Open six-day plan</button>
+        </div>
+
+        <div id="workoutPlayer" class="workout-player hidden">
+          <div class="player-topline">
+            <button id="closeWorkoutBtn" class="icon-btn" type="button" aria-label="Close workout">←</button>
+            <div><p id="playerDay" class="eyebrow">DAY 1</p><h2 id="playerWorkoutTitle">Full Body Foundation</h2></div>
+            <button id="playerInfoBtn" class="icon-btn" type="button" aria-label="Exercise details">i</button>
+          </div>
+
+          <div class="session-progress"><span id="sessionProgressBar"></span></div>
+          <div class="player-meta"><span id="phaseLabel">Warm-up</span><span id="stepCounter">1 of 60</span></div>
+
+          <div id="exerciseVisual" class="exercise-visual" aria-live="polite"></div>
+          <div class="timer-wrap">
+            <div id="timerState" class="timer-state">MOVE</div>
+            <div id="timerDisplay" class="timer-display">01:00</div>
+          </div>
+
+          <div class="exercise-copy">
+            <h3 id="exerciseName">March in Place</h3>
+            <p id="exerciseCue">Stand tall, swing your arms and lift one knee at a time.</p>
+            <div id="targetMuscles" class="tag-row"></div>
+          </div>
+
+          <div class="player-controls">
+            <button id="prevStepBtn" class="control-btn" type="button">⏮<small>Back</small></button>
+            <button id="playPauseBtn" class="play-btn" type="button">▶</button>
+            <button id="nextStepBtn" class="control-btn" type="button">⏭<small>Next</small></button>
+          </div>
+
+          <div class="quick-cues">
+            <button id="easierBtn" type="button"><strong>Easier</strong><span id="easierCue">Move slower.</span></button>
+            <button id="harderBtn" type="button"><strong>Harder</strong><span id="harderCue">Increase range.</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section id="page-library" class="page" data-page="library">
+        <div class="page-title">
+          <div><p class="eyebrow">LEARN THE MOVEMENTS</p><h2>Exercise library</h2></div>
+        </div>
+        <div class="filter-row">
+          <input id="exerciseSearch" type="search" placeholder="Search exercise or body area" />
+          <select id="exerciseFilter" aria-label="Filter exercise category">
+            <option value="all">All</option>
+            <option value="warmup">Warm-up</option>
+            <option value="strength">Strength</option>
+            <option value="cardio">Cardio</option>
+            <option value="core">Core</option>
+            <option value="mobility">Mobility</option>
+          </select>
+        </div>
+        <div id="exerciseLibrary" class="library-grid"></div>
+      </section>
+
+      <section id="page-meals" class="page" data-page="meals">
+        <div class="page-title">
+          <div><p class="eyebrow">VEGETARIAN FUEL</p><h2>Meal plan</h2></div>
+          <select id="mealDaySelect" aria-label="Select meal-plan day"></select>
+        </div>
+        <div class="segmented" role="group" aria-label="Diet type">
+          <button class="segment active" data-diet="lacto" type="button">Vegetarian</button>
+          <button class="segment" data-diet="vegan" type="button">Vegan alternatives</button>
+        </div>
+        <section class="nutrition-focus">
+          <div><span>Protein focus</span><strong id="proteinFocus">Include a protein source at every main meal</strong></div>
+          <div><span>Workout timing</span><strong id="timingTip">Eat a light carbohydrate snack 60–90 minutes before training</strong></div>
+        </section>
+        <div id="mealCards" class="stack"></div>
+        <section class="panel nutrient-panel">
+          <h3>Vegetarian nutrition checklist</h3>
+          <div class="check-grid">
+            <article><strong>Protein</strong><p>Lentils, beans, tofu, tempeh, dairy, eggs, soy milk, nuts and seeds.</p></article>
+            <article><strong>Iron</strong><p>Legumes, tofu, leafy greens and fortified foods. Add vitamin-C-rich food to meals.</p></article>
+            <article><strong>Vitamin B12</strong><p>Use reliable fortified foods or discuss supplementation with a qualified clinician, especially for vegan diets.</p></article>
+            <article><strong>Calcium + iodine</strong><p>Choose calcium-fortified alternatives and check labels; use iodised salt in modest amounts unless medically restricted.</p></article>
+          </div>
+        </section>
+        <section class="notice"><strong>Portions are flexible</strong><p>This plan is a balanced template, not a prescribed calorie diet. Adjust portions for hunger, body size, workload and medical needs.</p></section>
+      </section>
+
+      <section id="page-progress" class="page" data-page="progress">
+        <div class="page-title"><div><p class="eyebrow">TRACK CONSISTENCY</p><h2>Progress</h2></div></div>
+        <div class="metric-grid large">
+          <article class="metric"><span id="progressWorkouts">0</span><small>Total workouts</small></article>
+          <article class="metric"><span id="progressMinutes">0</span><small>Active minutes</small></article>
+          <article class="metric"><span id="progressStreak">0</span><small>Current streak</small></article>
+        </div>
+        <section class="panel">
+          <div class="section-heading"><div><p class="eyebrow">BODY CHECK-IN</p><h3>Add optional measurements</h3></div></div>
+          <form id="checkinForm" class="form-grid">
+            <label>Date<input id="checkinDate" type="date" required /></label>
+            <label>Weight (kg)<input id="checkinWeight" inputmode="decimal" type="number" min="20" max="400" step="0.1" placeholder="Optional" /></label>
+            <label>Waist (cm)<input id="checkinWaist" inputmode="decimal" type="number" min="30" max="300" step="0.1" placeholder="Optional" /></label>
+            <label>Resting pulse<input id="checkinPulse" inputmode="numeric" type="number" min="30" max="220" placeholder="Optional" /></label>
+            <label class="full">Notes<textarea id="checkinNotes" rows="2" placeholder="Energy, sleep, soreness or progress"></textarea></label>
+            <button class="primary-btn full" type="submit">Save check-in</button>
+          </form>
+        </section>
+        <section class="panel">
+          <div class="section-heading"><div><p class="eyebrow">HISTORY</p><h3>Recent check-ins</h3></div></div>
+          <div id="checkinHistory" class="history-list"></div>
+        </section>
+      </section>
+
+      <section id="page-settings" class="page" data-page="settings">
+        <div class="page-title"><div><p class="eyebrow">PERSONALISE</p><h2>Settings</h2></div><span id="appVersion" class="pill"></span></div>
+        <form id="settingsForm" class="panel form-grid">
+          <label class="full">Primary goal
+            <select id="goalSelect">
+              <option value="general">General fitness</option>
+              <option value="fat">Reduce body fat</option>
+              <option value="stamina">Improve stamina</option>
+              <option value="shape">Shape and tone body</option>
+              <option value="strength">Build strength</option>
+            </select>
+          </label>
+          <label>Fitness level
+            <select id="levelSelect"><option value="beginner">Beginner</option><option value="intermediate">Intermediate</option></select>
+          </label>
+          <label>Equipment
+            <select id="equipmentSelect"><option value="none">No equipment</option><option value="dumbbells">Dumbbells available</option></select>
+          </label>
+          <label>Theme
+            <select id="themeSelect"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+          </label>
+          <label>Sound cues
+            <select id="soundSelect"><option value="on">On</option><option value="off">Off</option></select>
+          </label>
+          <button class="primary-btn full" type="submit">Save settings</button>
+        </form>
+
+        <section class="panel">
+          <h3>Safety screening</h3>
+          <p class="muted">Seek medical advice before starting if you have a heart or lung condition, uncontrolled blood pressure, recent surgery, unexplained fainting, pregnancy-related restrictions, or an injury that changes how you move.</p>
+          <label class="ack-row"><input id="safetyAck" type="checkbox" /> <span>I understand this is general education, not individual medical treatment.</span></label>
+        </section>
+
+        <section class="panel button-stack">
+          <button id="installBtn" class="secondary-btn" type="button">Install Health App</button>
+          <button id="exportBtn" class="secondary-btn" type="button">Export backup</button>
+          <label class="secondary-btn file-label">Import backup<input id="importInput" type="file" accept="application/json" hidden /></label>
+          <button id="resetBtn" class="danger-btn" type="button">Reset app data</button>
+        </section>
+
+        <section class="panel source-panel">
+          <h3>Evidence and guidance</h3>
+          <p>This app follows current Australian adult movement guidance: activity on most days, muscle strengthening at least twice weekly, functional activity on at least three days, less prolonged sitting and adequate sleep.</p>
+          <p>Meal guidance follows the Australian healthy eating framework and highlights vegetarian protein, iron and vitamin B12 considerations.</p>
+          <div class="source-links">
+            <a href="https://www.health.gov.au/topics/physical-activity/24-hour-movement-guidelines-for-all-australians/recommendations-for-adults-18-to-64-years" target="_blank" rel="noreferrer">Australian movement guidelines</a>
+            <a href="https://www.eatforhealth.gov.au/food-essentials/five-food-groups" target="_blank" rel="noreferrer">Australian healthy eating guide</a>
+            <a href="https://www.eatforhealth.gov.au/nutrient-reference-values/nutrients/vitamin-b12" target="_blank" rel="noreferrer">Vitamin B12 reference</a>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Main navigation">
+      <button class="nav-btn active" data-go="home" type="button"><span>⌂</span><small>Home</small></button>
+      <button class="nav-btn" data-go="plan" type="button"><span>▦</span><small>Plan</small></button>
+      <button class="nav-btn" data-go="library" type="button"><span>◎</span><small>Exercises</small></button>
+      <button class="nav-btn" data-go="meals" type="button"><span>♧</span><small>Meals</small></button>
+      <button class="nav-btn" data-go="progress" type="button"><span>↗</span><small>Progress</small></button>
+      <button class="nav-btn" data-go="settings" type="button"><span>⚙</span><small>Settings</small></button>
+    </nav>
+  </div>
+
+  <dialog id="exerciseDialog" class="detail-dialog">
+    <button id="closeDialogBtn" class="dialog-close" type="button" aria-label="Close">×</button>
+    <div id="dialogVisual" class="dialog-visual"></div>
+    <p id="dialogCategory" class="eyebrow"></p>
+    <h2 id="dialogTitle"></h2>
+    <div id="dialogTags" class="tag-row"></div>
+    <section><h3>Why you are doing it</h3><p id="dialogBenefit"></p></section>
+    <section><h3>How to do it</h3><ol id="dialogSteps"></ol></section>
+    <section class="two-col"><div><h3>Easier</h3><p id="dialogEasier"></p></div><div><h3>Harder</h3><p id="dialogHarder"></p></div></section>
+    <section class="notice warning"><strong>Common mistake</strong><p id="dialogCaution"></p></section>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
