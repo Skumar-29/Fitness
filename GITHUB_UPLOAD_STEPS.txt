@@ -1,0 +1,28 @@
+HEALTH APP V2 — GITHUB UPLOAD
+
+1. Download and double-click health_app_v2_github_ready.zip.
+2. Open the extracted folder.
+3. Confirm you can immediately see index.html, app.js, styles.css, sw.js, manifest.webmanifest, assets and icons.
+4. In your GitHub repository choose Add file > Upload files.
+5. Select EVERYTHING INSIDE the extracted folder. Do not upload the ZIP file itself.
+6. Drag all selected files and folders into GitHub.
+7. Commit directly to the main branch.
+8. Open Repository Settings > Pages.
+9. Choose Deploy from a branch, main, /(root), then Save.
+10. Open https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/ after deployment finishes.
+
+CORRECT REPOSITORY ROOT
+index.html
+app.js
+styles.css
+sw.js
+manifest.webmanifest
+README.txt
+GITHUB_UPLOAD_STEPS.txt
+MEDIA_REPLACEMENT_GUIDE.txt
+assets/
+icons/
+
+WRONG
+health_app_v2/index.html  (one folder too deep)
+health_app_v2_github_ready.zip only  (GitHub Pages does not extract it)

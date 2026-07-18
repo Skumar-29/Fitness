@@ -1,0 +1,13 @@
+HEALTH APP V2 — FUTURE PHOTOREALISTIC AI VIDEO UPGRADE
+
+The included MP4s are lightweight original full-body anatomy-style animations. The application already uses real video files and is ready for photorealistic AI-generated replacements.
+
+To replace an exercise video:
+1. Keep the replacement portrait-oriented, muted and seamlessly loopable.
+2. Recommended delivery: MP4 H.264, 720 x 1280, 6–15 seconds, no audio, fast-start enabled.
+3. Give it the exact existing filename, for example assets/videos/squat.mp4.
+4. Replace the matching poster, for example assets/posters/squat.webp.
+5. Increase the shell cache version in sw.js when posters or application files change.
+6. Test the movement for correct joint alignment, safe range, stable hands/feet and accurate muscle highlights before publishing.
+
+The app automatically uses the replacement because workout data refers to stable exercise IDs rather than hard-coded video layouts.

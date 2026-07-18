@@ -1,32 +1,26 @@
 (() => {
-  'use strict';
-
-  const APP_VERSION = 'health-app-v1.0.0';
-  const STORAGE_KEY = 'completeHealthAppStateV1';
-
-  const DEFAULT_STATE = {
-    goal: 'general',
-    level: 'beginner',
-    equipment: 'none',
-    theme: 'system',
-    sound: 'on',
-    diet: 'lacto',
-    currentDay: 1,
-    completedDays: [],
-    workouts: [],
-    checkins: [],
-    safetyAck: false
-  };
-
-  const GOALS = {
-    general: { label: 'General fitness', note: 'Build balanced strength, stamina, mobility and consistency.' },
-    fat: { label: 'Reduce body fat', note: 'Combine consistent training, daily movement, sleep and a sustainable eating pattern.' },
-    stamina: { label: 'Improve stamina', note: 'Progress gradually by moving longer while maintaining controlled breathing and good form.' },
-    shape: { label: 'Shape and tone body', note: 'Use controlled repetitions, full range of motion and progressive resistance.' },
-    strength: { label: 'Build strength', note: 'Slow the lowering phase and add resistance only after technique is reliable.' }
-  };
-
-  const EXERCISES = {
+'use strict';
+const APP_VERSION='health-app-v2.0.0';
+const SCHEMA_VERSION=2;
+const STORAGE_KEY='completeHealthAppStateV2';
+const OLD_STORAGE_KEY='completeHealthAppStateV1';
+const MEDIA_CACHE='health-app-v2-media-v1';
+const EXERCISE_IDS=["march", "armCircles", "stepTouch", "hipCircles", "torsoTwist", "heelDigs", "kneeHugs", "ankleRolls", "squat", "sumoSquat", "squatPulse", "reverseLunge", "sideLunge", "curtsyLunge", "gluteBridge", "singleLegBridge", "calfRaise", "wallSit", "goodMorning", "donkeyKick", "fireHydrant", "inclinePushup", "pushup", "pikePress", "shoulderTap", "tricepsDip", "bentRow", "reverseFly", "floorPress", "superman", "plank", "sidePlank", "deadBug", "birdDog", "heelTap", "bicycle", "crunch", "lowJack", "highKnees", "skater", "mountainClimber", "fastFeet", "squatReach", "reverseLungeKnee", "burpeeStepback", "childPose", "catCow", "cobra", "hamstringStretch", "hipFlexorStretch", "chestOpener", "figure4", "thoracicRotation", "breathing", "downwardDog"];
+const GOALS={"general": {"label": "General fitness", "note": "Build balanced strength, stamina, mobility and consistency.", "steps": ["Train all major muscle groups", "Use moderate cardio", "Keep one recovery day"]}, "fat": {"label": "Reduce body fat", "note": "Combine consistent training, daily movement and a sustainable food pattern. Fat cannot be reduced from only one chosen body area.", "steps": ["Complete strength and cardio days", "Add regular walking", "Use repeatable portions, not crash diets"]}, "stamina": {"label": "Improve stamina", "note": "Progress gradually by moving longer while keeping breathing and technique controlled.", "steps": ["Start with low-impact intervals", "Increase work time slowly", "Record a monthly stamina test"]}, "shape": {"label": "Shape and tone body", "note": "Use controlled repetitions, full movement range and progressive resistance.", "steps": ["Prioritise legs, glutes, back and shoulders", "Slow the lowering phase", "Track waist and strength, not only weight"]}, "strength": {"label": "Build strength", "note": "Use reliable form and increase resistance or difficulty one step at a time.", "steps": ["Choose controlled variations", "Record repetitions or resistance", "Recover before repeating hard muscle work"]}, "mobility": {"label": "Improve mobility", "note": "Combine active movement, strength through comfortable ranges and gentle recovery work.", "steps": ["Move daily without forcing range", "Strengthen around stiff joints", "Use Day 7 for easy mobility"]}};
+const DIET_LABELS={"indian": "Indian vegetarian", "lacto": "Vegetarian with dairy", "ovo": "Vegetarian with eggs", "lactoOvo": "Dairy + eggs", "vegan": "Vegan", "highProtein": "High-protein vegetarian"};
+const STAGES=[
+ {name:'Foundation',weeks:'Weeks 1–2',text:'Learn movement form, use easier options and establish a repeatable six-day rhythm.'},
+ {name:'Control',weeks:'Weeks 3–4',text:'Improve balance, trunk control and consistent range of motion.'},
+ {name:'Build',weeks:'Weeks 5–6',text:'Increase repetitions, work duration or light resistance while form remains reliable.'},
+ {name:'Capacity',weeks:'Weeks 7–8',text:'Complete more total quality work and recover efficiently between intervals.'},
+ {name:'Progression',weeks:'Weeks 9–10',text:'Use harder variations or slightly greater resistance one factor at a time.'},
+ {name:'Consolidation',weeks:'Weeks 11–12',text:'Complete stronger full sessions, repeat fitness tests and plan the next cycle.'}
+];
+const DEFAULT_STATE={schema:SCHEMA_VERSION,profile:{name:'',ageRange:'30-39',height:'',weight:''},goal:'general',level:'beginner',equipment:'none',duration:60,theme:'system',sound:'on',autoplay:'on',reducedMotion:'off',diet:'indian',foodExclusions:'',currentDay:1,completedDays:[],workouts:[],checkins:[],tests:[],safetyAck:false,onboardingDone:false,readiness:'',activeSession:null,programStart:''};
+function ex(name,category,muscles,benefit,steps,easier,harder,caution,animation){return{name,category,muscles,benefit,steps,easier,harder,caution,animation};}
+function plan(day,title,focus,intensity,warmup,circuitA,circuitB,finisher,cooldown){return{day,title,focus,intensity,warmup,circuitA,circuitB,finisher,cooldown};}
+function meals(day,focus,items){return{day,focus,items};}
+const EXERCISES={
     march: ex('March in Place', 'warmup', ['Legs', 'Heart'], 'Raises body temperature and prepares joints for exercise.', ['Stand tall with ribs stacked over hips.', 'Lift one knee while swinging the opposite arm.', 'Land softly and keep a steady breathing rhythm.'], 'Use a slower pace and hold a wall.', 'Drive the knees higher and move the arms faster.', 'Do not lean backwards or stamp the feet.', 'march'),
     armCircles: ex('Arm Circles', 'warmup', ['Shoulders', 'Upper back'], 'Warms the shoulders and improves movement awareness.', ['Stand tall with arms extended.', 'Make small controlled circles, then gradually enlarge them.', 'Reverse direction halfway through.'], 'Keep the circles small.', 'Add a light squat while circling.', 'Avoid forcing painful shoulder range.', 'shoulder'),
     stepTouch: ex('Step Touch', 'warmup', ['Hips', 'Legs'], 'Gently raises heart rate and coordinates side-to-side movement.', ['Step one foot sideways.', 'Bring the other foot in lightly.', 'Repeat side to side with relaxed arm swings.'], 'Take smaller steps.', 'Add a deeper knee bend and larger arm swing.', 'Keep knees tracking over toes.', 'jack'),
@@ -82,9 +76,8 @@
     thoracicRotation: ex('Open-Book Rotation', 'mobility', ['Upper back', 'Chest'], 'Improves upper-back rotation and chest mobility.', ['Lie on one side with hips and knees bent.', 'Reach the top arm across and then open it toward the other side.', 'Follow the hand with the eyes while knees stay together.'], 'Use a smaller arm range.', 'Pause longer in the open position.', 'Do not force the lower back or shoulder.', 'twist'),
     breathing: ex('Slow Recovery Breathing', 'mobility', ['Breathing', 'Nervous system'], 'Helps heart rate settle and reinforces relaxed breathing.', ['Sit or lie comfortably.', 'Inhale gently through the nose.', 'Exhale slowly and allow shoulders and jaw to relax.'], 'Use any comfortable position.', 'Lengthen the exhale slightly without straining.', 'Stop breath holds if dizzy.', 'breathing'),
     downwardDog: ex('Downward Dog Pedal', 'mobility', ['Calves', 'Shoulders', 'Back'], 'Combines shoulder mobility with a moving calf stretch.', ['Start on hands and knees and lift hips.', 'Keep knees bent enough to lengthen the spine.', 'Alternate pressing one heel toward the floor.'], 'Use hands on a wall or bench.', 'Pause longer over each calf.', 'Do not force heels down or collapse shoulders.', 'stretch')
-  };
-
-  const PLANS = [
+};
+const PLANS=[
     plan(1, 'Full Body Foundation', 'Balanced strength and movement control', 'Moderate',
       ['march','armCircles','stepTouch','hipCircles','torsoTwist','heelDigs','kneeHugs','ankleRolls'],
       ['squat','inclinePushup','reverseLunge','birdDog','gluteBridge','shoulderTap'],
@@ -121,9 +114,8 @@
       ['sideLunge','reverseFly','singleLegBridge','deadBug','donkeyKick','sidePlank'],
       ['squatPulse','lowJack','shoulderTap','reverseLungeKnee','fastFeet','march'],
       ['breathing','childPose','catCow','downwardDog','hamstringStretch','hipFlexorStretch','chestOpener','figure4'])
-  ];
-
-  const MEALS = [
+];
+const MEALS=[
     meals(1, 'Full Body Foundation', [
       ['Breakfast','🥣','Oats cooked with milk, chia seeds, berries and a spoon of peanut butter.','Vegan: use calcium-fortified soy milk.'],
       ['Snack','🍎','Fruit with Greek yoghurt or a handful of nuts.','Vegan: soy yoghurt or nuts.'],
@@ -173,653 +165,129 @@
       ['Snack','🥣','Yoghurt or soy yoghurt with seeds.','Choose a fortified option when possible.'],
       ['Dinner','🍲','Vegetable and bean soup with wholegrain bread.','A lighter recovery-day dinner.']
     ])
-  ];
+];
+let state=loadState();
+let currentPage='home',libraryView='exercises',quickFilter='all',bodyView='front',selectedMuscle='';
+let activePlan=null,session=[],stepIndex=0,remaining=60,timerId=null,isPlaying=false,deferredInstallPrompt=null,toastTimer=null;
+const $=id=>document.getElementById(id);const $$=s=>[...document.querySelectorAll(s)];
 
-  let state = loadState();
-  let currentPage = 'home';
-  let activePlan = null;
-  let session = [];
-  let stepIndex = 0;
-  let remaining = 60;
-  let timerId = null;
-  let isPlaying = false;
-  let deferredInstallPrompt = null;
-  let toastTimer = null;
-
-  const $ = (id) => document.getElementById(id);
-  const $$ = (selector) => [...document.querySelectorAll(selector)];
-
-  function ex(name, category, muscles, benefit, steps, easier, harder, caution, animation) {
-    return { name, category, muscles, benefit, steps, easier, harder, caution, animation };
-  }
-  function plan(day, title, focus, intensity, warmup, circuitA, circuitB, finisher, cooldown) {
-    return { day, title, focus, intensity, warmup, circuitA, circuitB, finisher, cooldown };
-  }
-  function meals(day, focus, items) { return { day, focus, items }; }
-
-  function loadState() {
-    try {
-      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      return { ...DEFAULT_STATE, ...(parsed || {}) };
-    } catch (error) {
-      console.warn('Could not read saved state', error);
-      return { ...DEFAULT_STATE };
-    }
-  }
-
-  function saveState(message) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    applyTheme();
-    renderAll();
-    if (message) showToast(message);
-  }
-
-  function init() {
-    applyTheme();
-    bindEvents();
-    renderAll();
-    $('checkinDate').value = isoDate(new Date());
-    registerServiceWorker();
-    updateNetworkBadge();
-    showPage('home');
-  }
-
-  function bindEvents() {
-    document.addEventListener('click', (event) => {
-      const go = event.target.closest('[data-go]');
-      if (go) showPage(go.dataset.go);
-    });
-    $$('.nav-btn').forEach((btn) => btn.addEventListener('click', () => showPage(btn.dataset.go)));
-    $('startTodayBtn').addEventListener('click', () => startWorkout(state.currentDay));
-    $('openMealBtn').addEventListener('click', () => { $('mealDaySelect').value = String(state.currentDay); renderMeals(); showPage('meals'); });
-    $('closeWorkoutBtn').addEventListener('click', () => stopTimerAndClose());
-    $('playPauseBtn').addEventListener('click', toggleTimer);
-    $('nextStepBtn').addEventListener('click', nextStep);
-    $('prevStepBtn').addEventListener('click', previousStep);
-    $('playerInfoBtn').addEventListener('click', () => openExerciseDialog(session[stepIndex]?.exerciseId));
-    $('easierBtn').addEventListener('click', () => showToast($('easierCue').textContent));
-    $('harderBtn').addEventListener('click', () => showToast($('harderCue').textContent));
-    $('exerciseSearch').addEventListener('input', renderExerciseLibrary);
-    $('exerciseFilter').addEventListener('change', renderExerciseLibrary);
-    $('mealDaySelect').addEventListener('change', renderMeals);
-    $$('.segment').forEach(btn => btn.addEventListener('click', () => {
-      state.diet = btn.dataset.diet;
-      saveState();
-      renderMeals();
-    }));
-    $('closeDialogBtn').addEventListener('click', () => $('exerciseDialog').close());
-    $('settingsForm').addEventListener('submit', saveSettingsFromForm);
-    $('safetyAck').addEventListener('change', (e) => { state.safetyAck = e.target.checked; saveState('Safety acknowledgement saved'); });
-    $('checkinForm').addEventListener('submit', saveCheckin);
-    $('installBtn').addEventListener('click', installApp);
-    $('exportBtn').addEventListener('click', exportBackup);
-    $('importInput').addEventListener('change', importBackup);
-    $('resetBtn').addEventListener('click', resetApp);
-    $('updateBtn').addEventListener('click', checkForUpdate);
-    window.addEventListener('online', updateNetworkBadge);
-    window.addEventListener('offline', updateNetworkBadge);
-    window.addEventListener('beforeinstallprompt', (event) => {
-      event.preventDefault();
-      deferredInstallPrompt = event;
-      $('installBtn').disabled = false;
-    });
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden && isPlaying) pauseTimer();
-    });
-  }
-
-  function renderAll() {
-    renderHome();
-    renderPlan();
-    renderExerciseLibrary();
-    renderMealOptions();
-    renderMeals();
-    renderProgress();
-    renderSettings();
-  }
-
-  function showPage(page) {
-    currentPage = page;
-    $$('.page').forEach((el) => el.classList.toggle('active', el.dataset.page === page));
-    $$('.nav-btn').forEach((el) => el.classList.toggle('active', el.dataset.go === page));
-    $('mainContent').focus({ preventScroll: true });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function renderHome() {
-    const plan = PLANS.find(p => p.day === state.currentDay) || PLANS[0];
-    const completed = uniqueCompletedDays().length;
-    const pct = Math.round((completed / 6) * 100);
-    $('todayTitle').textContent = `Day ${plan.day} · ${plan.title}`;
-    $('todaySummary').textContent = GOALS[state.goal]?.note || plan.focus;
-    $('todayIntensity').textContent = plan.intensity;
-    $('todayGoalPill').textContent = GOALS[state.goal]?.label || 'General fitness';
-    $('goalGuideTitle').textContent = GOALS[state.goal]?.label || 'General fitness';
-    $('goalGuideText').textContent = goalGuideText(state.goal);
-    $('weekProgressRing').textContent = `${pct}%`;
-    $('weekProgressRing').parentElement.style.setProperty('--progress', `${pct}%`);
-    const summary = workoutSummary();
-    $('completedCount').textContent = summary.weekCount;
-    $('activeMinutes').textContent = summary.minutes;
-    $('currentStreak').textContent = summary.streak;
-
-    $('weekStrip').innerHTML = '';
-    for (let day = 1; day <= 7; day++) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `week-day ${day === state.currentDay ? 'today' : ''} ${state.completedDays.includes(day) ? 'done' : ''} ${day === 7 ? 'rest' : ''}`;
-      btn.innerHTML = `<strong>${day === 7 ? 'Rest' : `D${day}`}</strong><small>${day === 7 ? 'Recover' : PLANS[day - 1].title.split(' ')[0]}</small>`;
-      btn.addEventListener('click', () => {
-        if (day === 7) { $('mealDaySelect').value = '7'; renderMeals(); showPage('meals'); }
-        else startWorkout(day);
-      });
-      $('weekStrip').appendChild(btn);
-    }
-  }
-
-  function renderPlan() {
-    const container = $('planList');
-    container.innerHTML = '';
-    PLANS.forEach((p) => {
-      const card = document.createElement('article');
-      card.className = `plan-card ${state.completedDays.includes(p.day) ? 'completed' : ''}`;
-      card.innerHTML = `
-        <div class="day-badge">${state.completedDays.includes(p.day) ? '✓' : `D${p.day}`}</div>
-        <div><h3>${p.title}</h3><p>${p.focus}</p><div class="plan-meta"><span>60 minutes</span><span>•</span><span>${p.intensity}</span><span>•</span><span>Animated guidance</span></div></div>
-        <button type="button">${state.completedDays.includes(p.day) ? 'Repeat' : 'Start'}</button>`;
-      card.querySelector('button').addEventListener('click', () => startWorkout(p.day));
-      container.appendChild(card);
-    });
-    const rest = document.createElement('article');
-    rest.className = 'plan-card';
-    rest.innerHTML = `<div class="day-badge">D7</div><div><h3>Recovery Day</h3><p>Easy walking, gentle mobility, hydration, nutritious food and 7–9 hours of sleep.</p><div class="plan-meta"><span>20–40 minutes easy movement</span><span>•</span><span>No hard training</span></div></div><button type="button">Meals</button>`;
-    rest.querySelector('button').addEventListener('click', () => { $('mealDaySelect').value = '7'; renderMeals(); showPage('meals'); });
-    container.appendChild(rest);
-  }
-
-  function renderExerciseLibrary() {
-    const query = ($('exerciseSearch')?.value || '').toLowerCase().trim();
-    const filter = $('exerciseFilter')?.value || 'all';
-    const container = $('exerciseLibrary');
-    if (!container) return;
-    const entries = Object.entries(EXERCISES).filter(([, item]) => {
-      const haystack = `${item.name} ${item.category} ${item.muscles.join(' ')} ${item.benefit}`.toLowerCase();
-      return (filter === 'all' || item.category === filter) && (!query || haystack.includes(query));
-    });
-    container.innerHTML = '';
-    entries.forEach(([id, item]) => {
-      const card = document.createElement('article');
-      card.className = 'exercise-card';
-      card.innerHTML = `<button type="button"><div class="mini-visual">${makeAnimation(item.animation)}</div><div class="card-copy"><p class="eyebrow">${item.category.toUpperCase()}</p><h3>${item.name}</h3><p>${item.benefit}</p></div></button>`;
-      card.querySelector('button').addEventListener('click', () => openExerciseDialog(id));
-      container.appendChild(card);
-    });
-    if (!entries.length) container.innerHTML = '<div class="notice"><strong>No matching exercise</strong><p>Try another body area or category.</p></div>';
-  }
-
-  function renderMealOptions() {
-    const select = $('mealDaySelect');
-    if (!select || select.options.length) return;
-    MEALS.forEach(m => {
-      const option = document.createElement('option');
-      option.value = String(m.day);
-      option.textContent = `Day ${m.day}: ${m.focus}`;
-      select.appendChild(option);
-    });
-    select.value = String(state.currentDay);
-  }
-
-  function renderMeals() {
-    const selected = Number($('mealDaySelect')?.value || state.currentDay);
-    const mealPlan = MEALS.find(m => m.day === selected) || MEALS[0];
-    $$('.segment').forEach(btn => btn.classList.toggle('active', btn.dataset.diet === state.diet));
-    const container = $('mealCards');
-    if (!container) return;
-    container.innerHTML = '';
-    mealPlan.items.forEach(([type, icon, meal, alternative]) => {
-      const card = document.createElement('article');
-      card.className = 'meal-card';
-      const line = state.diet === 'vegan' ? alternative : alternative.replace(/^Vegan:\s*/i, 'Alternative: ');
-      card.innerHTML = `<div class="meal-icon">${icon}</div><div><p class="eyebrow">${type.toUpperCase()}</p><h3>${meal}</h3><small>${line}</small></div>`;
-      container.appendChild(card);
-    });
-    $('proteinFocus').textContent = selected === 5 ? 'Prioritise a protein-rich recovery meal after conditioning' : 'Include a protein source at every main meal';
-    $('timingTip').textContent = selected === 7 ? 'Focus on regular balanced meals and hydration' : 'Eat a light carbohydrate snack 60–90 minutes before training';
-  }
-
-  function renderProgress() {
-    const summary = workoutSummary();
-    $('progressWorkouts').textContent = state.workouts.length;
-    $('progressMinutes').textContent = summary.totalMinutes;
-    $('progressStreak').textContent = summary.streak;
-    const container = $('checkinHistory');
-    container.innerHTML = '';
-    const sorted = [...state.checkins].sort((a,b) => b.date.localeCompare(a.date)).slice(0, 12);
-    if (!sorted.length) {
-      container.innerHTML = '<p class="muted">No check-ins saved yet. Consistency and how you feel matter more than daily scale changes.</p>';
-      return;
-    }
-    sorted.forEach((item) => {
-      const row = document.createElement('article');
-      row.className = 'history-item';
-      const values = [item.weight ? `${item.weight} kg` : '', item.waist ? `${item.waist} cm waist` : '', item.pulse ? `${item.pulse} bpm` : '', item.notes || ''].filter(Boolean).join(' · ');
-      row.innerHTML = `<div class="history-date">${formatDate(item.date)}</div><div class="history-values">${values || 'Check-in saved'}</div><button type="button" aria-label="Delete check-in">×</button>`;
-      row.querySelector('button').addEventListener('click', () => {
-        state.checkins = state.checkins.filter(c => c.id !== item.id);
-        saveState('Check-in deleted');
-      });
-      container.appendChild(row);
-    });
-  }
-
-  function renderSettings() {
-    $('goalSelect').value = state.goal;
-    $('levelSelect').value = state.level;
-    $('equipmentSelect').value = state.equipment;
-    $('themeSelect').value = state.theme;
-    $('soundSelect').value = state.sound;
-    $('safetyAck').checked = Boolean(state.safetyAck);
-    $('appVersion').textContent = APP_VERSION;
-  }
-
-  function saveSettingsFromForm(event) {
-    event.preventDefault();
-    state.goal = $('goalSelect').value;
-    state.level = $('levelSelect').value;
-    state.equipment = $('equipmentSelect').value;
-    state.theme = $('themeSelect').value;
-    state.sound = $('soundSelect').value;
-    saveState('Settings saved');
-  }
-
-  function saveCheckin(event) {
-    event.preventDefault();
-    const date = $('checkinDate').value;
-    const weight = $('checkinWeight').value;
-    const waist = $('checkinWaist').value;
-    const pulse = $('checkinPulse').value;
-    const notes = $('checkinNotes').value.trim();
-    if (!date) return showToast('Choose a date');
-    if (!weight && !waist && !pulse && !notes) return showToast('Add at least one measurement or note');
-    state.checkins.push({ id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`, date, weight, waist, pulse, notes });
-    event.target.reset();
-    $('checkinDate').value = isoDate(new Date());
-    saveState('Check-in saved');
-  }
-
-  function startWorkout(day) {
-    const p = PLANS.find(x => x.day === day);
-    if (!p) return;
-    if (!state.safetyAck) showToast('Review the safety guidance in Settings when convenient');
-    activePlan = p;
-    session = buildSession(p);
-    stepIndex = 0;
-    remaining = session[0].duration;
-    isPlaying = false;
-    clearInterval(timerId);
-    $('workoutEmpty').classList.add('hidden');
-    $('workoutPlayer').classList.remove('hidden');
-    showPage('workout');
-    renderPlayer();
-  }
-
-  function buildSession(p) {
-    const items = [];
-    p.warmup.forEach(id => items.push(step(id, 'Warm-up', 60, 'continuous')));
-    for (let round = 1; round <= 3; round++) p.circuitA.forEach(id => items.push(step(id, `Circuit A · Round ${round}/3`, 60, 'interval')));
-    items.push({ exerciseId: null, name: 'Hydration + transition', phase: 'Two-minute transition', duration: 120, mode: 'transition' });
-    for (let round = 1; round <= 3; round++) p.circuitB.forEach(id => items.push(step(id, `Circuit B · Round ${round}/3`, 60, 'interval')));
-    p.finisher.forEach(id => items.push(step(id, 'Six-minute finisher', 60, 'interval')));
-    p.cooldown.forEach(id => items.push(step(id, 'Cool-down', 60, 'continuous')));
-    return items;
-  }
-
-  function step(exerciseId, phase, duration, mode) {
-    return { exerciseId, name: EXERCISES[exerciseId].name, phase, duration, mode };
-  }
-
-  function renderPlayer() {
-    const current = session[stepIndex];
-    if (!current) return;
-    $('playerDay').textContent = `DAY ${activePlan.day}`;
-    $('playerWorkoutTitle').textContent = activePlan.title;
-    $('phaseLabel').textContent = current.phase;
-    $('stepCounter').textContent = `${stepIndex + 1} of ${session.length}`;
-    $('sessionProgressBar').style.width = `${((stepIndex + (1 - remaining/current.duration)) / session.length) * 100}%`;
-    const isIntervalRest = current.mode === 'interval' && remaining <= restSeconds();
-    const timerState = $('timerState');
-    timerState.classList.toggle('rest', isIntervalRest || current.mode === 'transition');
-    timerState.textContent = current.mode === 'transition' ? 'RECOVER' : isIntervalRest ? 'REST / CHANGE' : current.phase === 'Cool-down' ? 'STRETCH' : 'MOVE';
-    $('timerDisplay').textContent = formatTime(remaining);
-    $('playPauseBtn').textContent = isPlaying ? '❚❚' : '▶';
-
-    if (current.exerciseId) {
-      const item = EXERCISES[current.exerciseId];
-      $('exerciseVisual').innerHTML = makeAnimation(item.animation);
-      $('exerciseVisual').classList.toggle('resting', isIntervalRest);
-      $('exerciseName').textContent = item.name;
-      $('exerciseCue').textContent = item.steps[0] + ' ' + item.steps[1];
-      $('targetMuscles').innerHTML = item.muscles.map(m => `<span>${m}</span>`).join('');
-      $('easierCue').textContent = item.easier;
-      $('harderCue').textContent = item.harder;
-      $('playerInfoBtn').disabled = false;
-    } else {
-      $('exerciseVisual').innerHTML = makeAnimation('breathing');
-      $('exerciseName').textContent = 'Hydration + transition';
-      $('exerciseCue').textContent = 'Sip water, breathe slowly and prepare for the next circuit. Keep moving gently rather than sitting suddenly.';
-      $('targetMuscles').innerHTML = '<span>Recovery</span><span>Hydration</span>';
-      $('easierCue').textContent = 'Walk slowly and focus on breathing.';
-      $('harderCue').textContent = 'Do not make recovery harder—use it to improve the next circuit.';
-      $('playerInfoBtn').disabled = true;
-    }
-  }
-
-  function toggleTimer() {
-    if (isPlaying) pauseTimer(); else playTimer();
-  }
-
-  function playTimer() {
-    if (!session.length) return;
-    isPlaying = true;
-    beep(720, .08);
-    clearInterval(timerId);
-    timerId = setInterval(() => {
-      remaining -= 1;
-      if (remaining === restSeconds() && session[stepIndex].mode === 'interval') beep(540, .12);
-      if (remaining <= 0) {
-        beep(880, .13);
-        advanceStepAutomatically();
-      } else renderPlayer();
-    }, 1000);
-    renderPlayer();
-  }
-
-  function pauseTimer() {
-    isPlaying = false;
-    clearInterval(timerId);
-    timerId = null;
-    renderPlayer();
-  }
-
-  function nextStep() {
-    pauseTimer();
-    if (stepIndex >= session.length - 1) return completeWorkout();
-    stepIndex += 1;
-    remaining = session[stepIndex].duration;
-    renderPlayer();
-  }
-
-  function previousStep() {
-    pauseTimer();
-    stepIndex = Math.max(0, stepIndex - 1);
-    remaining = session[stepIndex].duration;
-    renderPlayer();
-  }
-
-  function advanceStepAutomatically() {
-    if (stepIndex >= session.length - 1) {
-      pauseTimer();
-      completeWorkout();
-      return;
-    }
-    stepIndex += 1;
-    remaining = session[stepIndex].duration;
-    renderPlayer();
-  }
-
-  function completeWorkout() {
-    pauseTimer();
-    const day = activePlan.day;
-    const now = new Date();
-    state.completedDays = [...new Set([...state.completedDays, day])].sort();
-    state.currentDay = day < 6 ? day + 1 : 6;
-    state.workouts.push({ id: `${Date.now()}-${day}`, date: isoDate(now), timestamp: now.toISOString(), day, title: activePlan.title, minutes: 60, goal: state.goal, level: state.level });
-    saveState('Workout completed — excellent consistency');
-    $('workoutPlayer').classList.add('hidden');
-    $('workoutEmpty').classList.remove('hidden');
-    showPage('progress');
-  }
-
-  function stopTimerAndClose() {
-    pauseTimer();
-    $('workoutPlayer').classList.add('hidden');
-    $('workoutEmpty').classList.remove('hidden');
-    showPage('plan');
-  }
-
-  function restSeconds() { return state.level === 'intermediate' ? 15 : 25; }
-
-  function openExerciseDialog(id) {
-    const item = EXERCISES[id];
-    if (!item) return;
-    $('dialogVisual').innerHTML = makeAnimation(item.animation);
-    $('dialogCategory').textContent = item.category.toUpperCase();
-    $('dialogTitle').textContent = item.name;
-    $('dialogTags').innerHTML = item.muscles.map(m => `<span>${m}</span>`).join('');
-    $('dialogBenefit').textContent = item.benefit;
-    $('dialogSteps').innerHTML = item.steps.map(s => `<li>${s}</li>`).join('');
-    $('dialogEasier').textContent = item.easier;
-    $('dialogHarder').textContent = item.harder;
-    $('dialogCaution').textContent = item.caution;
-    $('exerciseDialog').showModal();
-  }
-
-  function makeAnimation(type) {
-    const poses = animationPoses(type);
-    const draw = (pose, className) => `
-      <g class="${className}">
-        <circle class="figure-head" cx="${pose.head[0]}" cy="${pose.head[1]}" r="15" />
-        <path class="figure-line" d="M ${pose.neck[0]} ${pose.neck[1]} L ${pose.hip[0]} ${pose.hip[1]}" />
-        <path class="figure-line figure-accent" d="M ${pose.neck[0]} ${pose.neck[1]} L ${pose.leftHand[0]} ${pose.leftHand[1]}" />
-        <path class="figure-line figure-accent" d="M ${pose.neck[0]} ${pose.neck[1]} L ${pose.rightHand[0]} ${pose.rightHand[1]}" />
-        <path class="figure-line" d="M ${pose.hip[0]} ${pose.hip[1]} L ${pose.leftFoot[0]} ${pose.leftFoot[1]}" />
-        <path class="figure-line" d="M ${pose.hip[0]} ${pose.hip[1]} L ${pose.rightFoot[0]} ${pose.rightFoot[1]}" />
-      </g>`;
-    return `<svg class="exercise-svg" viewBox="0 0 320 220" role="img" aria-label="Animated two-position exercise demonstration"><line class="figure-ground" x1="35" y1="195" x2="285" y2="195" />${draw(poses[0], 'pose-a')}${draw(poses[1], 'pose-b')}</svg>`;
-  }
-
-  function animationPoses(type) {
-    const stand = pose([160,45],[160,63],[160,125],[115,103],[205,103],[130,192],[190,192]);
-    const wide = pose([160,45],[160,63],[160,125],[95,85],[225,85],[100,192],[220,192]);
-    const squatA = stand;
-    const squatB = pose([160,77],[160,93],[160,142],[110,118],[210,118],[105,192],[215,192]);
-    const lungeA = stand;
-    const lungeB = pose([150,57],[150,73],[145,126],[112,100],[198,98],[105,192],[230,180]);
-    const plankA = pose([80,91],[96,99],[170,135],[85,145],[115,145],[255,190],[230,190]);
-    const plankB = pose([85,91],[101,99],[170,135],[85,145],[115,145],[210,151],[255,190]);
-    const pushA = pose([75,110],[92,115],[168,140],[86,170],[120,170],[260,190],[235,190]);
-    const pushB = pose([90,140],[108,143],[175,155],[105,185],[135,185],[260,190],[235,190]);
-    const bridgeA = pose([87,153],[103,153],[165,170],[95,183],[126,183],[225,190],[195,190]);
-    const bridgeB = pose([90,124],[107,125],[170,125],[97,179],[128,179],[225,190],[195,190]);
-    const crunchA = pose([93,158],[110,159],[165,171],[105,184],[130,184],[220,190],[190,190]);
-    const crunchB = pose([108,130],[125,135],[170,165],[115,177],[140,177],[220,190],[190,190]);
-    const birdA = pose([142,87],[142,103],[150,140],[100,170],[184,165],[120,190],[205,190]);
-    const birdB = pose([142,87],[142,103],[150,140],[65,104],[184,165],[120,190],[250,125]);
-    const hingeA = stand;
-    const hingeB = pose([112,83],[125,88],[170,126],[95,126],[202,126],[130,192],[190,192]);
-    const sideA = pose([160,45],[160,63],[160,125],[120,97],[200,97],[140,192],[180,192]);
-    const sideB = pose([153,78],[153,95],[153,137],[120,110],[200,110],[120,192],[195,192]);
-    const map = {
-      squat: [squatA, squatB], lunge: [lungeA, lungeB], pushup: [pushA, pushB], plank: [plankA, plankB],
-      sideplank: [pose([105,104],[120,110],[170,145],[112,175],[140,175],[245,190],[220,190]), pose([95,65],[112,75],[165,130],[90,170],[140,170],[245,190],[220,190])],
-      bridge: [bridgeA, bridgeB], crunch: [crunchA, crunchB], deadbug: [pose([160,78],[160,95],[160,145],[120,95],[200,95],[130,165],[190,165]), pose([160,78],[160,95],[160,145],[75,70],[200,95],[130,165],[245,190])],
-      bird: [birdA, birdB], hinge: [hingeA, hingeB], row: [hingeB, pose([112,83],[125,88],[170,126],[130,115],[178,112],[130,192],[190,192])],
-      press: [pose([160,147],[160,162],[160,175],[120,135],[200,135],[130,192],[190,192]), pose([160,147],[160,162],[160,175],[130,82],[190,82],[130,192],[190,192])],
-      shoulder: [stand, pose([160,45],[160,63],[160,125],[100,48],[220,48],[130,192],[190,192])],
-      jack: [stand, wide], march: [stand, pose([160,45],[160,63],[160,125],[110,80],[210,115],[130,192],[190,142])],
-      mountain: [plankA, pose([80,91],[96,99],[170,135],[85,145],[115,145],[205,150],[245,190])],
-      skater: [pose([135,58],[135,75],[145,132],[95,115],[188,103],[100,192],[205,175]), pose([185,58],[185,75],[175,132],[132,103],[225,115],[115,175],[220,192])],
-      feet: [pose([155,48],[155,65],[160,125],[120,105],[200,105],[140,190],[180,185]), pose([165,48],[165,65],[160,125],[120,105],[200,105],[140,185],[180,190])],
-      wall: [pose([155,67],[155,83],[155,140],[120,112],[190,112],[110,190],[205,190]), pose([155,80],[155,96],[155,145],[120,118],[190,118],[115,190],[205,190])],
-      calf: [stand, pose([160,40],[160,58],[160,120],[115,98],[205,98],[135,180],[185,180])],
-      dip: [pose([130,88],[130,105],[155,135],[115,145],[185,145],[120,190],[210,190]), pose([130,115],[130,130],[155,150],[115,170],[185,170],[120,190],[210,190])],
-      superman: [pose([85,155],[103,156],[165,168],[80,185],[125,184],[235,190],[205,190]), pose([90,125],[108,130],[165,160],[65,115],[120,150],[250,150],[205,185])],
-      burpee: [stand, plankA], balance: [stand, pose([160,45],[160,63],[160,125],[115,100],[205,100],[130,192],[190,142])],
-      twist: [stand, pose([160,45],[160,63],[160,125],[90,80],[230,125],[130,192],[190,192])],
-      mobility: [stand, wide], catcow: [birdA, pose([142,105],[142,120],[150,145],[100,170],[184,165],[120,190],[205,190])],
-      cobra: [pose([90,155],[108,157],[170,172],[105,190],[130,190],[245,190],[215,190]), pose([110,105],[125,115],[170,165],[105,180],[140,180],[245,190],[215,190])],
-      stretch: [stand, hingeB], breathing: [stand, sideA]
-    };
-    return map[type] || [stand, wide];
-  }
-
-  function pose(head, neck, hip, leftHand, rightHand, leftFoot, rightFoot) {
-    return { head, neck, hip, leftHand, rightHand, leftFoot, rightFoot };
-  }
-
-  function goalGuideText(goal) {
-    const guides = {
-      general: 'Complete the six varied sessions, use easier options when needed, and keep Day 7 restorative. Balanced fitness comes from strength, cardio, mobility, daily light movement and sleep.',
-      fat: 'The app combines strength and conditioning because preserving muscle and increasing total activity supports sustainable body-fat reduction. Food portions, protein-rich meals, sleep and consistency matter more than punishing workouts.',
-      stamina: 'Stay at a pace where technique remains controlled. Over several weeks, progress from marching to faster variations, or from beginner intervals to intermediate intervals, rather than increasing everything at once.',
-      shape: 'Body shape changes through muscle development and overall body-fat change. Use slow, controlled repetitions, complete the full range you can manage and add dumbbells only when technique is stable.',
-      strength: 'Strength improves when the same movement becomes more controlled or gradually more difficult. First improve form, then add repetitions, slower lowering, longer holds or modest resistance.'
-    };
-    return guides[goal] || guides.general;
-  }
-
-  function workoutSummary() {
-    const totalMinutes = state.workouts.reduce((sum, w) => sum + Number(w.minutes || 0), 0);
-    const weekCount = uniqueCompletedDays().length;
-    const minutes = state.workouts.filter(w => daysAgo(w.date) <= 7).reduce((sum,w) => sum + Number(w.minutes || 0), 0);
-    const dates = [...new Set(state.workouts.map(w => w.date))].sort().reverse();
-    let streak = 0;
-    if (dates.length) {
-      let cursor = new Date();
-      if (!dates.includes(isoDate(cursor))) cursor.setDate(cursor.getDate() - 1);
-      while (dates.includes(isoDate(cursor))) { streak += 1; cursor.setDate(cursor.getDate() - 1); }
-    }
-    return { totalMinutes, weekCount, minutes, streak };
-  }
-
-  function uniqueCompletedDays() { return [...new Set(state.completedDays.filter(d => d >= 1 && d <= 6))]; }
-
-  function applyTheme() { document.documentElement.dataset.theme = state.theme || 'system'; }
-
-  function exportBackup() {
-    const blob = new Blob([JSON.stringify({ app: APP_VERSION, exportedAt: new Date().toISOString(), state }, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `health-app-backup-${isoDate(new Date())}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-    showToast('Backup exported');
-  }
-
-  async function importBackup(event) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    try {
-      const parsed = JSON.parse(await file.text());
-      const imported = parsed.state || parsed;
-      state = { ...DEFAULT_STATE, ...imported };
-      saveState('Backup imported');
-    } catch (error) {
-      console.error(error);
-      showToast('This backup could not be imported');
-    } finally { event.target.value = ''; }
-  }
-
-  function resetApp() {
-    if (!confirm('Reset all workouts, settings and check-ins on this device?')) return;
-    state = { ...DEFAULT_STATE };
-    localStorage.removeItem(STORAGE_KEY);
-    saveState('App data reset');
-    showPage('home');
-  }
-
-  async function installApp() {
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      await deferredInstallPrompt.userChoice;
-      deferredInstallPrompt = null;
-      return;
-    }
-    showToast('On iPhone: Share → Add to Home Screen');
-  }
-
-  async function registerServiceWorker() {
-    if (!('serviceWorker' in navigator)) return;
-    try {
-      const registration = await navigator.serviceWorker.register('./sw.js');
-      registration.addEventListener('updatefound', () => {
-        const worker = registration.installing;
-        worker?.addEventListener('statechange', () => {
-          if (worker.state === 'installed' && navigator.serviceWorker.controller) showToast('New app version available — tap update');
-        });
-      });
-    } catch (error) { console.warn('Service worker registration failed', error); }
-  }
-
-  async function checkForUpdate() {
-    if (!('serviceWorker' in navigator)) return location.reload();
-    try {
-      const registration = await navigator.serviceWorker.getRegistration();
-      await registration?.update();
-      if (registration?.waiting) registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-      const keys = await caches.keys();
-      await Promise.all(keys.filter(k => !k.includes(APP_VERSION)).map(k => caches.delete(k)));
-      showToast('App refreshed to the latest available version');
-      setTimeout(() => location.reload(), 450);
-    } catch (error) {
-      console.error(error);
-      showToast('Update check failed — your saved data is safe');
-    }
-  }
-
-  function updateNetworkBadge() {
-    const online = navigator.onLine;
-    $('networkBadge').textContent = online ? 'Online · offline ready' : 'Offline mode';
-    $('networkBadge').style.color = online ? 'var(--success)' : 'var(--accent)';
-  }
-
-  function beep(frequency, duration) {
-    if (state.sound !== 'on') return;
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      const ctx = new AudioContext();
-      const oscillator = ctx.createOscillator();
-      const gain = ctx.createGain();
-      oscillator.frequency.value = frequency;
-      gain.gain.setValueAtTime(.04, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + duration);
-      oscillator.connect(gain).connect(ctx.destination);
-      oscillator.start();
-      oscillator.stop(ctx.currentTime + duration);
-    } catch (_) {}
-  }
-
-  function showToast(message) {
-    clearTimeout(toastTimer);
-    $('toast').textContent = message;
-    $('toast').classList.add('show');
-    toastTimer = setTimeout(() => $('toast').classList.remove('show'), 2400);
-  }
-
-  function formatTime(seconds) {
-    const min = Math.floor(seconds / 60).toString().padStart(2, '0');
-    const sec = Math.max(0, seconds % 60).toString().padStart(2, '0');
-    return `${min}:${sec}`;
-  }
-
-  function isoDate(date) {
-    const y = date.getFullYear();
-    const m = String(date.getMonth() + 1).padStart(2, '0');
-    const d = String(date.getDate()).padStart(2, '0');
-    return `${y}-${m}-${d}`;
-  }
-
-  function formatDate(value) {
-    const date = new Date(`${value}T00:00:00`);
-    return date.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
-  }
-
-  function daysAgo(value) {
-    const then = new Date(`${value}T00:00:00`);
-    const now = new Date(); now.setHours(0,0,0,0);
-    return Math.floor((now - then) / 86400000);
-  }
-
-  init();
+function loadState(){
+ try{
+  let raw=localStorage.getItem(STORAGE_KEY);
+  if(!raw){const old=localStorage.getItem(OLD_STORAGE_KEY);if(old){const p=JSON.parse(old);raw=JSON.stringify({...DEFAULT_STATE,...p,schema:2,onboardingDone:true,profile:DEFAULT_STATE.profile,duration:60,autoplay:'on',reducedMotion:'off',diet:p.diet==='vegan'?'vegan':'indian'});}}
+  const parsed=raw?JSON.parse(raw):{};
+  return{...DEFAULT_STATE,...parsed,profile:{...DEFAULT_STATE.profile,...(parsed.profile||{})},duration:Number(parsed.duration||60)};
+ }catch(e){console.warn(e);return structuredClone(DEFAULT_STATE);}
+}
+function saveState(message){state.schema=SCHEMA_VERSION;localStorage.setItem(STORAGE_KEY,JSON.stringify(state));applyTheme();renderAll();if(message)showToast(message);}
+function init(){applyTheme();bindEvents();renderAll();$('checkinDate').value=isoDate(new Date());registerServiceWorker();updateNetworkBadge();showPage('home');if(!state.onboardingDone)setTimeout(()=>openOnboarding(),300);}
+function bindEvents(){
+ document.addEventListener('click',event=>{const go=event.target.closest('[data-go]');if(go)showPage(go.dataset.go);});
+ $$('.nav-btn').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.go)));
+ $('headerSettingsBtn').addEventListener('click',()=>showPage('settings'));
+ $('startTodayBtn').addEventListener('click',()=>startWorkout(state.currentDay));$('previewTodayBtn').addEventListener('click',()=>showPage('plan'));
+ $('todayPreview').addEventListener('click',()=>openExerciseDialog(PLANS[state.currentDay-1].warmup[0]));
+ $$('[data-readiness]').forEach(b=>b.addEventListener('click',()=>{state.readiness=b.dataset.readiness;saveState();renderReadiness();}));
+ $('resumeWorkoutBtn').addEventListener('click',resumeSavedWorkout);
+ $('closeWorkoutBtn').addEventListener('click',stopTimerAndClose);$('playPauseBtn').addEventListener('click',toggleTimer);$('nextStepBtn').addEventListener('click',nextStep);$('prevStepBtn').addEventListener('click',previousStep);
+ $('playerInfoBtn').addEventListener('click',()=>openExerciseDialog(session[stepIndex]?.exerciseId));$('easierBtn').addEventListener('click',()=>showToast($('easierCue').textContent));$('harderBtn').addEventListener('click',()=>showToast($('harderCue').textContent));
+ $('replaceBtn').addEventListener('click',replaceCurrentExercise);$('addTimeBtn').addEventListener('click',()=>{remaining+=15;renderPlayer();showToast('15 seconds added');});
+ $('exerciseSearch').addEventListener('input',renderExerciseLibrary);$('exerciseFilter').addEventListener('change',renderExerciseLibrary);
+ $$('[data-library-view]').forEach(b=>b.addEventListener('click',()=>{libraryView=b.dataset.libraryView;renderLibraryViews();}));
+ $$('[data-quick-filter]').forEach(b=>b.addEventListener('click',()=>{quickFilter=b.dataset.quickFilter;renderExerciseLibrary();}));
+ $$('[data-body-view]').forEach(b=>b.addEventListener('click',()=>{bodyView=b.dataset.bodyView;renderMuscleMap();}));
+ $('mealDaySelect').addEventListener('change',renderMeals);$('settingsForm').addEventListener('submit',saveSettingsFromForm);$('safetyAck').addEventListener('change',e=>{state.safetyAck=e.target.checked;saveState('Safety acknowledgement saved');});
+ $('checkinForm').addEventListener('submit',saveCheckin);$('testForm').addEventListener('submit',saveTest);$('closeDialogBtn').addEventListener('click',()=>$('exerciseDialog').close());
+ $('installBtn').addEventListener('click',installApp);$('updateBtn').addEventListener('click',checkForUpdate);$('exportBtn').addEventListener('click',exportBackup);$('importInput').addEventListener('change',importBackup);$('resetBtn').addEventListener('click',resetApp);
+ $('downloadAllBtn').addEventListener('click',()=>downloadVideos(EXERCISE_IDS,'All exercise videos'));$('clearVideosBtn').addEventListener('click',clearDownloadedVideos);
+ $('onboardingForm').addEventListener('submit',finishOnboarding);
+ window.addEventListener('online',updateNetworkBadge);window.addEventListener('offline',updateNetworkBadge);window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstallPrompt=e;$('installBtn').disabled=false;});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&isPlaying)pauseTimer();});
+}
+function renderAll(){renderHome();renderPlan();renderLibraryViews();renderMealOptions();renderDietChips();renderMeals();renderProgress();renderSettings();renderMediaPacks();}
+function showPage(page){currentPage=page;$$('.page').forEach(el=>el.classList.toggle('active',el.dataset.page===page));const navPage=page==='workout'?'plan':page;$$('.nav-btn').forEach(el=>el.classList.toggle('active',el.dataset.go===navPage));$('mainContent').focus({preventScroll:true});window.scrollTo({top:0,behavior:state.reducedMotion==='on'?'auto':'smooth'});if(page==='settings')updateMediaStorageLabel();}
+function renderHome(){
+ const p=PLANS[state.currentDay-1]||PLANS[0],summary=workoutSummary(),completed=uniqueCompletedDays().length,pct=Math.round(completed/6*100);
+ $('todayTitle').textContent=`Day ${p.day} · ${p.title}`;$('todaySummary').textContent=GOALS[state.goal].note;$('todayDuration').textContent=`${state.duration} minutes`;$('todayIntensity').textContent=p.intensity;$('todayGoalPill').textContent=GOALS[state.goal].label;
+ $('weekProgressRing').textContent=`${pct}%`;$('weekScoreRing').style.setProperty('--score',`${pct}%`);$('homeStreak').textContent=summary.streak;$('homeMinutes').textContent=summary.totalMinutes;
+ $('todayPoster').src=posterUrl(p.circuitA[0]);$('goalGuideTitle').textContent=GOALS[state.goal].label;$('goalGuideText').textContent=GOALS[state.goal].note;$('goalSteps').innerHTML=GOALS[state.goal].steps.map((x,i)=>`<div class="goal-step"><span>${i+1}</span><div><strong>${x}</strong><p>${goalStepDetail(state.goal,i)}</p></div></div>`).join('');
+ const meal=MEALS.find(x=>x.day===state.currentDay)||MEALS[0];$('homeMealPreview').innerHTML=meal.items.slice(0,3).map(x=>`<article><strong>${x[0]}</strong><span>${dietText(x)}</span></article>`).join('');
+ $('weekStrip').innerHTML='';for(let day=1;day<=7;day++){const b=document.createElement('button');b.type='button';b.className=`week-day ${day===state.currentDay?'today':''} ${state.completedDays.includes(day)?'done':''} ${day===7?'rest':''}`;b.innerHTML=`<strong>${day===7?'Rest':`D${day}`}</strong><small>${day===7?'Recover':PLANS[day-1].title.split(' ')[0]}</small>`;b.addEventListener('click',()=>day===7?showRecovery():startWorkout(day));$('weekStrip').appendChild(b);}renderReadiness();
+}
+function renderReadiness(){const map={fresh:'Normal session is suitable if warm-up feels good.',okay:'Use controlled pace and stop one level before poor form.',sore:'Choose easier variations, lower impact and longer recovery.',pain:'Do not train through sharp or worsening pain. Assess the cause first.'};$$('[data-readiness]').forEach(b=>b.classList.toggle('active',b.dataset.readiness===state.readiness));$('readinessAdvice').textContent=map[state.readiness]||'Choose one';}
+function renderPlan(){
+ $('planSessionLength').textContent=state.duration;$('planDurationNote').textContent=state.duration===60?'Each full session is exactly 60 minutes.':`You selected the ${state.duration}-minute version; the full version remains 60 minutes.`;$('resumeWorkoutBtn').classList.toggle('hidden',!state.activeSession);
+ const c=$('planList');c.innerHTML='';PLANS.forEach(p=>{const card=document.createElement('article');card.className=`plan-card ${state.completedDays.includes(p.day)?'completed':''}`;const count=uniqueIdsForPlan(p).length;card.innerHTML=`<div class="day-badge">${state.completedDays.includes(p.day)?'✓':`D${p.day}`}</div><div><h2>${p.title}</h2><p>${p.focus}</p><div class="plan-meta"><span>${state.duration} minutes</span><span>•</span><span>${p.intensity}</span><span>•</span><span>${count} video exercises</span></div></div><div class="plan-actions"><button type="button" class="offline">Offline videos</button><button type="button" class="start">${state.completedDays.includes(p.day)?'Repeat':'Start'}</button></div>`;card.querySelector('.start').addEventListener('click',()=>startWorkout(p.day));card.querySelector('.offline').addEventListener('click',()=>downloadVideos(uniqueIdsForPlan(p),`Day ${p.day} video pack`));c.appendChild(card);});
+ const rest=document.createElement('article');rest.className='plan-card';rest.innerHTML=`<div class="day-badge">D7</div><div><h2>Recovery Day</h2><p>Easy walking, gentle mobility, hydration, balanced meals and sufficient sleep.</p><div class="plan-meta"><span>15–45 minutes optional</span><span>•</span><span>No hard intervals</span></div></div><div class="plan-actions"><button type="button" class="start">Open recovery</button></div>`;rest.querySelector('button').addEventListener('click',showRecovery);c.appendChild(rest);
+}
+function showRecovery(){$('mealDaySelect').value='7';renderMeals();showPage('meals');showToast('Use easy walking or gentle mobility today');}
+function renderLibraryViews(){$$('[data-library-view]').forEach(b=>b.classList.toggle('active',b.dataset.libraryView===libraryView));$('exerciseLibraryView').classList.toggle('hidden',libraryView!=='exercises');$('muscleMapView').classList.toggle('hidden',libraryView!=='muscles');if(libraryView==='exercises')renderExerciseLibrary();else renderMuscleMap();}
+function renderExerciseLibrary(){
+ const q=($('exerciseSearch').value||'').toLowerCase().trim(),cat=$('exerciseFilter').value;cToggleQuick();const entries=Object.entries(EXERCISES).filter(([,x])=>{const hay=`${x.name} ${x.category} ${x.muscles.join(' ')} ${x.benefit}`.toLowerCase();return(cat==='all'||x.category===cat)&&(quickFilter==='all'||hay.includes(quickFilter.toLowerCase()))&&(!q||hay.includes(q));});
+ const c=$('exerciseLibrary');c.innerHTML='';entries.forEach(([id,x])=>{const card=document.createElement('article');card.className='exercise-card';card.innerHTML=`<button type="button"><img loading="lazy" src="${posterUrl(id)}" alt="Full-body demonstration of ${escapeHtml(x.name)}"><div class="card-copy"><p class="eyebrow">${x.category.toUpperCase()}</p><h2>${x.name}</h2><p>${x.benefit}</p><span class="video-label">▶ Short video + muscle highlights</span></div></button>`;card.querySelector('button').addEventListener('click',()=>openExerciseDialog(id));c.appendChild(card);});if(!entries.length)c.innerHTML='<div class="notice"><strong>No matching exercise</strong><p>Try another search or filter.</p></div>';
+}
+function cToggleQuick(){$$('[data-quick-filter]').forEach(b=>b.classList.toggle('active',b.dataset.quickFilter===quickFilter));}
+function renderMuscleMap(){
+ $$('[data-body-view]').forEach(b=>b.classList.toggle('active',b.dataset.bodyView===bodyView));$('muscleMap').innerHTML=muscleSvg(bodyView);$$('.muscle-hit').forEach(el=>{el.classList.toggle('active',el.dataset.muscle===selectedMuscle);el.addEventListener('click',()=>selectMuscle(el.dataset.muscle));});if(selectedMuscle)selectMuscle(selectedMuscle,false);
+}
+function selectMuscle(muscle,rerender=true){selectedMuscle=muscle;const info=MUSCLE_INFO[muscle]||MUSCLE_INFO.full;$('muscleTitle').textContent=info.title;$('muscleDescription').textContent=info.text;const matches=Object.entries(EXERCISES).filter(([,x])=>`${x.muscles.join(' ')}`.toLowerCase().includes(info.term)).slice(0,8);$('muscleExerciseLinks').innerHTML=matches.map(([id,x])=>`<button type="button" class="muscle-link" data-ex="${id}">${x.name}</button>`).join('')||'<p class="muted">Use the exercise search for more options.</p>';$$('[data-ex]').forEach(b=>b.addEventListener('click',()=>openExerciseDialog(b.dataset.ex)));if(rerender)renderMuscleMap();}
+const MUSCLE_INFO={full:{title:'Full body',term:'',text:'Select a body area to view matching exercises.'},chest:{title:'Chest',term:'chest',text:'Pushes the arms away from the body and supports upper-body pressing.'},shoulders:{title:'Shoulders',term:'shoulder',text:'Move and stabilise the arms during pressing, raising and carrying.'},arms:{title:'Arms',term:'arms',text:'Biceps and triceps bend and straighten the elbows.'},core:{title:'Core',term:'core',text:'Controls the trunk and transfers force between the upper and lower body.'},back:{title:'Back',term:'back',text:'Supports posture, pulling movements and spinal control.'},glutes:{title:'Glutes',term:'glute',text:'Extend and stabilise the hips during squats, lunges and walking.'},quads:{title:'Quadriceps',term:'thigh',text:'Straighten the knees and contribute strongly to squats and steps.'},hamstrings:{title:'Hamstrings',term:'hamstring',text:'Bend the knees and extend the hips during hinges and bridges.'},calves:{title:'Calves',term:'calf',text:'Support ankle movement, walking, balance and jumping.'},hips:{title:'Hips',term:'hip',text:'Control leg movement in several directions and support balance.'}};
+function muscleSvg(view){const back=view==='back';return `<svg viewBox="0 0 480 650" role="img" aria-label="${view} human body muscle map"><g><circle class="muscle-shape" cx="240" cy="58" r="39"/><path class="muscle-shape" d="M205 100 Q240 82 275 100 L300 245 Q275 295 270 330 L210 330 Q205 295 180 245Z"/><path class="muscle-shape" d="M190 115 L125 260 L150 278 L215 160Z"/><path class="muscle-shape" d="M290 115 L355 260 L330 278 L265 160Z"/><path class="muscle-shape" d="M210 325 L165 510 L195 600 L225 590 L238 390Z"/><path class="muscle-shape" d="M270 325 L315 510 L285 600 L255 590 L242 390Z"/>
+ ${back?`<ellipse class="muscle-hit" data-muscle="back" cx="240" cy="182" rx="58" ry="75"/><ellipse class="muscle-hit" data-muscle="shoulders" cx="190" cy="128" rx="30" ry="24"/><ellipse class="muscle-hit" data-muscle="shoulders" cx="290" cy="128" rx="30" ry="24"/>`:`<ellipse class="muscle-hit" data-muscle="chest" cx="240" cy="158" rx="55" ry="42"/><ellipse class="muscle-hit" data-muscle="shoulders" cx="190" cy="126" rx="28" ry="24"/><ellipse class="muscle-hit" data-muscle="shoulders" cx="290" cy="126" rx="28" ry="24"/>`}
+ <ellipse class="muscle-hit" data-muscle="arms" cx="153" cy="215" rx="24" ry="62"/><ellipse class="muscle-hit" data-muscle="arms" cx="327" cy="215" rx="24" ry="62"/><ellipse class="muscle-hit" data-muscle="core" cx="240" cy="247" rx="42" ry="63"/><ellipse class="muscle-hit" data-muscle="glutes" cx="240" cy="340" rx="53" ry="35"/><ellipse class="muscle-hit" data-muscle="quads" cx="205" cy="430" rx="27" ry="78"/><ellipse class="muscle-hit" data-muscle="quads" cx="275" cy="430" rx="27" ry="78"/><ellipse class="muscle-hit" data-muscle="hamstrings" cx="210" cy="455" rx="24" ry="67"/><ellipse class="muscle-hit" data-muscle="hamstrings" cx="270" cy="455" rx="24" ry="67"/><ellipse class="muscle-hit" data-muscle="calves" cx="190" cy="555" rx="23" ry="53"/><ellipse class="muscle-hit" data-muscle="calves" cx="290" cy="555" rx="23" ry="53"/><ellipse class="muscle-hit" data-muscle="hips" cx="240" cy="326" rx="67" ry="24"/></g></svg>`;}
+function renderMealOptions(){const s=$('mealDaySelect');if(s.options.length)return;MEALS.forEach(m=>{const o=document.createElement('option');o.value=m.day;o.textContent=`Day ${m.day}: ${m.focus}`;s.appendChild(o);});s.value=state.currentDay;}
+function renderDietChips(){$('dietModeChips').innerHTML=Object.entries(DIET_LABELS).map(([id,label])=>`<button type="button" data-diet="${id}" class="${state.diet===id?'active':''}">${label}</button>`).join('');$$('[data-diet]').forEach(b=>b.addEventListener('click',()=>{state.diet=b.dataset.diet;saveState('Diet style updated');}));}
+function renderMeals(){const selected=Number($('mealDaySelect').value||state.currentDay),mp=MEALS.find(m=>m.day===selected)||MEALS[0],c=$('mealCards');c.innerHTML='';mp.items.forEach((x,i)=>{const card=document.createElement('article');card.className='meal-card';card.innerHTML=`<div class="meal-icon">${x[1]}</div><div><p class="eyebrow">${x[0].toUpperCase()}</p><h2>${dietText(x)}</h2><small>${mealNote(x)}</small></div><button type="button">Replace</button>`;card.querySelector('button').addEventListener('click',()=>showToast(mealReplacement(x[0])));c.appendChild(card);});$('proteinFocus').textContent=state.diet==='highProtein'?'Include a substantial protein source at every meal':'Include a protein source at every main meal';$('timingTip').textContent=selected===7?'Recovery day: balanced meals and steady hydration':'Light carbohydrate snack 60–90 minutes before training';}
+function dietText(x){if(state.diet==='vegan')return x[3].replace(/^Vegan:\s*/i,'')||x[2];if(state.diet==='highProtein')return `${x[2]} Add tofu, lentils, Greek/soy yoghurt or another suitable protein.`;if(state.diet==='ovo')return `${x[2]} Eggs can be used as a protein replacement where suitable.`;return x[2];}
+function mealNote(x){const exclusion=state.foodExclusions?` Exclude: ${state.foodExclusions}.`:'';return `${DIET_LABELS[state.diet]}. ${x[3]}${exclusion}`;}
+function mealReplacement(type){const r={Breakfast:'Try moong dal chilla, tofu scramble or high-protein oats.',Lunch:'Try rajma, chole, lentil pasta or tofu grain bowl.',Dinner:'Try dal, tofu curry, tempeh stir-fry or bean soup.',Snack:'Try fruit with soy yoghurt, nuts or roasted chickpeas.','Pre-workout':'Try banana, toast, dates or a small potato.','Recovery':'Try fortified soy milk, yoghurt, tofu meal or lentil dish.'};return r[type]||'Choose another balanced meal with vegetables, whole grains and a protein source.';}
+function renderProgress(){const s=workoutSummary();$('progressWorkouts').textContent=state.workouts.length;$('progressMinutes').textContent=s.totalMinutes;$('progressStreak').textContent=s.streak;const week=programWeek(),idx=Math.min(5,Math.floor((week-1)/2));$('progressStage').textContent=idx+1;$('stageTitle').textContent=`${STAGES[idx].name} · ${STAGES[idx].weeks}`;$('stageBadge').textContent=`Stage ${idx+1} of 6`;$('stageText').textContent=STAGES[idx].text;const pct=Math.min(100,Math.round(week/12*100));$('programProgressBar').style.width=`${pct}%`;$('programProgressText').textContent=`Program week ${week} of 12 · ${pct}% of the cycle`;
+ renderHistory('checkinHistory',state.checkins,(x)=>[x.weight?`${x.weight} kg`:'',x.waist?`${x.waist} cm waist`:'',x.pulse?`${x.pulse} bpm`:'',x.notes||''].filter(Boolean).join(' · '),'checkin');renderHistory('testHistory',state.tests,x=>`${testLabel(x.type)}: ${x.value}`,'test');}
+function renderHistory(id,items,text,type){const c=$(id);c.innerHTML='';const sorted=[...items].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,12);if(!sorted.length){c.innerHTML='<p class="muted">No records saved yet.</p>';return;}sorted.forEach(x=>{const row=document.createElement('article');row.className='history-item';row.innerHTML=`<div class="history-date">${formatDate(x.date)}</div><div class="history-values">${escapeHtml(text(x))}</div><button type="button" aria-label="Delete">×</button>`;row.querySelector('button').addEventListener('click',()=>{state[type==='test'?'tests':'checkins']=state[type==='test'?'tests':'checkins'].filter(y=>y.id!==x.id);saveState('Record deleted');});c.appendChild(row);});}
+function renderSettings(){const p=state.profile;$('profileName').value=p.name;$('ageRange').value=p.ageRange;$('profileHeight').value=p.height;$('profileWeight').value=p.weight;$('goalSelect').value=state.goal;$('levelSelect').value=state.level;$('durationSelect').value=String(state.duration);$('equipmentSelect').value=state.equipment;$('dietSelect').value=state.diet;$('foodExclusions').value=state.foodExclusions;$('themeSelect').value=state.theme;$('soundSelect').value=state.sound;$('autoplaySelect').value=state.autoplay;$('motionSelect').value=state.reducedMotion;$('safetyAck').checked=state.safetyAck;$('appVersion').textContent=APP_VERSION;}
+function saveSettingsFromForm(e){e.preventDefault();state.profile={name:$('profileName').value.trim(),ageRange:$('ageRange').value,height:$('profileHeight').value,weight:$('profileWeight').value};state.goal=$('goalSelect').value;state.level=$('levelSelect').value;state.duration=Number($('durationSelect').value);state.equipment=$('equipmentSelect').value;state.diet=$('dietSelect').value;state.foodExclusions=$('foodExclusions').value.trim();state.theme=$('themeSelect').value;state.sound=$('soundSelect').value;state.autoplay=$('autoplaySelect').value;state.reducedMotion=$('motionSelect').value;saveState('Settings saved');}
+function saveCheckin(e){e.preventDefault();const item={id:uid(),date:$('checkinDate').value,weight:$('checkinWeight').value,waist:$('checkinWaist').value,pulse:$('checkinPulse').value,notes:$('checkinNotes').value.trim()};if(!item.date)return showToast('Choose a date');if(!item.weight&&!item.waist&&!item.pulse&&!item.notes)return showToast('Add at least one value');state.checkins.push(item);e.target.reset();$('checkinDate').value=isoDate(new Date());saveState('Check-in saved');}
+function saveTest(e){e.preventDefault();const value=$('testValue').value;if(value==='')return;state.tests.push({id:uid(),date:isoDate(new Date()),type:$('testType').value,value});e.target.reset();saveState('Fitness result saved');}
+function testLabel(x){return{march2:'2-minute march',plank:'Plank hold',pushups:'Controlled push-ups',squats:'Chair squats'}[x]||x;}
+function startWorkout(day){const p=PLANS.find(x=>x.day===day);if(!p)return;activePlan=p;session=buildSession(p,state.duration);stepIndex=0;remaining=session[0].duration;isPlaying=false;clearInterval(timerId);state.activeSession={day,stepIndex,remaining,duration:state.duration,startedAt:new Date().toISOString()};persistOnly();$('workoutEmpty').classList.add('hidden');$('workoutPlayer').classList.remove('hidden');showPage('workout');renderPlayer();if(!state.safetyAck)showToast('Please review the safety acknowledgement in Settings');}
+function resumeSavedWorkout(){const s=state.activeSession;if(!s)return;const p=PLANS.find(x=>x.day===s.day);if(!p){state.activeSession=null;return;}activePlan=p;session=buildSession(p,s.duration||state.duration);stepIndex=Math.min(s.stepIndex,session.length-1);remaining=s.remaining||session[stepIndex].duration;$('workoutEmpty').classList.add('hidden');$('workoutPlayer').classList.remove('hidden');showPage('workout');renderPlayer();}
+function buildSession(p,duration){const out=[];const add=(ids,phase,rounds=1)=>{for(let r=1;r<=rounds;r++)ids.forEach(id=>out.push(step(id,rounds>1?`${phase} · Round ${r}/${rounds}`:phase,60,'interval')));};if(duration===30){p.warmup.slice(0,5).forEach(id=>out.push(step(id,'Warm-up',60,'continuous')));add(p.circuitA,'Main circuit',2);add(p.circuitB,'Strength circuit',1);add(p.finisher.slice(0,3),'Finisher',1);p.cooldown.slice(0,4).forEach(id=>out.push(step(id,'Cool-down',60,'continuous')));}else if(duration===45){p.warmup.slice(0,6).forEach(id=>out.push(step(id,'Warm-up',60,'continuous')));add(p.circuitA,'Circuit A',2);out.push({exerciseId:null,name:'Hydration + transition',phase:'Transition',duration:60,mode:'transition'});add(p.circuitB,'Circuit B',2);add(p.finisher,'Finisher',1);p.cooldown.slice(0,8).forEach(id=>out.push(step(id,'Cool-down',60,'continuous')));}else{p.warmup.forEach(id=>out.push(step(id,'Warm-up',60,'continuous')));add(p.circuitA,'Circuit A',3);out.push({exerciseId:null,name:'Hydration + transition',phase:'Two-minute transition',duration:120,mode:'transition'});add(p.circuitB,'Circuit B',3);add(p.finisher,'Six-minute finisher',1);p.cooldown.forEach(id=>out.push(step(id,'Cool-down',60,'continuous')));}return out;}
+function step(id,phase,duration,mode){return{exerciseId:id,name:EXERCISES[id].name,phase,duration,mode};}
+function renderPlayer(){const cur=session[stepIndex];if(!cur)return;$('playerDay').textContent=`DAY ${activePlan.day}`;$('playerWorkoutTitle').textContent=activePlan.title;$('phaseLabel').textContent=cur.phase;$('stepCounter').textContent=`${stepIndex+1} of ${session.length}`;$('sessionProgressBar').style.width=`${((stepIndex+(1-remaining/cur.duration))/session.length)*100}%`;const rest=cur.mode==='interval'&&remaining<=restSeconds();$('timerState').classList.toggle('rest',rest||cur.mode==='transition');$('timerState').textContent=cur.mode==='transition'?'RECOVER':rest?'REST / CHANGE':cur.phase==='Cool-down'?'STRETCH':'MOVE';$('timerDisplay').textContent=formatTime(remaining);$('intervalHint').textContent=cur.mode==='interval'?`${60-restSeconds()} sec movement · ${restSeconds()} sec change`:'Move slowly with controlled breathing';$('playPauseBtn').textContent=isPlaying?'❚❚':'▶';
+ if(cur.exerciseId){const x=EXERCISES[cur.exerciseId];renderMedia($('exerciseMedia'),cur.exerciseId,true);$('exerciseCategory').textContent=x.category.toUpperCase();$('exerciseName').textContent=x.name;$('exerciseCue').textContent=`${x.steps[0]} ${x.steps[1]}`;$('targetMuscles').innerHTML=x.muscles.map(m=>`<span>${m}</span>`).join('');$('easierCue').textContent=x.easier;$('harderCue').textContent=x.harder;$('playerInfoBtn').disabled=false;}else{renderMedia($('exerciseMedia'),'breathing',true);$('exerciseCategory').textContent='RECOVERY';$('exerciseName').textContent='Hydration + transition';$('exerciseCue').textContent='Sip water, breathe slowly and prepare for the next circuit.';$('targetMuscles').innerHTML='<span>Recovery</span><span>Hydration</span>';$('easierCue').textContent='Walk slowly and focus on breathing.';$('harderCue').textContent='Keep recovery easy so the next circuit stays controlled.';$('playerInfoBtn').disabled=true;}
+ state.activeSession={day:activePlan.day,stepIndex,remaining,duration:state.duration,startedAt:state.activeSession?.startedAt||new Date().toISOString()};persistOnly();}
+function renderMedia(container,id,autoplay){const x=EXERCISES[id]||EXERCISES.breathing;const shouldPlay=autoplay&&state.autoplay==='on'&&state.reducedMotion!=='on';container.innerHTML=`<video ${shouldPlay?'autoplay':''} muted loop playsinline preload="metadata" poster="${posterUrl(id)}" aria-label="Full-body video demonstration of ${escapeHtml(x.name)}"><source src="${videoUrl(id)}" type="video/mp4"></video><span class="media-badge">Target: ${escapeHtml(x.muscles.slice(0,3).join(' · '))}</span><div class="media-controls"><button type="button" data-media-action="toggle">${shouldPlay?'Pause':'Play'}</button></div>`;const v=container.querySelector('video'),b=container.querySelector('[data-media-action]');b.addEventListener('click',()=>{if(v.paused){v.play().catch(()=>{});b.textContent='Pause';}else{v.pause();b.textContent='Play';}});v.addEventListener('error',()=>{b.textContent='Poster only';b.disabled=true;});if(shouldPlay)v.play().catch(()=>{});}
+function toggleTimer(){isPlaying?pauseTimer():playTimer();}function playTimer(){if(!session.length)return;isPlaying=true;beep(720,.07);clearInterval(timerId);timerId=setInterval(()=>{remaining--;if(remaining===restSeconds()&&session[stepIndex].mode==='interval')beep(540,.1);if(remaining<=0){beep(880,.12);advanceStepAutomatically();}else renderPlayer();},1000);renderPlayer();}function pauseTimer(){isPlaying=false;clearInterval(timerId);timerId=null;renderPlayer();}
+function nextStep(){pauseTimer();if(stepIndex>=session.length-1)return completeWorkout();stepIndex++;remaining=session[stepIndex].duration;renderPlayer();}function previousStep(){pauseTimer();stepIndex=Math.max(0,stepIndex-1);remaining=session[stepIndex].duration;renderPlayer();}function advanceStepAutomatically(){if(stepIndex>=session.length-1){pauseTimer();completeWorkout();return;}stepIndex++;remaining=session[stepIndex].duration;renderPlayer();}
+function completeWorkout(){pauseTimer();const day=activePlan.day,now=new Date();state.completedDays=[...new Set([...state.completedDays,day])].sort();state.currentDay=day<6?day+1:1;state.workouts.push({id:uid(),date:isoDate(now),timestamp:now.toISOString(),day,title:activePlan.title,minutes:state.duration,goal:state.goal,level:state.level});if(!state.programStart)state.programStart=isoDate(now);state.activeSession=null;saveState('Workout completed — excellent consistency');$('workoutPlayer').classList.add('hidden');$('workoutEmpty').classList.remove('hidden');showPage('progress');}
+function stopTimerAndClose(){pauseTimer();$('workoutPlayer').classList.add('hidden');$('workoutEmpty').classList.remove('hidden');showPage('plan');}
+function restSeconds(){return state.level==='advanced'?10:state.level==='intermediate'?15:25;}
+function replaceCurrentExercise(){const cur=session[stepIndex];if(!cur?.exerciseId)return;const x=EXERCISES[cur.exerciseId];const candidates=Object.entries(EXERCISES).filter(([id,y])=>id!==cur.exerciseId&&y.category===x.category&&y.muscles.some(m=>x.muscles.includes(m)));if(!candidates.length)return showToast('No similar replacement found');const[id,y]=candidates[Math.floor(Math.random()*candidates.length)];cur.exerciseId=id;cur.name=y.name;renderPlayer();showToast(`Replaced with ${y.name}`);}
+function openExerciseDialog(id){const x=EXERCISES[id];if(!x)return;renderMedia($('dialogMedia'),id,true);$('dialogCategory').textContent=x.category.toUpperCase();$('dialogTitle').textContent=x.name;$('dialogTags').innerHTML=x.muscles.map(m=>`<span>${m}</span>`).join('');$('dialogBenefit').textContent=x.benefit;$('dialogSteps').innerHTML=x.steps.map(s=>`<li>${s}</li>`).join('');$('dialogBreathing').textContent=breathingCue(x.category,x.name);$('dialogEasier').textContent=x.easier;$('dialogHarder').textContent=x.harder;$('dialogCaution').textContent=x.caution;$('exerciseDialog').showModal();}
+function breathingCue(cat,name){if(cat==='strength'||cat==='core')return`Breathe out through the effort and breathe in during the easier return. Never hold your breath to force ${name}.`;if(cat==='cardio')return'Use a pace that allows controlled, regular breathing. Reduce impact before technique becomes rushed.';return'Breathe slowly and never force a painful range.';}
+function renderMediaPacks(){const c=$('mediaPackGrid');c.innerHTML='';PLANS.forEach(p=>{const ids=uniqueIdsForPlan(p),d=document.createElement('article');d.className='media-pack';d.innerHTML=`<strong>Day ${p.day}</strong><span>${ids.length} unique videos</span><button type="button">Download pack</button>`;d.querySelector('button').addEventListener('click',()=>downloadVideos(ids,`Day ${p.day} video pack`));c.appendChild(d);});}
+async function downloadVideos(ids,label){if(!('caches'in window))return showToast('Offline video caching is not supported here');if(!navigator.onLine)return showToast('Connect to the internet before downloading videos');const unique=[...new Set(ids)],cache=await caches.open(MEDIA_CACHE);$('downloadProgress').classList.remove('hidden');let done=0;for(const id of unique){for(const url of [videoUrl(id),posterUrl(id)]){try{const res=await fetch(url,{cache:'reload'});if(res.ok)await cache.put(url,res.clone());}catch(e){console.warn('Download failed',url,e);}}done++;$('downloadProgressBar').style.width=`${done/unique.length*100}%`;$('downloadProgressText').textContent=`${label}: ${done} of ${unique.length}`;await new Promise(r=>setTimeout(r,10));}$('downloadProgressText').textContent=`${label} ready offline`;showToast(`${label} downloaded`);updateMediaStorageLabel();}
+async function clearDownloadedVideos(){if(!confirm('Remove all downloaded exercise videos? Your progress will remain.'))return;await caches.delete(MEDIA_CACHE);showToast('Downloaded videos removed');updateMediaStorageLabel();}
+async function updateMediaStorageLabel(){if(!$('mediaStorageLabel'))return;try{const c=await caches.open(MEDIA_CACHE),keys=await c.keys(),videos=keys.filter(r=>r.url.endsWith('.mp4')).length;$('mediaStorageLabel').textContent=`${videos} of ${EXERCISE_IDS.length} videos offline`;}catch{$('mediaStorageLabel').textContent='Storage unavailable';}}
+function uniqueIdsForPlan(p){return[...new Set([...p.warmup,...p.circuitA,...p.circuitB,...p.finisher,...p.cooldown])];}
+function finishOnboarding(e){e.preventDefault();state.profile.name=$('onboardName').value.trim();state.goal=$('onboardGoal').value;state.level=$('onboardLevel').value;state.duration=Number($('onboardDuration').value);state.diet=$('onboardDiet').value;state.safetyAck=$('onboardSafety').checked;state.onboardingDone=true;state.programStart=isoDate(new Date());$('onboardingDialog').close();saveState('Your program is ready');}
+function openOnboarding(){if(typeof $('onboardingDialog').showModal==='function')$('onboardingDialog').showModal();else state.onboardingDone=true;}
+function goalStepDetail(goal,i){const details={general:['Builds whole-body capacity.','Supports heart and lung fitness.','Helps repeat training safely.'],fat:['Preserves and builds useful muscle.','Raises sustainable weekly movement.','Supports gradual energy balance.'],stamina:['Reduces unnecessary joint impact.','Builds duration without rushing.','Shows improvement beyond body weight.'],shape:['Develops balanced proportions.','Increases muscular control.','Shows practical changes over time.'],strength:['Makes load safer and measurable.','Shows progressive overload.','Allows muscles and joints to adapt.'],mobility:['Keeps joints moving regularly.','Builds usable range, not passive range only.','Reduces pressure to force stretching.']};return(details[goal]||details.general)[i];}
+function workoutSummary(){const total=state.workouts.reduce((s,x)=>s+Number(x.minutes||0),0),today=new Date(),weekStart=new Date(today);weekStart.setDate(today.getDate()-6);const weekCount=state.workouts.filter(x=>new Date(x.date+'T00:00:00')>=weekStart).length;const dates=[...new Set(state.workouts.map(x=>x.date))].sort().reverse();let streak=0,cursor=new Date();for(let i=0;i<370;i++){const key=isoDate(cursor);if(dates.includes(key)){streak++;cursor.setDate(cursor.getDate()-1);}else if(i===0){cursor.setDate(cursor.getDate()-1);}else break;}return{totalMinutes:total,weekCount,streak};}
+function uniqueCompletedDays(){return[...new Set(state.completedDays.filter(x=>x>=1&&x<=6))];}
+function programWeek(){if(!state.programStart)return 1;const diff=Math.max(0,Date.now()-new Date(state.programStart+'T00:00:00').getTime());return Math.min(12,Math.floor(diff/604800000)+1);}
+function applyTheme(){const dark=state.theme==='dark'||(state.theme==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';document.documentElement.style.colorScheme=dark?'dark':'light';}
+function updateNetworkBadge(){const b=$('networkBadge');b.textContent=navigator.onLine?'Online':'Offline ready';b.classList.toggle('online',navigator.onLine);}
+function registerServiceWorker(){if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);}
+async function checkForUpdate(){if(!('serviceWorker'in navigator))return showToast('Update checking is unavailable');const reg=await navigator.serviceWorker.getRegistration();if(reg){await reg.update();showToast('Update check complete');if(reg.waiting&&confirm('An update is ready. Reload now?')){reg.waiting.postMessage({type:'SKIP_WAITING'});location.reload();}}else showToast('App is current');}
+async function installApp(){if(deferredInstallPrompt){deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;}else showToast('On iPhone Safari: Share → Add to Home Screen');}
+function exportBackup(){const blob=new Blob([JSON.stringify({app:'Health App',version:APP_VERSION,schema:SCHEMA_VERSION,exportedAt:new Date().toISOString(),state},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`health-app-backup-${isoDate(new Date())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+function importBackup(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result),incoming=p.state||p;if(!incoming.workouts||!incoming.checkins)throw new Error('Invalid');state={...DEFAULT_STATE,...incoming,profile:{...DEFAULT_STATE.profile,...(incoming.profile||{})},schema:2,onboardingDone:true};saveState('Backup imported');}catch{showToast('This backup could not be imported');}e.target.value='';};r.readAsText(file);}
+function resetApp(){if(!confirm('Reset profile, workout history, meals and progress? Downloaded videos will remain.'))return;state=structuredClone(DEFAULT_STATE);localStorage.removeItem(STORAGE_KEY);saveState('App data reset');openOnboarding();}
+function persistOnly(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+function videoUrl(id){return`assets/videos/${id}.mp4`;}function posterUrl(id){return`assets/posters/${id}.webp`;}
+function uid(){return crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random()}`;}function isoDate(d){return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);}function formatDate(s){return new Intl.DateTimeFormat(undefined,{day:'numeric',month:'short',year:'numeric'}).format(new Date(s+'T00:00:00'));}function formatTime(n){n=Math.max(0,n);return`${String(Math.floor(n/60)).padStart(2,'0')}:${String(n%60).padStart(2,'0')}`;}function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));}
+function beep(freq,dur){if(state.sound!=='on')return;try{const C=window.AudioContext||window.webkitAudioContext,ctx=new C(),o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=freq;g.gain.setValueAtTime(.05,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur);o.onended=()=>ctx.close();}catch{}}
+function showToast(msg){clearTimeout(toastTimer);$('toast').textContent=msg;$('toast').classList.add('show');toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2600);}
+init();
 })();
