@@ -1,5 +1,5 @@
 /*
-  Fitness V4 Firebase configuration.
+  Fitness V5 Firebase configuration.
   Replace the placeholder values with the Web App configuration from:
   Firebase Console → Project settings → Your apps → Web app.
   Firebase web configuration is an identifier, not a private server secret.

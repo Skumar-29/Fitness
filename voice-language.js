@@ -120,9 +120,9 @@
   };
 
   const EXACT_HI = {
-    'Health App': 'फिटनेस V4', 'Fitness V4': 'फिटनेस V4', 'Complete body training': 'संपूर्ण शरीर प्रशिक्षण', 'Offline ready': 'ऑफलाइन तैयार', 'Online': 'ऑनलाइन',
+    'Health App': 'फिटनेस V5', 'Fitness V5': 'फिटनेस V5', 'Complete body training': 'संपूर्ण शरीर प्रशिक्षण', 'Offline ready': 'ऑफलाइन तैयार', 'Online': 'ऑनलाइन',
     'Language and voice coach':'भाषा और वॉइस कोच','App language':'ऐप भाषा','Spoken guidance':'बोला गया मार्गदर्शन','Voice preference':'वॉइस पसंद','Speaking speed':'बोलने की गति','Spoken countdown':'बोला गया काउंटडाउन','Form reminders':'तकनीक संकेत','On-screen subtitles':'स्क्रीन पर उपशीर्षक','Low-data video mode':'कम डेटा वीडियो मोड','Preview voice':'वॉइस सुनें','Voice coach':'वॉइस कोच','Repeat instruction':'निर्देश दोहराएँ','Stop voice':'वॉइस रोकें','Full instruction + cues':'पूरा निर्देश और संकेत','Essential cues':'केवल आवश्यक संकेत','Automatic':'स्वचालित','Female preferred':'महिला वॉइस प्राथमिक','Male preferred':'पुरुष वॉइस प्राथमिक','Slow':'धीमी','Normal':'सामान्य','Fast':'तेज़','Normal quality':'सामान्य गुणवत्ता','Poster until workout starts':'वर्कआउट शुरू होने तक चित्र',
-    "TODAY'S GUIDED SESSION": 'आज का निर्देशित सत्र', 'Start workout': 'वर्कआउट शुरू करें', 'Preview plan': 'योजना देखें', 'Full-body video guidance': 'फुल-बॉडी वीडियो मार्गदर्शन',
+    "TODAY'S GUIDED SESSION": 'आज का निर्देशित सत्र', 'Start workout': 'वर्कआउट शुरू करें', 'Preview plan': 'योजना देखें', 'Full-body video guidance': 'फुल-बॉडी वीडियो मार्गदर्शन', 'Full-body anatomy motion': 'फुल-बॉडी एनाटॉमी मोशन',
     'QUICK READINESS CHECK': 'त्वरित तैयारी जाँच', 'How does your body feel today?': 'आज आपका शरीर कैसा महसूस कर रहा है?', 'Choose one': 'एक चुनें',
     'Fresh': 'ताज़ा', 'Okay': 'ठीक', 'Sore': 'मांसपेशियों में दर्द', 'Pain': 'दर्द', 'Normal plan': 'सामान्य योजना', 'Use control': 'नियंत्रित गति', 'Lower impact': 'कम प्रभाव', 'Stop and assess': 'रुकें और जाँचें',
     'YOUR WEEK': 'आपका सप्ताह', 'Six training days + recovery': 'छह प्रशिक्षण दिन + रिकवरी', 'Open plan': 'योजना खोलें', 'CURRENT GOAL': 'वर्तमान लक्ष्य', 'Change': 'बदलें',
@@ -133,8 +133,8 @@
     'VEGETARIAN NUTRITION': 'शाकाहारी पोषण', 'Seven-day meal guidance': 'सात दिन की भोजन योजना', 'PROGRESS': 'प्रगति', 'Your training record': 'आपका प्रशिक्षण रिकॉर्ड',
     'PERSONALISE AND PROTECT DATA': 'व्यक्तिगत सेटिंग और डेटा सुरक्षा', 'Settings': 'सेटिंग्स', 'Profile and program': 'प्रोफ़ाइल और कार्यक्रम', 'Display name': 'नाम', 'Age range': 'आयु सीमा', 'Height (cm)': 'ऊँचाई (सेमी)', 'Weight (kg)': 'वज़न (किग्रा)', 'Main goal': 'मुख्य लक्ष्य', 'Fitness level': 'फिटनेस स्तर', 'Session duration': 'सत्र अवधि', 'Equipment': 'उपकरण', 'Diet style': 'आहार शैली', 'Excluded foods': 'न खाए जाने वाले खाद्य पदार्थ',
     'Display and guidance': 'डिस्प्ले और मार्गदर्शन', 'Theme': 'थीम', 'Sound cues': 'ध्वनि संकेत', 'Video autoplay': 'वीडियो ऑटोप्ले', 'Reduced motion': 'कम गति', 'Save settings': 'सेटिंग्स सहेजें',
-    'OFFLINE EXERCISE VIDEOS': 'ऑफलाइन व्यायाम वीडियो', 'Download workout packs': 'वर्कआउट पैक डाउनलोड करें', 'Download all videos': 'सभी वीडियो डाउनलोड करें', 'Remove downloaded videos': 'डाउनलोड वीडियो हटाएँ',
-    'Safety screening': 'सुरक्षा जाँच', 'Install Health App': 'फिटनेस V4 इंस्टॉल करें', 'Check for update': 'अपडेट जाँचें', 'Export backup': 'बैकअप निर्यात करें', 'Import backup': 'बैकअप आयात करें', 'Reset app data': 'ऐप डेटा रीसेट करें',
+    'OFFLINE EXERCISE VIDEOS': 'ऑफलाइन व्यायाम वीडियो', 'OFFLINE ANATOMY ANIMATIONS': 'ऑफलाइन एनाटॉमी एनीमेशन', 'Download workout packs': 'वर्कआउट पैक डाउनलोड करें', 'Built into every workout': 'हर वर्कआउट में शामिल', 'Download all videos': 'सभी वीडियो डाउनलोड करें', 'Confirm all offline': 'सभी ऑफलाइन की पुष्टि करें', 'Remove downloaded videos': 'डाउनलोड वीडियो हटाएँ', 'Animation storage info': 'एनीमेशन स्टोरेज जानकारी',
+    'Safety screening': 'सुरक्षा जाँच', 'Install Health App': 'फिटनेस V5 इंस्टॉल करें', 'Check for update': 'अपडेट जाँचें', 'Export backup': 'बैकअप निर्यात करें', 'Import backup': 'बैकअप आयात करें', 'Reset app data': 'ऐप डेटा रीसेट करें',
     'Home': 'होम', 'Workout': 'वर्कआउट', 'Diet': 'आहार', 'Progress': 'प्रगति', 'Why you are doing it': 'यह क्यों किया जा रहा है', 'How to do it': 'कैसे करें', 'Breathing and control': 'सांस और नियंत्रण', 'Easier': 'आसान', 'Harder': 'कठिन', 'Common mistake': 'सामान्य गलती',
     'MOVE': 'व्यायाम', 'REST / CHANGE': 'आराम / बदलाव', 'RECOVER': 'रिकवरी', 'STRETCH': 'स्ट्रेच', 'Recovery': 'रिकवरी', 'Hydration': 'पानी', 'Pause': 'रोकें', 'Play': 'चलाएँ', 'Poster only': 'केवल चित्र',
     'General fitness': 'सामान्य फिटनेस', 'Reduce body fat': 'शरीर की चर्बी कम करें', 'Improve stamina': 'स्टैमिना बढ़ाएँ', 'Shape and tone body': 'शरीर को आकार और टोन दें', 'Build strength': 'शक्ति बढ़ाएँ', 'Improve mobility': 'मोबिलिटी सुधारें',
@@ -143,7 +143,7 @@
     'Indian vegetarian': 'भारतीय शाकाहारी', 'Vegetarian with dairy': 'डेयरी सहित शाकाहारी', 'Vegetarian with eggs': 'अंडे सहित शाकाहारी', 'Dairy + eggs': 'डेयरी + अंडे', 'Vegan': 'वीगन', 'High-protein vegetarian': 'उच्च-प्रोटीन शाकाहारी',
     'GUIDED WORKOUT PLAYBACK':'निर्देशित वर्कआउट प्लेबैक','Automatic exercise flow':'स्वचालित व्यायाम क्रम','Automatic next exercise':'अगला व्यायाम अपने आप','Next exercise preview':'अगले व्यायाम की झलक','Orientation preference':'स्क्रीन दिशा पसंद','Start in Focus Mode':'फोकस मोड में शुरू करें','Prefer portrait':'पोर्ट्रेट प्राथमिक','Prefer landscape':'लैंडस्केप प्राथमिक',
     'ACCOUNT & AUTOMATIC SYNC':'खाता और स्वचालित सिंक','Use the same progress on every device':'हर डिवाइस पर समान प्रगति','Continue with Google':'Google से जारी रखें','Email':'ईमेल','Password':'पासवर्ड','Sign in':'साइन इन','Create account':'खाता बनाएँ','Reset password':'पासवर्ड रीसेट','Sync now':'अभी सिंक करें','Sign out':'साइन आउट','Delete cloud data':'क्लाउड डेटा हटाएँ','Delete account':'खाता हटाएँ','Firebase setup required before first cloud sign-in':'पहले क्लाउड साइन-इन से पहले Firebase सेटअप आवश्यक',
-    'Target muscles':'लक्षित मांसपेशियाँ','How to do':'कैसे करें','Breathing':'साँस','Common mistakes':'सामान्य गलतियाँ','Reps / time':'रेप्स / समय','Difficulty':'कठिनाई','Benefits':'लाभ','Next exercise':'अगला व्यायाम','Approved anatomy video':'स्वीकृत एनाटॉमी वीडियो','Voice and written guidance':'वॉइस और लिखित मार्गदर्शन','Focus mode':'फोकस मोड','Full screen':'फुल स्क्रीन',
+    'Target muscles':'लक्षित मांसपेशियाँ','How to do':'कैसे करें','Breathing':'साँस','Common mistakes':'सामान्य गलतियाँ','Reps / time':'रेप्स / समय','Difficulty':'कठिनाई','Benefits':'लाभ','Next exercise':'अगला व्यायाम','Approved anatomy video':'स्वीकृत एनाटॉमी वीडियो','Full-body anatomy':'फुल-बॉडी एनाटॉमी','Voice and written guidance':'वॉइस और लिखित मार्गदर्शन','Focus mode':'फोकस मोड','Full screen':'फुल स्क्रीन',
     'Breakfast': 'नाश्ता', 'Lunch': 'दोपहर का भोजन', 'Dinner': 'रात का भोजन', 'Snack': 'स्नैक', 'Pre-workout': 'वर्कआउट से पहले', 'Recovery': 'रिकवरी', 'Replace': 'बदलें'
   };
 
@@ -218,7 +218,7 @@
     if (translating || !root) return;
     translating = true;
     document.documentElement.lang = prefs.language === 'hi' ? 'hi' : 'en';
-    document.title = prefs.language === 'hi' ? 'फिटनेस V4' : 'Fitness V4';
+    document.title = prefs.language === 'hi' ? 'फिटनेस V5' : 'Fitness V5';
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         if (!node.parentElement || ['SCRIPT','STYLE'].includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
@@ -363,7 +363,7 @@
       updateSubtitleVisibility();
     }));
     document.getElementById('v3PreviewVoice').addEventListener('click', () => {
-      speak(prefs.language === 'hi' ? 'नमस्ते। आपका फिटनेस वॉइस कोच तैयार है।' : 'Hello. Your Fitness V4 voice coach is ready.', {interrupt:true});
+      speak(prefs.language === 'hi' ? 'नमस्ते। आपका फिटनेस वॉइस कोच तैयार है।' : 'Hello. Your Fitness V5 voice coach is ready.', {interrupt:true});
     });
   }
 
@@ -568,7 +568,7 @@
   }
 
   function boot() {
-    document.querySelector('.brand-button strong').textContent = 'Fitness V4';
+    document.querySelector('.brand-button strong').textContent = 'Fitness V5';
     document.querySelector('.brand-button small').textContent = 'Bilingual anatomy workouts';
     const actions = document.querySelector('.header-actions');
     if (actions && !document.getElementById('v3QuickLanguage')) {
@@ -584,7 +584,7 @@
       const label = document.createElement('label'); label.className='full'; label.innerHTML='App language<select id="onboardV3Language"><option value="en">English</option><option value="hi">हिन्दी</option></select>';
       onboardingForm.prepend(label); const sel=label.querySelector('select'); sel.value=prefs.language; sel.addEventListener('change',()=>{prefs.language=sel.value;savePrefs();const main=document.getElementById('v3Language');if(main)main.value=prefs.language;const q=document.getElementById('v3QuickLanguage');if(q)q.textContent=prefs.language==='hi'?'EN':'हि';});
     }
-    const badge = document.getElementById('appVersion'); if (badge) badge.textContent = 'fitness-v4.0.0-preview';
+    const badge = document.getElementById('appVersion'); if (badge) badge.textContent = 'fitness-v5.0.0-anatomy-motion';
     createV3Controls();
     enhancePlayer();
     bindCoachEvents();

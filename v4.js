@@ -232,7 +232,7 @@
   }
 
   function boot() {
-    document.querySelector('.brand-button strong').textContent='Fitness V4';
+    document.querySelector('.brand-button strong').textContent='Fitness V5';
     document.querySelector('.brand-button small').textContent='Anatomy · bilingual · cloud ready';
     bindSettings();
     bindPlayer();

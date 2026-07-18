@@ -1,4 +1,4 @@
-FITNESS V4 — GITHUB PAGES UPLOAD
+FITNESS V5 — GITHUB PAGES UPLOAD
 ================================
 
 NEW REPOSITORY
@@ -44,8 +44,8 @@ NEW REPOSITORY
 UPDATING AN EXISTING FITNESS APP REPOSITORY
 -------------------------------------------
 1. Export a backup from the existing app first.
-2. Upload all Fitness V4 files and replace matching files.
-3. Delete obsolete V3-only files if GitHub still contains them, especially old assets/videos and assets/posters files that are not in the V4 package.
+2. Upload all Fitness V5 files and replace matching files.
+3. Delete obsolete V3-only files if GitHub still contains them, especially old assets/videos and assets/posters files that are not in the V5 package.
 4. Keep the same website address if you want the app to migrate compatible local V2/V3 data automatically.
 5. Open the updated app and use Settings → Check for update.
 6. If the installed PWA still shows the older build, close it completely, reopen it while online, and check for update again.

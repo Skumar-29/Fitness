@@ -1,7 +1,7 @@
 {
-  "name": "Fitness V4 — Anatomy Coach",
-  "short_name": "Fitness V4",
-  "description": "Six-day bilingual anatomy-style guided workouts with automatic exercise flow, vegetarian meals, progress tracking and optional private cloud sync.",
+  "name": "Fitness V6 — Anatomy Coach",
+  "short_name": "Fitness V6",
+  "description": "Six-day bilingual anatomy-style guided anatomy-motion workouts with automatic exercise flow, vegetarian meals, progress tracking and optional private cloud sync.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

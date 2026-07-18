@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" role="img" aria-label="Full-body anatomical exercise animation">
+<defs>
+ <radialGradient id="bg" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset=".72" stop-color="#e9ecec"/><stop offset="1" stop-color="#d8dddd"/></radialGradient>
+ <linearGradient id="body" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4f0ed"/><stop offset=".52" stop-color="#c9c3c0"/><stop offset="1" stop-color="#eeeae7"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="720" height="720" fill="url(#bg)"/><ellipse cx="360" cy="662" rx="125" ry="17" fill="#344" opacity=".12"/>
+<g stroke="#70797a" stroke-width="3" fill="url(#body)">
+ <ellipse cx="360" cy="105" rx="39" ry="47"/>
+ <path d="M302 166 Q360 137 418 166 L402 365 Q360 405 318 365Z"/>
+ <path d="M310 179 L229 367 Q220 393 241 401 Q259 404 270 379 L337 205Z"/>
+ <path d="M410 179 L491 367 Q500 393 479 401 Q461 404 450 379 L383 205Z"/>
+ <path d="M325 358 L284 544 L301 650 Q305 670 326 665 L347 548 L360 387Z"/>
+ <path d="M395 358 L436 544 L419 650 Q415 670 394 665 L373 548 L360 387Z"/>
+</g>
+<g fill="none" stroke="#8d6057" opacity=".32" stroke-width="2">
+ <path d="M322 194 Q360 219 398 194M320 227 Q360 252 400 227M326 263 Q360 282 394 263M334 300 Q360 316 386 300"/>
+ <path d="M251 305 l38 24M463 305 l-38 24M306 459 l38 20M414 459 l-38 20M296 557 l35 16M424 557 l-35 16"/>
+</g>
+<g fill="#e63c37" opacity=".9" filter="url(#glow)">
+ <ellipse cx="337" cy="212" rx="27" ry="33"/><ellipse cx="383" cy="212" rx="27" ry="33"/>
+ <ellipse cx="344" cy="294" rx="17" ry="43"/><ellipse cx="376" cy="294" rx="17" ry="43"/>
+ <ellipse cx="316" cy="448" rx="23" ry="69"/><ellipse cx="404" cy="448" rx="23" ry="69"/>
+ <ellipse cx="301" cy="580" rx="16" ry="48"/><ellipse cx="419" cy="580" rx="16" ry="48"/>
+</g>
+<g fill="#4d5556"><circle cx="346" cy="96" r="4"/><circle cx="374" cy="96" r="4"/><path d="M347 124 Q360 132 373 124" fill="none" stroke="#4d5556" stroke-width="3"/></g>
+<rect x="24" y="24" width="278" height="52" rx="15" fill="#202526" opacity=".9"/><text x="44" y="57" fill="#fff" font-family="Arial,sans-serif" font-size="21" font-weight="700">FULL-BODY ANATOMY MOTION</text>
+<rect x="132" y="667" width="456" height="38" rx="14" fill="#fff" opacity=".88" stroke="#b8bebe"/><circle cx="158" cy="686" r="7" fill="#e63c37"/><text x="176" y="692" fill="#303839" font-family="Arial,sans-serif" font-size="18" font-weight="700">Working muscles illuminate in red</text>
+</svg>

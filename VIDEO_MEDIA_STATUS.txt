@@ -1,77 +1,20 @@
-FITNESS V4 — ANATOMICAL VIDEO MEDIA STATUS
-==========================================
+FITNESS V5 — ANATOMY MOTION STATUS
 
-APPROVED V4 STYLE
------------------
-• complete human anatomical body
-• grey/white anatomy presentation
-• working muscles highlighted in red
-• clean white or light-grey background
-• full body and important joints visible
-• correct start, movement and finish positions
-• clear front, side or three-quarter angle chosen for the exercise
-• smooth, muted, repeatable movement
-• no watermark, username or copied third-party branding
+Status: COMPLETE BUILT-IN LIBRARY
 
-INCLUDED APPROVED SAMPLES
--------------------------
-1. Bodyweight Squat
-   Video: assets/videos/squat.mp4
-   Poster: assets/posters/squat.webp
+All 55 stable exercise IDs now have a full-body animated demonstration through anatomy-motion.js.
 
-2. Reverse Lunge
-   Video: assets/videos/reverseLunge.mp4
-   Poster: assets/posters/reverseLunge.webp
+VISUAL STANDARD
 
-REMOVED
--------
-The previous 55 unclear robotic/vector MP4 files and posters are not included in this package.
+• complete body remains inside the frame
+• clean light-grey studio background
+• anatomical muscle/skeleton presentation
+• working muscles illuminate red
+• smooth repeating movement
+• front or side view selected for movement clarity
+• muted visual coaching so English/Hindi voice instructions remain clear
+• no third-party exercise video is copied or republished
 
-OTHER EXERCISES
----------------
-All other exercises use:
-• a clear anatomical-video-pending placeholder
-• full English and Hindi written guidance
-• English and Hindi spoken coaching
-• target-muscle information
-• safer/easier and harder options
+OFFLINE STATUS
 
-This prevents unapproved media from being mistaken for a reliable form demonstration.
-
-REPLACEMENT STANDARD
---------------------
-Recommended delivery for each future clip:
-• H.264 MP4
-• yuv420p pixel format
-• fast-start enabled
-• 720 × 1280 portrait or an exercise-appropriate high-resolution layout
-• normally 6–12 seconds
-• 24 or 30 fps
-• no audio
-• seamless or visually smooth loop
-• matching WebP poster
-
-Use the stable exercise ID as the filename. Example:
-  assets/videos/pushup.mp4
-  assets/posters/pushup.webp
-
-Before approving a clip, check:
-• correct exercise and target muscles
-• accurate joint alignment and safe range
-• natural hands, feet and limb proportions
-• no body distortion between frames
-• no visible motion jump at the loop point
-• body is large enough to learn from on a phone
-• movement is understandable without audio
-• correct front/side angle
-
-After adding an approved file:
-1. Add the exercise ID to APPROVED_MEDIA in app.js.
-2. Add the poster to the service-worker shell only when it should always be available offline.
-3. Increase the cache version in app.js and sw.js.
-4. Test normal, Focus Mode, fullscreen, portrait and landscape playback.
-5. Test the English and Hindi narration timing.
-
-COPYRIGHT
----------
-The user’s reference recording is a visual-direction reference only. Do not copy, download or republish third-party exercise videos unless you own them or have an appropriate licence.
+The renderer, pose library, CSS and static poster are included in the service-worker app shell. There are no separate video packs to download.

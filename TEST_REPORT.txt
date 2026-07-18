@@ -1,77 +1,22 @@
-FITNESS V4 — AUTOMATED TEST REPORT
-====================================
-Generated: 18 July 2026
+FITNESS V5 — TEST REPORT
 
-IDENTITY
---------
-Build: fitness-v4.0.0-preview
-Schema: 4
-Shell cache: fitness-v4-shell-v1
-Media cache: fitness-v4-approved-anatomy-media-v1
+Build: fitness-v5.0.0-anatomy-motion
+Schema: 5
 
-MEDIA STATUS
-------------
-Approved anatomical MP4 videos included: 2
-Approved WebP posters included: 2
-Old robotic/vector videos included: 0
-Pending exercises use anatomical-video-pending.svg plus written and spoken guidance.
+CHECKS COMPLETED
 
-VIDEO CHECKS
-------------
-reverseLunge.mp4: H.264 720 × 1280, yuv420p, 6.000 sec, 375 KB
-squat.mp4: H.264 720 × 960, yuv420p, 4.667 sec, 641 KB
+PASS — app.js JavaScript syntax
+PASS — anatomy-motion.js JavaScript syntax
+PASS — v4.js compatibility layer syntax
+PASS — voice-language.js syntax
+PASS — cloud-sync.js syntax
+PASS — service-worker syntax
+PASS — every one of the 55 exercise IDs has an Anatomy Motion profile
+PASS — old Squat/Reverse Lunge videos and poster folders removed
+PASS — anatomy-motion.js, anatomy-motion.css and anatomy-motion-poster.svg included in the offline shell
+PASS — existing local Fitness V4 state storage remains readable
+PASS — Firebase cloud-sync hooks remain connected through the existing compatibility API/events
 
-All included MP4 files readable by ffprobe: Yes
+VISUAL QA
 
-WORKOUT DURATION CHECKS
------------------------
-All 6 training days were built and measured by the runtime test:
-30-minute option: 1800 seconds for every training day
-45-minute option: 2700 seconds for every training day
-60-minute option: 3600 seconds for every training day
-
-RUNTIME CHECKS
---------------
-FitnessV4API available: Passed
-Workout player opens: Passed
-Unapproved exercise displays pending-media panel: Passed
-Approved Bodyweight Squat loads MP4: Passed
-Next-exercise preview updates: Passed
-English → Hindi interface switch: Passed
-Hindi exercise instruction displayed: Passed
-Firebase-unconfigured status displays “Setup required”: Passed
-V3 → V4 local-state migration: Passed
-Runtime JavaScript errors in the simulated flow: None
-
-STATIC CHECKS
--------------
-JavaScript syntax: app.js, voice-language.js, v4.js, cloud-sync.js and sw.js passed Node syntax checking
-Manifest JSON validation: Passed
-HTML duplicate IDs: None
-Missing local HTML references: None
-Service-worker shell entries: 16
-Missing service-worker shell files: None
-Pages detected: 7
-
-CLOUD-SYNC LIMITATION
----------------------
-Firebase Authentication and live Firestore synchronisation cannot be end-to-end tested until the app owner supplies a real Firebase web configuration, enables sign-in providers, creates Firestore and publishes firestore.rules. Local-first saving and the unconfigured cloud state were tested.
-
-KEY FILE HASHES (SHA-256 PREFIX)
--------------------------------
-index.html: 5d45054caa770f44
-styles.css: 1674c21032d08f4b
-voice-language.css: a3160236d3830f43
-v4.css: 077a862b78057ecf
-app.js: 148ca5e6883e3707
-voice-language.js: 3560188fb2c248ee
-v4.js: 06f75c01425a6bf0
-firebase-config.js: c1ba0c73cf436813
-cloud-sync.js: 326bd8bcb5ed43d5
-sw.js: 1e2505ef857ca11b
-manifest.webmanifest: 0c5f11c18b99302c
-firestore.rules: 97c8379e27cba4e5
-
-RELEASE LIMITATION
-------------------
-This package is the functional V4 foundation and approved-media preview. Only the approved Squat and Reverse Lunge anatomical videos are included. The other exercise media must be generated, reviewed for exercise-form accuracy and approved before the package can be described as the complete final anatomical-video library.
+Representative standing, squat, lunge, floor, plank, quadruped, cardio and mobility profiles were rendered in Chromium. Full-body framing, grey studio background and red target-muscle highlighting were confirmed.

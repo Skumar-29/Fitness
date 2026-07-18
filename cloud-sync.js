@@ -92,7 +92,7 @@ async function pullAndMerge({announce=false}={}){
       checkins:mergeRecords(local?.checkins,cloud?.checkins),
       tests:mergeRecords(local?.tests,cloud?.tests),
       activeSession:chooseNewer(local?.activeSession,cloud?.active)||local?.activeSession||cloud?.active||null,
-      schema:4
+      schema:5
     };
     window.FitnessV4API?.applyExternalState?.(merged,{source:'cloud'});
     if(cloud?.prefs&&window.FitnessV4Voice?.applyPrefs)window.FitnessV4Voice.applyPrefs(cloud.prefs);
@@ -159,7 +159,7 @@ async function emailSignIn(create=false){
 async function resetPassword(){const email=$('cloudEmail')?.value.trim();if(!email){showToast(text('Enter your email first.','पहले अपना ईमेल दर्ज करें।'));return;}await sdk.sendPasswordResetEmail(auth,email);showToast(text('Password reset email sent.','पासवर्ड रीसेट ईमेल भेजा गया।'));}
 async function deleteCollection(ref){const snap=await sdk.getDocs(ref);for(let i=0;i<snap.docs.length;i+=400){const batch=sdk.writeBatch(db);snap.docs.slice(i,i+400).forEach(d=>batch.delete(d.ref));await batch.commit();}}
 async function deleteCloudData(){
-  if(!user||!confirm(text('Delete all synced Fitness V4 data from the cloud? Local data on this device will remain.','क्लाउड से सभी सिंक Fitness V4 डेटा हटाएँ? इस डिवाइस का स्थानीय डेटा रहेगा।')))return;
+  if(!user||!confirm(text('Delete all synced Fitness V5 data from the cloud? Local data on this device will remain.','क्लाउड से सभी सिंक Fitness V5 डेटा हटाएँ? इस डिवाइस का स्थानीय डेटा रहेगा।')))return;
   setStatus('warn',text('Deleting cloud data…','क्लाउड डेटा हटाया जा रहा है…'));
   const p=paths(user.uid);
   await Promise.all([deleteCollection(p.workouts),deleteCollection(p.checkins),deleteCollection(p.tests)]);
@@ -167,7 +167,7 @@ async function deleteCloudData(){
   lastSyncAt='';setStatus('warn',text('Cloud data deleted','क्लाउड डेटा हटाया गया'));showToast(text('Cloud data deleted; local data remains.','क्लाउड डेटा हटाया गया; स्थानीय डेटा सुरक्षित है।'));
 }
 async function deleteAccount(){
-  if(!user||!confirm(text('Permanently delete this Fitness V4 account and all synced cloud data? Local data on this device will remain until you reset it separately.','इस Fitness V4 खाते और सभी सिंक क्लाउड डेटा को स्थायी रूप से हटाएँ? इस डिवाइस का स्थानीय डेटा अलग से रीसेट करने तक रहेगा।')))return;
+  if(!user||!confirm(text('Permanently delete this Fitness V5 account and all synced cloud data? Local data on this device will remain until you reset it separately.','इस Fitness V5 खाते और सभी सिंक क्लाउड डेटा को स्थायी रूप से हटाएँ? इस डिवाइस का स्थानीय डेटा अलग से रीसेट करने तक रहेगा।')))return;
   const currentUser=user;
   setStatus('warn',text('Deleting account…','खाता हटाया जा रहा है…'));
   const p=paths(currentUser.uid);

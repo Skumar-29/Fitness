@@ -1,13 +1,13 @@
-const SHELL_CACHE='fitness-v4-shell-v1';
-const MEDIA_CACHE='fitness-v4-approved-anatomy-media-v1';
+const SHELL_CACHE='fitness-v6-shell-v1';
+const MEDIA_CACHE='fitness-v6-media-v1';
 const SHELL=[
-  './','./index.html','./styles.css','./voice-language.css','./v4.css','./app.js','./voice-language.js','./v4.js','./firebase-config.js','./cloud-sync.js','./manifest.webmanifest',
-  './icons/icon-192.png','./icons/icon-512.png','./assets/ui/anatomy-video-pending.svg','./assets/posters/squat.webp','./assets/posters/reverseLunge.webp'
+  './','./index.html','./styles.css','./voice-language.css','./v4.css','./anatomy-motion.css','./final-player.css','./anatomy-motion.js','./app.js','./voice-language.js','./v4.js','./firebase-config.js','./cloud-sync.js','./manifest.webmanifest',
+  './icons/icon-192.png','./icons/icon-512.png','./assets/ui/anatomy-motion-poster.svg','./assets/posters/highKnees.png','./assets/videos/highKnees.mp4'
 ];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(SHELL_CACHE).then(c=>c.addAll(SHELL)));});
 self.addEventListener('activate',event=>{
   event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>{
-    const old=k.startsWith('health-app-v2-')||k.startsWith('fitness-v3-')||k.startsWith('fitness-v4-');
+    const old=k.startsWith('health-app-v2-')||k.startsWith('fitness-v3-')||k.startsWith('fitness-v4-')||k.startsWith('fitness-v5-');
     return old&&k!==SHELL_CACHE&&k!==MEDIA_CACHE;
   }).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
 });

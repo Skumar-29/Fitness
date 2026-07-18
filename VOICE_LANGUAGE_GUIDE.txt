@@ -1,4 +1,4 @@
-FITNESS V4 — ENGLISH/HINDI LANGUAGE & VOICE GUIDE
+FITNESS V5 — ENGLISH/HINDI LANGUAGE & VOICE GUIDE
 =================================================
 
 LANGUAGE
@@ -52,7 +52,7 @@ The app requests a Hindi (India) voice, but the actual voice comes from iOS/Safa
 1. Open iPhone Settings.
 2. Accessibility → Spoken Content → Voices.
 3. Select Hindi and download a preferred voice.
-4. Reopen Fitness V4.
+4. Reopen Fitness V5.
 5. Use the voice preview in Settings.
 
 Hindi text remains available even when a Hindi speech voice is not installed.
