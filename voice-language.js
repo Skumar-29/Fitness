@@ -53,7 +53,7 @@
     'Slow Bicycle': ['धीमा बाइसिकल', 'पीठ के बल लेटकर पेट कसें। एक घुटना अंदर लाते समय विपरीत कंधा उसकी ओर घुमाएँ और धीरे पक्ष बदलें।'],
     'Controlled Crunch': ['कंट्रोल्ड क्रंच', 'घुटने मोड़कर लेटें। पेट कसकर कंधे हल्के उठाएँ, गर्दन को न खींचें और धीरे नीचे आएँ।'],
     'Low-Impact Jack': ['लो-इम्पैक्ट जैक', 'एक पैर बगल में रखते हुए दोनों हाथ ऊपर उठाएँ। बीच में लौटें और दूसरे पैर से दोहराएँ, बिना कूदे।'],
-    'High-Knee March or Run': ['हाई-नी मार्च या रन', 'एक घुटना ऊँचा उठाएँ और विपरीत हाथ चलाएँ। शरीर सीधा रखें और अपनी क्षमता के अनुसार मार्च या दौड़ें।'],
+    'High Knees': ['हाई नीज़', 'सीधे खड़े रहें। एक घुटने को कूल्हे की ऊँचाई की ओर उठाएँ और विपरीत हाथ आगे चलाएँ। नरमी से उतरें और बिना पीछे झुके दूसरी तरफ दोहराएँ।'],
     'Skater Step': ['स्केटर स्टेप', 'एक ओर कदम रखें और दूसरा पैर तिरछा पीछे ले जाएँ। कूल्हे पीछे रखें और नियंत्रित तरीके से दूसरी ओर जाएँ।'],
     'Mountain Climber': ['माउंटेन क्लाइंबर', 'ऊँचे प्लैंक में शरीर सीधा रखें। एक घुटना छाती की ओर लाएँ, वापस रखें और पैर बदलें।'],
     'Fast Feet': ['फास्ट फीट', 'घुटनों को हल्का मोड़कर छोटे तेज कदम लें। शरीर हल्का रखें और तकनीक बिगड़ने से पहले गति कम करें।'],
@@ -120,7 +120,7 @@
   };
 
   const EXACT_HI = {
-    'Health App': 'फिटनेस V5', 'Fitness V5': 'फिटनेस V5', 'Complete body training': 'संपूर्ण शरीर प्रशिक्षण', 'Offline ready': 'ऑफलाइन तैयार', 'Online': 'ऑनलाइन',
+    'Health App': 'फिटनेस V6.1', 'Fitness V5': 'फिटनेस V6.1', 'Fitness V6.1': 'फिटनेस V6.1', 'Complete body training': 'संपूर्ण शरीर प्रशिक्षण', 'Offline ready': 'ऑफलाइन तैयार', 'Online': 'ऑनलाइन',
     'Language and voice coach':'भाषा और वॉइस कोच','App language':'ऐप भाषा','Spoken guidance':'बोला गया मार्गदर्शन','Voice preference':'वॉइस पसंद','Speaking speed':'बोलने की गति','Spoken countdown':'बोला गया काउंटडाउन','Form reminders':'तकनीक संकेत','On-screen subtitles':'स्क्रीन पर उपशीर्षक','Low-data video mode':'कम डेटा वीडियो मोड','Preview voice':'वॉइस सुनें','Voice coach':'वॉइस कोच','Repeat instruction':'निर्देश दोहराएँ','Stop voice':'वॉइस रोकें','Full instruction + cues':'पूरा निर्देश और संकेत','Essential cues':'केवल आवश्यक संकेत','Automatic':'स्वचालित','Female preferred':'महिला वॉइस प्राथमिक','Male preferred':'पुरुष वॉइस प्राथमिक','Slow':'धीमी','Normal':'सामान्य','Fast':'तेज़','Normal quality':'सामान्य गुणवत्ता','Poster until workout starts':'वर्कआउट शुरू होने तक चित्र',
     "TODAY'S GUIDED SESSION": 'आज का निर्देशित सत्र', 'Start workout': 'वर्कआउट शुरू करें', 'Preview plan': 'योजना देखें', 'Full-body video guidance': 'फुल-बॉडी वीडियो मार्गदर्शन', 'Full-body anatomy motion': 'फुल-बॉडी एनाटॉमी मोशन',
     'QUICK READINESS CHECK': 'त्वरित तैयारी जाँच', 'How does your body feel today?': 'आज आपका शरीर कैसा महसूस कर रहा है?', 'Choose one': 'एक चुनें',
@@ -134,7 +134,7 @@
     'PERSONALISE AND PROTECT DATA': 'व्यक्तिगत सेटिंग और डेटा सुरक्षा', 'Settings': 'सेटिंग्स', 'Profile and program': 'प्रोफ़ाइल और कार्यक्रम', 'Display name': 'नाम', 'Age range': 'आयु सीमा', 'Height (cm)': 'ऊँचाई (सेमी)', 'Weight (kg)': 'वज़न (किग्रा)', 'Main goal': 'मुख्य लक्ष्य', 'Fitness level': 'फिटनेस स्तर', 'Session duration': 'सत्र अवधि', 'Equipment': 'उपकरण', 'Diet style': 'आहार शैली', 'Excluded foods': 'न खाए जाने वाले खाद्य पदार्थ',
     'Display and guidance': 'डिस्प्ले और मार्गदर्शन', 'Theme': 'थीम', 'Sound cues': 'ध्वनि संकेत', 'Video autoplay': 'वीडियो ऑटोप्ले', 'Reduced motion': 'कम गति', 'Save settings': 'सेटिंग्स सहेजें',
     'OFFLINE EXERCISE VIDEOS': 'ऑफलाइन व्यायाम वीडियो', 'OFFLINE ANATOMY ANIMATIONS': 'ऑफलाइन एनाटॉमी एनीमेशन', 'Download workout packs': 'वर्कआउट पैक डाउनलोड करें', 'Built into every workout': 'हर वर्कआउट में शामिल', 'Download all videos': 'सभी वीडियो डाउनलोड करें', 'Confirm all offline': 'सभी ऑफलाइन की पुष्टि करें', 'Remove downloaded videos': 'डाउनलोड वीडियो हटाएँ', 'Animation storage info': 'एनीमेशन स्टोरेज जानकारी',
-    'Safety screening': 'सुरक्षा जाँच', 'Install Health App': 'फिटनेस V5 इंस्टॉल करें', 'Check for update': 'अपडेट जाँचें', 'Export backup': 'बैकअप निर्यात करें', 'Import backup': 'बैकअप आयात करें', 'Reset app data': 'ऐप डेटा रीसेट करें',
+    'Safety screening': 'सुरक्षा जाँच', 'Install Health App': 'फिटनेस V6.1 इंस्टॉल करें', 'Install Fitness V6.1': 'फिटनेस V6.1 इंस्टॉल करें', 'Check for update': 'अपडेट जाँचें', 'Export backup': 'बैकअप निर्यात करें', 'Import backup': 'बैकअप आयात करें', 'Reset app data': 'ऐप डेटा रीसेट करें',
     'Home': 'होम', 'Workout': 'वर्कआउट', 'Diet': 'आहार', 'Progress': 'प्रगति', 'Why you are doing it': 'यह क्यों किया जा रहा है', 'How to do it': 'कैसे करें', 'Breathing and control': 'सांस और नियंत्रण', 'Easier': 'आसान', 'Harder': 'कठिन', 'Common mistake': 'सामान्य गलती',
     'MOVE': 'व्यायाम', 'REST / CHANGE': 'आराम / बदलाव', 'RECOVER': 'रिकवरी', 'STRETCH': 'स्ट्रेच', 'Recovery': 'रिकवरी', 'Hydration': 'पानी', 'Pause': 'रोकें', 'Play': 'चलाएँ', 'Poster only': 'केवल चित्र',
     'General fitness': 'सामान्य फिटनेस', 'Reduce body fat': 'शरीर की चर्बी कम करें', 'Improve stamina': 'स्टैमिना बढ़ाएँ', 'Shape and tone body': 'शरीर को आकार और टोन दें', 'Build strength': 'शक्ति बढ़ाएँ', 'Improve mobility': 'मोबिलिटी सुधारें',
@@ -218,7 +218,7 @@
     if (translating || !root) return;
     translating = true;
     document.documentElement.lang = prefs.language === 'hi' ? 'hi' : 'en';
-    document.title = prefs.language === 'hi' ? 'फिटनेस V5' : 'Fitness V5';
+    document.title = prefs.language === 'hi' ? 'फिटनेस V6.1' : 'Fitness V6.1';
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         if (!node.parentElement || ['SCRIPT','STYLE'].includes(node.parentElement.tagName)) return NodeFilter.FILTER_REJECT;
@@ -363,7 +363,7 @@
       updateSubtitleVisibility();
     }));
     document.getElementById('v3PreviewVoice').addEventListener('click', () => {
-      speak(prefs.language === 'hi' ? 'नमस्ते। आपका फिटनेस वॉइस कोच तैयार है।' : 'Hello. Your Fitness V5 voice coach is ready.', {interrupt:true});
+      speak(prefs.language === 'hi' ? 'नमस्ते। आपका फिटनेस वॉइस कोच तैयार है।' : 'Hello. Your Fitness V6.1 voice coach is ready.', {interrupt:true});
     });
   }
 
@@ -568,7 +568,7 @@
   }
 
   function boot() {
-    document.querySelector('.brand-button strong').textContent = 'Fitness V5';
+    document.querySelector('.brand-button strong').textContent = 'Fitness V6.1';
     document.querySelector('.brand-button small').textContent = 'Bilingual anatomy workouts';
     const actions = document.querySelector('.header-actions');
     if (actions && !document.getElementById('v3QuickLanguage')) {

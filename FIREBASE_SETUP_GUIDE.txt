@@ -1,4 +1,4 @@
-FITNESS V5 — FIREBASE ACCOUNT & AUTOMATIC SYNC SETUP
+FITNESS V6.1 — FIREBASE ACCOUNT & AUTOMATIC SYNC SETUP
 ====================================================
 
 WHY THIS STEP IS REQUIRED
@@ -10,7 +10,7 @@ The app remains fully usable with local saving before Firebase is connected.
 STEP 1 — CREATE THE FIREBASE PROJECT
 ------------------------------------
 1. Open the Firebase Console.
-2. Create a project for Fitness V5.
+2. Create a project for Fitness V6.1.
 3. Analytics is optional for this app.
 4. In Project settings → Your apps, add a Web app.
 5. Copy the Firebase configuration object shown for the Web app.
@@ -60,7 +60,7 @@ Upload the edited firebase-config.js to the GitHub repository and allow GitHub P
 
 STEP 7 — TEST TWO-DEVICE SYNC
 -----------------------------
-1. Open Fitness V5 on the first device.
+1. Open Fitness V6.1 on the first device.
 2. Settings → Account & automatic sync.
 3. Sign in with Google or create an email/password account.
 4. Complete a small test workout or add a measurement.
@@ -91,4 +91,4 @@ The app includes a placeholder for Firebase App Check. Configure reCAPTCHA Enter
 
 IMPORTANT
 ---------
-Keep the manual Fitness V5 JSON backup feature even after cloud sync is enabled. It gives the user an independent recovery copy.
+Keep the manual Fitness V6.1 JSON backup feature even after cloud sync is enabled. It gives the user an independent recovery copy.

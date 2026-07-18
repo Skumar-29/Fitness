@@ -1,20 +1,30 @@
-FITNESS V5 — ANATOMY MOTION STATUS
+FITNESS V6.1 — VIDEO MEDIA STATUS
 
-Status: COMPLETE BUILT-IN LIBRARY
+APPROVAL MEDIA
 
-All 55 stable exercise IDs now have a full-body animated demonstration through anatomy-motion.js.
+High Knees:
+• realistic model-only MP4
+• 720 × 1116 pixels
+• 30 frames per second
+• 5.2-second clean loop
+• no embedded exercise title
+• no embedded instructions
+• no embedded target-muscle panel
+• full body remains visible
 
-VISUAL STANDARD
+TARGET-MUSCLE CARD
 
-• complete body remains inside the frame
-• clean light-grey studio background
-• anatomical muscle/skeleton presentation
-• working muscles illuminate red
-• smooth repeating movement
-• front or side view selected for movement clarity
-• muted visual coaching so English/Hindi voice instructions remain clear
-• no third-party exercise video is copied or republished
+High Knees uses a separate scalable SVG card highlighting:
+• core
+• hip flexors
+• quadriceps
+• calves
+• glutes as a secondary stabilising/drive area
 
-OFFLINE STATUS
+REMAINING EXERCISES
 
-The renderer, pose library, CSS and static poster are included in the service-worker app shell. There are no separate video packs to download.
+The other exercise IDs still use the existing built-in animation system in this review build. They should not be described as completed realistic videos yet.
+
+OFFLINE
+
+The High Knees video, poster, target-muscle SVG and app shell files are included in the service-worker cache list for offline use after the updated app has loaded successfully.

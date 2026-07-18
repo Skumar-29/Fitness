@@ -1,16 +1,16 @@
 /*
-  Fitness V5 Firebase configuration.
+  Fitness V6.1 Firebase configuration.
   Replace the placeholder values with the Web App configuration from:
   Firebase Console → Project settings → Your apps → Web app.
   Firebase web configuration is an identifier, not a private server secret.
 */
 window.FITNESS_FIREBASE_CONFIG = {
-  apiKey: "AIzaSyCIURSRglerZVcFKoUI0xn83u6H0-FB7-Y",
-  authDomain: "fitness-42c18.firebaseapp.com",
-  projectId: "fitness-42c18",
-  storageBucket: "fitness-42c18.firebasestorage.app",
-  messagingSenderId: "1059033782568",
-  appId: "1:1059033782568:web:10e25fff50cd199266181d"
+  apiKey: "PASTE_FIREBASE_API_KEY",
+  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
+  projectId: "PASTE_PROJECT_ID",
+  storageBucket: "PASTE_PROJECT_ID.firebasestorage.app",
+  messagingSenderId: "PASTE_MESSAGING_SENDER_ID",
+  appId: "PASTE_FIREBASE_APP_ID"
 };
 
 /* Optional but recommended before public release. Leave blank until App Check is configured. */

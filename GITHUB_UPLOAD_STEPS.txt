@@ -1,55 +1,18 @@
-FITNESS V5 — GITHUB PAGES UPLOAD
-================================
+FITNESS V6.1 — GITHUB PAGES UPLOAD
 
-NEW REPOSITORY
---------------
-1. Extract fitness_v4_anatomy_bilingual_cloud_sync_preview.zip.
-2. Open the extracted fitness_v4 folder.
-3. In GitHub, create or open a repository, for example: fitness-v4.
-4. Select Add file → Upload files.
-5. Upload EVERYTHING INSIDE the extracted folder, including:
+This build is for reviewing the High Knees portrait and landscape player before replacing all exercise media.
 
-   index.html
-   styles.css
-   voice-language.css
-   v4.css
-   app.js
-   voice-language.js
-   v4.js
-   firebase-config.js
-   cloud-sync.js
-   firestore.rules
-   sw.js
-   manifest.webmanifest
-   assets/
-   icons/
-   README.txt
-   FIREBASE_SETUP_GUIDE.txt
-   VIDEO_MEDIA_STATUS.txt
-   VOICE_LANGUAGE_GUIDE.txt
-   TEST_REPORT.txt
-   SOURCES.txt
+1. Export a backup from the currently published fitness app.
+2. Extract the Fitness V6.1 ZIP.
+3. Open the extracted fitness_v6_1_high_knees_review folder.
+4. Upload EVERYTHING INSIDE that folder to the root of the GitHub repository.
+5. Replace matching files when GitHub asks.
+6. Confirm index.html is directly in the repository root.
+7. Commit the changes to the Pages branch, normally main.
+8. Open the published app while online once so the updated service worker can cache the new files.
+9. On the Home screen, tap “Review High Knees screen”.
+10. Test both portrait and landscape before approving the design.
 
-6. Do not upload only the ZIP file.
-7. Commit directly to the main branch.
-8. Confirm index.html appears directly on the repository’s main page—not inside another folder.
-9. Open Settings → Pages.
-10. Select Deploy from a branch → main → /(root), then Save.
-11. Open the published address, usually:
+Do not upload only the ZIP file.
 
-   https://YOUR-USERNAME.github.io/fitness-v4/
-
-12. Open the app online once before testing offline use.
-
-UPDATING AN EXISTING FITNESS APP REPOSITORY
--------------------------------------------
-1. Export a backup from the existing app first.
-2. Upload all Fitness V5 files and replace matching files.
-3. Delete obsolete V3-only files if GitHub still contains them, especially old assets/videos and assets/posters files that are not in the V5 package.
-4. Keep the same website address if you want the app to migrate compatible local V2/V3 data automatically.
-5. Open the updated app and use Settings → Check for update.
-6. If the installed PWA still shows the older build, close it completely, reopen it while online, and check for update again.
-
-FIREBASE
---------
-The app works locally without Firebase. Automatic device-to-device sync requires the separate steps in FIREBASE_SETUP_GUIDE.txt. Do not leave Firestore in test mode for a public app.
+The app works locally without Firebase. Automatic device-to-device sync still requires the configuration described in FIREBASE_SETUP_GUIDE.txt.

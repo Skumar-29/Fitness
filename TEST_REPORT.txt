@@ -1,22 +1,33 @@
-FITNESS V5 — TEST REPORT
+FITNESS V6.1 — TEST REPORT
 
-Build: fitness-v5.0.0-anatomy-motion
+Build: fitness-v6.1.0-high-knees-responsive-review
 Schema: 5
 
-CHECKS COMPLETED
+AUTOMATED CHECKS
 
 PASS — app.js JavaScript syntax
+PASS — v4.js JavaScript syntax
+PASS — voice-language.js JavaScript syntax
 PASS — anatomy-motion.js JavaScript syntax
-PASS — v4.js compatibility layer syntax
-PASS — voice-language.js syntax
-PASS — cloud-sync.js syntax
-PASS — service-worker syntax
-PASS — every one of the 55 exercise IDs has an Anatomy Motion profile
-PASS — old Squat/Reverse Lunge videos and poster folders removed
-PASS — anatomy-motion.js, anatomy-motion.css and anatomy-motion-poster.svg included in the offline shell
-PASS — existing local Fitness V4 state storage remains readable
-PASS — Firebase cloud-sync hooks remain connected through the existing compatibility API/events
+PASS — service-worker JavaScript syntax
+PASS — manifest JSON parsing
+PASS — no duplicate HTML IDs
+PASS — required High Knees video, poster and target-muscle SVG present
+PASS — High Knees video metadata: 720 × 1116, 30 fps, 5.2 seconds
+PASS — service-worker shell references existing files
+PASS — existing storage schema and cloud-sync compatibility API retained
 
-VISUAL QA
+RESPONSIVE VISUAL CHECKS
 
-Representative standing, squat, lunge, floor, plank, quadruped, cardio and mobility profiles were rendered in Chromium. Full-body framing, grey studio background and red target-muscle highlighting were confirmed.
+PASS — 390 × 844 portrait viewport rendered
+PASS — 844 × 390 landscape viewport rendered
+PASS — portrait view keeps the complete body visible
+PASS — landscape view keeps the complete body visible
+PASS — target-muscle panel does not cover the central body
+PASS — portrait and landscape screens fit the viewport without page scrolling
+PASS — timed-cardio labels show Work / Rounds / Change
+PASS — no large orientation toast is displayed
+
+KNOWN SCOPE
+
+Only High Knees is converted to the approved realistic-video format. Remaining exercises are intentionally unchanged pending approval of this screen.

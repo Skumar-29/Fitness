@@ -99,6 +99,18 @@
     }
     const writtenSteps=isHindi()?hindiExerciseSteps(exercise):exercise.steps;
     $('v4HowTo').innerHTML = writtenSteps.map(s => `<li>${escapeHtml(s)}</li>`).join('');
+    if($('finalStepText'))$('finalStepText').textContent=writtenSteps[0]||'';
+    if($('reviewStepTwo'))$('reviewStepTwo').textContent=writtenSteps[1]||'';
+    if($('reviewStepThree'))$('reviewStepThree').textContent=writtenSteps[2]||'';
+    if($('finalStepTitle'))$('finalStepTitle').textContent=bilingual('How to move','कैसे करें');
+    if($('finalStepBadge'))$('finalStepBadge').textContent=bilingual(`${writtenSteps.length} steps`,`${writtenSteps.length} चरण`);
+    if($('finalAltLabel'))$('finalAltLabel').textContent=bilingual('Other side','दूसरी तरफ');
+    if($('finalPositionLabel'))$('finalPositionLabel').textContent=exercise.name==='High Knees'?bilingual('Knee drive','घुटना उठाना'):$('finalPositionLabel').textContent;
+    if(isHindi()){
+      if($('reviewPrimaryLabel'))$('reviewPrimaryLabel').textContent='व्यायाम';
+      if($('reviewSecondaryLabel'))$('reviewSecondaryLabel').textContent='राउंड';
+      if($('reviewTertiaryLabel'))$('reviewTertiaryLabel').textContent='बदलाव';
+    }
     $('v4Breathing').textContent = breathingText(exercise);
     $('v4Mistakes').textContent = mistakeText(exercise);
     $('v4Benefit').textContent = benefitText(exercise);
@@ -155,7 +167,6 @@
     const next = current === 'auto' ? 'landscape' : current === 'landscape' ? 'portrait' : 'auto';
     api()?.setPreference('orientation', next);
     if ($('v4Orientation')) $('v4Orientation').value = next;
-    api()?.showToast(bilingual(`Orientation: ${next}`,`स्क्रीन दिशा: ${next === 'auto' ? 'स्वचालित' : next === 'landscape' ? 'लैंडस्केप' : 'पोर्ट्रेट'}`));
     applyOrientationPreference(next);
   }
 
@@ -232,7 +243,7 @@
   }
 
   function boot() {
-    document.querySelector('.brand-button strong').textContent='Fitness V5';
+    document.querySelector('.brand-button strong').textContent='Fitness V6.1';
     document.querySelector('.brand-button small').textContent='Anatomy · bilingual · cloud ready';
     bindSettings();
     bindPlayer();

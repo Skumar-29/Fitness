@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#0f766e" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Fitness V6" />
+  <meta name="apple-mobile-web-app-title" content="Fitness V6.1" />
   <meta name="description" content="Bilingual English and Hindi guided workouts with final exercise-player layout, realistic sample video support, meal plans and progress tracking." />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/icon-192.png" />
@@ -16,14 +16,14 @@
   <link rel="stylesheet" href="v4.css" />
   <link rel="stylesheet" href="anatomy-motion.css" />
   <link rel="stylesheet" href="final-player.css" />
-  <title>Fitness V6</title>
+  <title>Fitness V6.1</title>
 </head>
 <body>
   <div id="appShell">
     <header class="app-header">
       <button class="brand-button" data-go="home" type="button" aria-label="Open home">
         <span class="brand-mark" aria-hidden="true">♥</span>
-        <span><strong>Fitness V6</strong><small id="headerSubtitle">Bilingual guided workout player</small></span>
+        <span><strong>Fitness V6.1</strong><small id="headerSubtitle">Bilingual guided workout player</small></span>
       </button>
       <div class="header-actions">
         <span id="networkBadge" class="status-badge">Offline ready</span>
@@ -62,7 +62,7 @@
           </aside>
         </div>
 
-        <section class="notice v4-media-release-note"><strong>V5 complete anatomy-motion library</strong><p>Final player layout approved. The workout screen now follows the approved full-screen training layout with exercise demo media in the centre, target muscles at the corner, step guidance, timing controls, reps/sets, tips, breathing and rest cards.</p></section>
+        <section class="notice v4-media-release-note"><strong>High Knees portrait + landscape review</strong><p>Clean model-only video, accurate target-muscle card and a responsive player that fits without duplicate overlays.</p><button id="reviewHighKneesBtn" class="primary-btn" type="button">Review High Knees screen</button></section>
 
         <section class="panel readiness-panel">
           <div class="section-heading"><div><p class="eyebrow">QUICK READINESS CHECK</p><h2>How does your body feel today?</h2></div><span id="readinessAdvice" class="subtle-chip">Choose one</span></div>
@@ -113,100 +113,95 @@
 
       <section id="page-workout" class="page" data-page="workout">
         <div id="workoutEmpty" class="empty-state">
-          <div class="empty-icon">🏃</div><h1>Choose a workout</h1><p>Open any day from your plan to begin guided anatomy-motion training.</p>
+          <div class="empty-icon">🏃</div><h1>Choose a workout</h1><p>Open any day from your plan to begin a guided workout.</p>
           <button class="primary-btn" data-go="plan" type="button">Open six-day plan</button>
         </div>
-        <div id="workoutPlayer" class="workout-player hidden final-player-shell">
-          <div class="player-topline final-topline">
-            <button id="closeWorkoutBtn" class="icon-btn" type="button" aria-label="Close workout">←</button>
-            <div class="final-title-wrap"><h1 id="playerWorkoutTitle">Push Up</h1><p id="playerWorkoutSub">Chest Exercise</p><p id="playerDay" class="eyebrow">DAY 1</p></div>
-            <div class="v4-player-actions">
-              <button id="orientationBtn" class="icon-btn" type="button" aria-label="Change orientation preference" title="Orientation">↻</button>
-              <button id="focusModeBtn" class="icon-btn" type="button" aria-label="Open workout focus mode" title="Focus mode">▣</button>
-              <button id="fullscreenBtn" class="icon-btn" type="button" aria-label="Enter full screen" title="Full screen">⛶</button>
-              <button id="playerInfoBtn" class="icon-btn" type="button" aria-label="Exercise details">i</button>
+        <div id="workoutPlayer" class="workout-player hidden review-player" aria-label="Guided exercise player">
+          <header class="review-player-header">
+            <button id="closeWorkoutBtn" class="review-icon-button" type="button" aria-label="Close workout">‹</button>
+            <div class="review-player-heading">
+              <h1 id="playerWorkoutTitle">High Knees</h1>
+              <p id="playerWorkoutSub">Cardio · Full Body</p>
+              <span id="playerDay" class="review-day-label">DAY 1</span>
             </div>
-          </div>
-          <div class="session-progress" aria-label="Workout progress"><span id="sessionProgressBar"></span></div>
-          <div class="player-meta"><span id="phaseLabel">Warm-up</span><span id="stepCounter">1 of 60</span></div>
+            <div class="review-player-actions">
+              <button id="orientationBtn" class="review-icon-button" type="button" aria-label="Change orientation" title="Orientation">↻</button>
+              <button id="focusModeBtn" class="review-icon-button" type="button" aria-label="Toggle focus mode" title="Focus mode">▣</button>
+              <button id="fullscreenBtn" class="review-icon-button" type="button" aria-label="Enter full screen" title="Full screen">⛶</button>
+              <button id="playerInfoBtn" class="review-icon-button" type="button" aria-label="Exercise details">i</button>
+            </div>
+          </header>
 
-          <div class="final-stage-wrap">
-            <div class="final-media-stage">
-              <div id="exerciseMedia" class="exercise-media final-media" aria-live="polite"></div>
-              <div class="final-overlay final-step-panel">
-                <div id="finalStepBadge" class="final-chip">Step 1/2</div>
-                <h3 id="finalStepTitle">Start Position</h3>
-                <p id="finalStepText">Keep your body in a straight line.</p>
-              </div>
-              <div class="final-overlay final-muscle-panel">
-                <h3>Target Muscles</h3>
-                <div id="v4MiniMuscleMap" class="v4-mini-muscle-map final-mini-muscle-map" aria-label="Front and back target muscle map"></div>
-              </div>
-              <button id="finalAltPreview" class="final-overlay final-alt-preview" type="button">
-                <img id="finalAltImage" alt="Alternate position preview" />
-                <span id="finalAltLabel">Next Position</span>
+          <div class="review-progress-row">
+            <div class="session-progress" aria-label="Workout progress"><span id="sessionProgressBar"></span></div>
+            <div class="player-meta"><span id="phaseLabel">Warm-up</span><span id="stepCounter">1 of 60</span></div>
+          </div>
+
+          <main class="review-player-main">
+            <section class="review-steps-panel" aria-label="Movement steps">
+              <span id="finalStepBadge" class="review-step-badge">3 steps</span>
+              <h2 id="finalStepTitle">How to move</h2>
+              <ol class="review-step-list">
+                <li><span>1</span><p id="finalStepText">Stand tall with your feet under your hips.</p></li>
+                <li><span>2</span><p id="reviewStepTwo">Drive one knee toward hip height as the opposite arm moves forward.</p></li>
+                <li><span>3</span><p id="reviewStepThree">Land softly and switch sides without leaning back.</p></li>
+              </ol>
+              <button id="easierBtn" class="review-option-button" type="button"><strong>Easier</strong><span id="easierCue">March slowly and lift the knees lower.</span></button>
+              <button id="harderBtn" class="review-option-button" type="button"><strong>Progression</strong><span id="harderCue">Increase speed while keeping soft landings.</span></button>
+            </section>
+
+            <section class="review-media-panel" aria-label="Exercise demonstration">
+              <div id="exerciseMedia" class="exercise-media review-media" aria-live="polite"></div>
+              <button id="finalAltPreview" class="review-alt-preview" type="button" aria-label="Open alternate position preview">
+                <img id="finalAltImage" alt="Opposite movement position" />
+                <span id="finalAltLabel">Opposite knee drive</span>
               </button>
-              <div id="finalPositionLabel" class="final-overlay final-position-label">Exercise Position</div>
-              <div class="final-overlay final-reps-card">
-                <span>Reps</span>
-                <strong id="finalRepsText">10 – 15</strong>
-                <small id="finalSetsText">3 Sets</small>
+            </section>
+
+            <aside class="review-target-panel" aria-label="Target muscles and exercise timing">
+              <div class="review-muscle-card">
+                <img id="reviewMuscleImage" src="assets/muscles/highKnees.svg" alt="High Knees target muscles: core, hip flexors, quadriceps and calves" />
               </div>
-            </div>
-
-            <div class="final-control-row">
-              <div class="final-timer-block">
-                <span id="timerState" class="timer-state">MOVE</span>
-                <strong id="timerDisplay" class="timer-display">01:00</strong>
+              <div class="review-metrics">
+                <div><small id="reviewPrimaryLabel">Work</small><strong id="finalRepsText">35 sec</strong></div>
+                <div><small id="reviewSecondaryLabel">Rounds</small><strong id="finalSetsText">2–3</strong></div>
+                <div><small id="reviewTertiaryLabel">Change</small><strong id="reviewRestCompact">25 sec</strong></div>
               </div>
-              <div class="player-controls">
-                <button id="prevStepBtn" class="control-btn" type="button"><span>⏮</span><small>Back</small></button>
-                <button id="playPauseBtn" class="play-btn" type="button" aria-label="Play workout">▶</button>
-                <button id="nextStepBtn" class="control-btn" type="button"><span>⏭</span><small>Next</small></button>
-              </div>
-              <div id="intervalHint" class="final-interval-hint">35 sec movement · 25 sec change</div>
+              <div id="finalPositionLabel" class="review-position-label">Knee Drive</div>
+            </aside>
+          </main>
+
+          <section class="review-controls" aria-label="Workout controls">
+            <div class="review-timer"><span id="timerState" class="timer-state">MOVE</span><strong id="timerDisplay" class="timer-display">01:00</strong></div>
+            <div class="player-controls review-player-controls">
+              <button id="prevStepBtn" class="review-control-button" type="button" aria-label="Previous exercise"><span>‹</span><small>Back</small></button>
+              <button id="playPauseBtn" class="review-play-button" type="button" aria-label="Play workout">▶</button>
+              <button id="nextStepBtn" class="review-control-button" type="button" aria-label="Next exercise"><span>›</span><small>Next</small></button>
             </div>
-            <div id="nextExercisePreview" class="v4-next-preview" aria-live="polite"></div>
-          </div>
+            <p id="intervalHint" class="review-interval-hint">35 sec movement · 25 sec change</p>
+            <div id="nextExercisePreview" class="v4-next-preview review-next-preview" aria-live="polite"></div>
+          </section>
 
-          <div class="final-info-grid">
-            <section class="final-info-card">
-              <h3>How to Perform</h3>
-              <ol id="v4HowTo"></ol>
-            </section>
-            <section class="final-info-card">
-              <h3>Tips</h3>
-              <ul id="finalTipsList"><li id="finalTipA">Keep your core tight.</li><li id="finalTipB">Move with control.</li><li id="finalTipC">Use the easier option if needed.</li></ul>
-            </section>
-            <section class="final-info-card">
-              <h3>Breathing</h3>
-              <p id="v4Breathing"></p>
-            </section>
-            <section class="final-info-card">
-              <h3>Rest</h3>
-              <p id="finalRestText">30 – 60 sec between sets</p>
-            </section>
-          </div>
-
-          <div class="legacy-player-data" hidden>
-            <div class="exercise-copy">
-              <p id="exerciseCategory" class="eyebrow">WARM-UP</p>
-              <h2 id="exerciseName">March in Place</h2>
-              <p id="exerciseCue">Stand tall, swing your arms and lift one knee at a time.</p>
+          <section class="review-guidance" aria-label="Exercise guidance">
+            <div class="review-guidance-tabs" role="tablist" aria-label="Guidance sections">
+              <button class="active" type="button" data-review-tab="how">How</button>
+              <button type="button" data-review-tab="tips">Tips</button>
+              <button type="button" data-review-tab="breathing">Breathing</button>
+              <button type="button" data-review-tab="rest">Rest</button>
             </div>
-            <div id="targetMuscles" class="tag-row"></div>
-            <div id="v4Mistakes"></div>
-            <div id="v4Reps"></div>
-            <div id="v4Equipment"></div>
-            <div id="v4Difficulty"></div>
-            <div id="v4Benefit"></div>
-          </div>
+            <div class="review-guidance-panels">
+              <div class="review-guidance-panel active" data-review-panel="how"><ol id="v4HowTo"></ol></div>
+              <div class="review-guidance-panel" data-review-panel="tips"><ul id="finalTipsList"><li id="finalTipA">Keep your torso tall.</li><li id="finalTipB">Land quietly under your body.</li><li id="finalTipC">Slow down before your form changes.</li></ul></div>
+              <div class="review-guidance-panel" data-review-panel="breathing"><p id="v4Breathing"></p></div>
+              <div class="review-guidance-panel" data-review-panel="rest"><p id="finalRestText">Use the 25-second change period before the next interval.</p></div>
+            </div>
+          </section>
 
-          <div class="workout-options">
-            <button id="easierBtn" type="button"><strong>Easier option</strong><span id="easierCue">Move slower.</span></button>
-            <button id="harderBtn" type="button"><strong>Progression</strong><span id="harderCue">Increase range.</span></button>
-            <button id="replaceBtn" type="button"><strong>Replace</strong><span>Choose a similar exercise.</span></button>
-            <button id="addTimeBtn" type="button"><strong>+15 seconds</strong><span>Add time to this step.</span></button>
+          <div class="review-hidden-data" hidden>
+            <p id="exerciseCategory"></p><h2 id="exerciseName"></h2><p id="exerciseCue"></p>
+            <div id="targetMuscles"></div><div id="v4MiniMuscleMap"></div><div id="v4Mistakes"></div>
+            <div id="v4Reps"></div><div id="v4Equipment"></div><div id="v4Difficulty"></div><div id="v4Benefit"></div>
+            <button id="replaceBtn" type="button">Replace</button><button id="addTimeBtn" type="button">Add time</button>
           </div>
         </div>
       </section>
@@ -361,7 +356,7 @@
         </section>
 
         <section class="panel button-stack">
-          <button id="installBtn" class="secondary-btn" type="button">Install Fitness V5</button>
+          <button id="installBtn" class="secondary-btn" type="button">Install Fitness V6.1</button>
           <button id="updateBtn" class="secondary-btn" type="button">Check for update</button>
           <button id="exportBtn" class="secondary-btn" type="button">Export backup</button>
           <label class="secondary-btn file-label">Import backup<input id="importInput" type="file" accept="application/json" hidden /></label>
@@ -391,7 +386,7 @@
   </dialog>
 
   <dialog id="onboardingDialog" class="onboarding-dialog">
-    <div class="onboarding-head"><span class="brand-mark">♥</span><div><p class="eyebrow">WELCOME TO FITNESS V5</p><h1>Build your starting program</h1></div></div>
+    <div class="onboarding-head"><span class="brand-mark">♥</span><div><p class="eyebrow">WELCOME TO FITNESS V6.1</p><h1>Build your starting program</h1></div></div>
     <p>Choose your current level and main goal. Everything can be changed later.</p>
     <form id="onboardingForm" class="form-grid">
       <label class="full">Display name<input id="onboardName" type="text" autocomplete="name" placeholder="Optional" /></label>
