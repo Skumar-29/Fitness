@@ -1,15 +1,20 @@
 {
-  "name": "Fitness V3 — English & Hindi Coach",
-  "short_name": "Fitness V3",
-  "description": "Six-day anatomy-style guided workouts with English and Hindi voice coaching, vegetarian meals and progress tracking.",
+  "name": "Fitness V4 — Anatomy Coach",
+  "short_name": "Fitness V4",
+  "description": "Six-day bilingual anatomy-style guided workouts with automatic exercise flow, vegetarian meals, progress tracking and optional private cloud sync.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f4f7f6",
   "theme_color": "#0f766e",
-  "orientation": "portrait-primary",
+  "orientation": "any",
+  "categories": ["fitness", "health", "lifestyle"],
   "icons": [
     {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
     {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ],
+  "shortcuts": [
+    {"name":"Start workout","short_name":"Workout","url":"./?open=plan","icons":[{"src":"icons/icon-192.png","sizes":"192x192"}]},
+    {"name":"Progress","short_name":"Progress","url":"./?open=progress","icons":[{"src":"icons/icon-192.png","sizes":"192x192"}]}
   ]
 }

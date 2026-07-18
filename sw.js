@@ -1,16 +1,39 @@
-const SHELL_CACHE='fitness-v3-shell-v1';
-const MEDIA_CACHE='fitness-v3-anatomy-media-v1';
-const SHELL=["./", "./index.html", "./styles.css", "./v3.css", "./app.js", "./v3.js", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./assets/posters/march.webp", "./assets/posters/armCircles.webp", "./assets/posters/stepTouch.webp", "./assets/posters/hipCircles.webp", "./assets/posters/torsoTwist.webp", "./assets/posters/heelDigs.webp", "./assets/posters/kneeHugs.webp", "./assets/posters/ankleRolls.webp", "./assets/posters/squat.webp", "./assets/posters/sumoSquat.webp", "./assets/posters/squatPulse.webp", "./assets/posters/reverseLunge.webp", "./assets/posters/sideLunge.webp", "./assets/posters/curtsyLunge.webp", "./assets/posters/gluteBridge.webp", "./assets/posters/singleLegBridge.webp", "./assets/posters/calfRaise.webp", "./assets/posters/wallSit.webp", "./assets/posters/goodMorning.webp", "./assets/posters/donkeyKick.webp", "./assets/posters/fireHydrant.webp", "./assets/posters/inclinePushup.webp", "./assets/posters/pushup.webp", "./assets/posters/pikePress.webp", "./assets/posters/shoulderTap.webp", "./assets/posters/tricepsDip.webp", "./assets/posters/bentRow.webp", "./assets/posters/reverseFly.webp", "./assets/posters/floorPress.webp", "./assets/posters/superman.webp", "./assets/posters/plank.webp", "./assets/posters/sidePlank.webp", "./assets/posters/deadBug.webp", "./assets/posters/birdDog.webp", "./assets/posters/heelTap.webp", "./assets/posters/bicycle.webp", "./assets/posters/crunch.webp", "./assets/posters/lowJack.webp", "./assets/posters/highKnees.webp", "./assets/posters/skater.webp", "./assets/posters/mountainClimber.webp", "./assets/posters/fastFeet.webp", "./assets/posters/squatReach.webp", "./assets/posters/reverseLungeKnee.webp", "./assets/posters/burpeeStepback.webp", "./assets/posters/childPose.webp", "./assets/posters/catCow.webp", "./assets/posters/cobra.webp", "./assets/posters/hamstringStretch.webp", "./assets/posters/hipFlexorStretch.webp", "./assets/posters/chestOpener.webp", "./assets/posters/figure4.webp", "./assets/posters/thoracicRotation.webp", "./assets/posters/breathing.webp", "./assets/posters/downwardDog.webp"];
+const SHELL_CACHE='fitness-v4-shell-v1';
+const MEDIA_CACHE='fitness-v4-approved-anatomy-media-v1';
+const SHELL=[
+  './','./index.html','./styles.css','./voice-language.css','./v4.css','./app.js','./voice-language.js','./v4.js','./firebase-config.js','./cloud-sync.js','./manifest.webmanifest',
+  './icons/icon-192.png','./icons/icon-512.png','./assets/ui/anatomy-video-pending.svg','./assets/posters/squat.webp','./assets/posters/reverseLunge.webp'
+];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(SHELL_CACHE).then(c=>c.addAll(SHELL)));});
-self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>((k.startsWith('health-app-v2-shell-')||k.startsWith('fitness-v3-shell-')||k==='health-app-v2-media-v1')&&k!==SHELL_CACHE&&k!==MEDIA_CACHE)).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener('activate',event=>{
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>{
+    const old=k.startsWith('health-app-v2-')||k.startsWith('fitness-v3-')||k.startsWith('fitness-v4-');
+    return old&&k!==SHELL_CACHE&&k!==MEDIA_CACHE;
+  }).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));
+});
 self.addEventListener('message',event=>{if(event.data?.type==='SKIP_WAITING')self.skipWaiting();});
 self.addEventListener('fetch',event=>{
- const req=event.request;if(req.method!=='GET')return;const url=new URL(req.url);if(url.origin!==location.origin)return;
- if(req.headers.has('range')&&url.pathname.endsWith('.mp4')){event.respondWith(rangeResponse(req));return;}
- if(req.mode==='navigate'){event.respondWith(fetch(req).then(res=>{const copy=res.clone();caches.open(SHELL_CACHE).then(c=>c.put('./index.html',copy));return res;}).catch(()=>caches.match('./index.html')));return;}
- event.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(res=>{if(res.ok&&!url.pathname.endsWith('.mp4')){const copy=res.clone();caches.open(SHELL_CACHE).then(c=>c.put(req,copy));}return res;})));
+  const req=event.request;if(req.method!=='GET')return;
+  const url=new URL(req.url);if(url.origin!==location.origin)return;
+  if(req.headers.has('range')&&url.pathname.endsWith('.mp4')){event.respondWith(rangeResponse(req));return;}
+  if(req.mode==='navigate'){
+    event.respondWith(fetch(req).then(res=>{const copy=res.clone();caches.open(SHELL_CACHE).then(c=>c.put('./index.html',copy));return res;}).catch(()=>caches.match('./index.html')));
+    return;
+  }
+  if(url.pathname.endsWith('.mp4')){
+    event.respondWith(caches.open(MEDIA_CACHE).then(async cache=>{
+      const hit=await cache.match(req);if(hit)return hit;
+      const res=await fetch(req);if(res.ok)cache.put(req,res.clone());return res;
+    }));
+    return;
+  }
+  event.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(res=>{if(res.ok){const copy=res.clone();caches.open(SHELL_CACHE).then(c=>c.put(req,copy));}return res;})));
 });
 async function rangeResponse(req){
- const cache=await caches.open(MEDIA_CACHE);let res=await cache.match(req.url);if(!res){try{res=await fetch(req.url);if(res.ok)await cache.put(req.url,res.clone());}catch{return new Response('',{status:504});}}
- const buf=await res.arrayBuffer(),range=req.headers.get('range'),m=/bytes=(\d+)-(\d*)/.exec(range||'');if(!m)return new Response(buf,{headers:res.headers});const start=Number(m[1]),end=Math.min(m[2]?Number(m[2]):buf.byteLength-1,buf.byteLength-1);return new Response(buf.slice(start,end+1),{status:206,statusText:'Partial Content',headers:{'Content-Type':'video/mp4','Content-Range':`bytes ${start}-${end}/${buf.byteLength}`,'Accept-Ranges':'bytes','Content-Length':String(end-start+1)}});
+  const cache=await caches.open(MEDIA_CACHE);let res=await cache.match(req.url);
+  if(!res){try{res=await fetch(req.url);if(res.ok)await cache.put(req.url,res.clone());}catch{return new Response('',{status:504});}}
+  const buf=await res.arrayBuffer(),range=req.headers.get('range'),m=/bytes=(\d+)-(\d*)/.exec(range||'');
+  if(!m)return new Response(buf,{headers:res.headers});
+  const start=Number(m[1]),end=Math.min(m[2]?Number(m[2]):buf.byteLength-1,buf.byteLength-1);
+  return new Response(buf.slice(start,end+1),{status:206,statusText:'Partial Content',headers:{'Content-Type':'video/mp4','Content-Range':`bytes ${start}-${end}/${buf.byteLength}`,'Accept-Ranges':'bytes','Content-Length':String(end-start+1)}});
 }

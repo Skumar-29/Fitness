@@ -1,11 +1,11 @@
-FITNESS V3 — HEALTH AND TECHNOLOGY SOURCES
+FITNESS V4 — HEALTH AND TECHNOLOGY SOURCES
 ==========================================
 Checked: 18 July 2026
 
 Australian Government — adult movement recommendations
 https://www.health.gov.au/topics/physical-activity/24-hour-movement-guidelines-for-all-australians/recommendations-for-adults-18-to-64-years
 
-Eat For Health — vegetarian protein alternatives and food group guidance
+Eat For Health — vegetarian protein alternatives and food-group guidance
 https://www.eatforhealth.gov.au/food-essentials/five-food-groups/lean-meat-and-poultry-fish-eggs-tofu-nuts-and-seeds-and
 
 Eat For Health — iron
@@ -14,13 +14,23 @@ https://www.eatforhealth.gov.au/nutrient-reference-values/nutrients/iron
 Eat For Health — vitamin B12
 https://www.eatforhealth.gov.au/nutrient-reference-values/nutrients/vitamin-b12
 
-MDN — SpeechSynthesisUtterance language
+Firebase — add Firebase to a JavaScript web project
+https://firebase.google.com/docs/web/setup
+
+Firebase Authentication — Google sign-in for web
+https://firebase.google.com/docs/auth/web/google-signin
+
+Firebase Authentication — email/password and web authentication
+https://firebase.google.com/docs/auth/web/start
+
+Cloud Firestore — offline data and synchronisation
+https://firebase.google.com/docs/firestore/manage-data/enable-offline
+
+Cloud Firestore — security rules
+https://firebase.google.com/docs/firestore/security/get-started
+
+MDN — Web Speech language and voice selection
 https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/lang
-
-MDN — SpeechSynthesis voice selection
 https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/voice
-
-MDN — speech rate
-https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/rate
 
 These references inform general educational content and implementation. They do not turn the app into personalised medical or dietetic advice.

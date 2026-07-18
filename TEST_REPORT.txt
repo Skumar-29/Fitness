@@ -1,55 +1,77 @@
-FITNESS V3 — AUTOMATED TEST REPORT
+FITNESS V4 — AUTOMATED TEST REPORT
 ====================================
 Generated: 18 July 2026
 
 IDENTITY
 --------
-Build: fitness-v3.0.0
-Schema: 3
-Shell cache: fitness-v3-shell-v1
-Media cache: fitness-v3-anatomy-media-v1
+Build: fitness-v4.0.0-preview
+Schema: 4
+Shell cache: fitness-v4-shell-v1
+Media cache: fitness-v4-approved-anatomy-media-v1
 
-CONTENT CHECKS
---------------
-Exercise IDs declared: 55
-MP4 videos present: 55
-WebP posters present: 55
-Hindi exercise coaching entries: 55
-Missing videos: None
-Missing posters: None
+MEDIA STATUS
+------------
+Approved anatomical MP4 videos included: 2
+Approved WebP posters included: 2
+Old robotic/vector videos included: 0
+Pending exercises use anatomical-video-pending.svg plus written and spoken guidance.
 
 VIDEO CHECKS
 ------------
-Video dimensions found: [(360, 600)]
-Duration minimum: 3.000 sec
-Duration maximum: 3.000 sec
-Duration average: 3.000 sec
-Files outside 2.8–3.2 sec: None
-All clips were readable by ffprobe: Yes
+reverseLunge.mp4: H.264 720 × 1280, yuv420p, 6.000 sec, 375 KB
+squat.mp4: H.264 720 × 960, yuv420p, 4.667 sec, 641 KB
+
+All included MP4 files readable by ffprobe: Yes
 
 WORKOUT DURATION CHECKS
 -----------------------
-30-minute plan: 30 minutes (1800 seconds)
-45-minute plan: 45 minutes (2700 seconds)
-60-minute plan: 60 minutes (3600 seconds)
+All 6 training days were built and measured by the runtime test:
+30-minute option: 1800 seconds for every training day
+45-minute option: 2700 seconds for every training day
+60-minute option: 3600 seconds for every training day
 
-OFFLINE CHECKS
+RUNTIME CHECKS
 --------------
-Service-worker shell entries: 64
-Missing shell files: None
+FitnessV4API available: Passed
+Workout player opens: Passed
+Unapproved exercise displays pending-media panel: Passed
+Approved Bodyweight Squat loads MP4: Passed
+Next-exercise preview updates: Passed
+English → Hindi interface switch: Passed
+Hindi exercise instruction displayed: Passed
+Firebase-unconfigured status displays “Setup required”: Passed
+V3 → V4 local-state migration: Passed
+Runtime JavaScript errors in the simulated flow: None
+
+STATIC CHECKS
+-------------
+JavaScript syntax: app.js, voice-language.js, v4.js, cloud-sync.js and sw.js passed Node syntax checking
 Manifest JSON validation: Passed
-JavaScript syntax: app.js, v3.js and sw.js passed Node syntax checking
+HTML duplicate IDs: None
+Missing local HTML references: None
+Service-worker shell entries: 16
+Missing service-worker shell files: None
+Pages detected: 7
+
+CLOUD-SYNC LIMITATION
+---------------------
+Firebase Authentication and live Firestore synchronisation cannot be end-to-end tested until the app owner supplies a real Firebase web configuration, enables sign-in providers, creates Firestore and publishes firestore.rules. Local-first saving and the unconfigured cloud state were tested.
 
 KEY FILE HASHES (SHA-256 PREFIX)
 -------------------------------
-index.html: f98549054516d6a9
+index.html: 5d45054caa770f44
 styles.css: 1674c21032d08f4b
-v3.css: a3160236d3830f43
-app.js: 75092ac388144601
-v3.js: 948164f079e8f84c
-sw.js: 0d25621005744a08
-manifest.webmanifest: 74b3be500fab46da
+voice-language.css: a3160236d3830f43
+v4.css: 077a862b78057ecf
+app.js: 148ca5e6883e3707
+voice-language.js: 3560188fb2c248ee
+v4.js: 06f75c01425a6bf0
+firebase-config.js: c1ba0c73cf436813
+cloud-sync.js: 326bd8bcb5ed43d5
+sw.js: 1e2505ef857ca11b
+manifest.webmanifest: 0c5f11c18b99302c
+firestore.rules: 97c8379e27cba4e5
 
-LIMITATION
-----------
-Automated checks confirm file completeness, media decoding, syntax and duration calculations. Final exercise-form accuracy and voice pronunciation should still be reviewed on the target iPhone before relying on the app for regular training.
+RELEASE LIMITATION
+------------------
+This package is the functional V4 foundation and approved-media preview. Only the approved Squat and Reverse Lunge anatomical videos are included. The other exercise media must be generated, reviewed for exercise-form accuracy and approved before the package can be described as the complete final anatomical-video library.

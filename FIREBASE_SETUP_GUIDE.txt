@@ -1,0 +1,94 @@
+FITNESS V4 — FIREBASE ACCOUNT & AUTOMATIC SYNC SETUP
+====================================================
+
+WHY THIS STEP IS REQUIRED
+-------------------------
+GitHub Pages hosts the app files, but it cannot create or own a private user database for you. Create the Firebase project in your own Google/Firebase account so you control the users, rules, data and billing settings.
+
+The app remains fully usable with local saving before Firebase is connected.
+
+STEP 1 — CREATE THE FIREBASE PROJECT
+------------------------------------
+1. Open the Firebase Console.
+2. Create a project for Fitness V4.
+3. Analytics is optional for this app.
+4. In Project settings → Your apps, add a Web app.
+5. Copy the Firebase configuration object shown for the Web app.
+
+STEP 2 — PASTE THE WEB CONFIGURATION
+------------------------------------
+Open firebase-config.js and replace all PASTE_... values:
+
+window.FITNESS_FIREBASE_CONFIG = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...",
+  appId: "..."
+};
+
+Do not paste a service-account private key into this web app. The normal Firebase web configuration belongs in firebase-config.js; access is protected by Authentication and Firestore Security Rules.
+
+STEP 3 — ENABLE SIGN-IN METHODS
+-------------------------------
+Firebase Console → Authentication → Sign-in method:
+• Enable Google.
+• Enable Email/Password.
+
+Then open Authentication → Settings → Authorised domains and add:
+• YOUR-USERNAME.github.io
+• your custom app domain, when used
+
+STEP 4 — CREATE CLOUD FIRESTORE
+--------------------------------
+1. Firebase Console → Firestore Database → Create database.
+2. Select the region appropriate for your expected users.
+3. Do not leave a public/test rule in place.
+
+STEP 5 — PUBLISH THE INCLUDED SECURITY RULES
+--------------------------------------------
+Open firestore.rules from this package and paste it into:
+Firestore Database → Rules
+Then publish it.
+
+The included rule permits an authenticated user to read and write only documents under that user’s own /users/{uid}/ path.
+
+STEP 6 — UPLOAD THE UPDATED FILE
+--------------------------------
+Upload the edited firebase-config.js to the GitHub repository and allow GitHub Pages to redeploy.
+
+STEP 7 — TEST TWO-DEVICE SYNC
+-----------------------------
+1. Open Fitness V4 on the first device.
+2. Settings → Account & automatic sync.
+3. Sign in with Google or create an email/password account.
+4. Complete a small test workout or add a measurement.
+5. Wait for “Up to date”.
+6. Open the same app link on a second device and sign in to the same account.
+7. Confirm the new record appears.
+8. Test offline by disconnecting the first device, saving one record, reconnecting and confirming it appears on the second device.
+
+SYNC BEHAVIOUR
+--------------
+• The app saves locally first.
+• Online changes upload automatically after sign-in.
+• Offline changes wait and upload when internet returns.
+• Completed workouts, measurements and tests are merged by record ID and update time.
+• The newest valid profile/settings state is kept.
+• Videos are shared app assets and are not copied into each user’s Firestore account.
+
+ACCOUNT CONTROLS
+----------------
+• Sync now
+• Sign out
+• Delete cloud data while preserving local data
+• Delete account and cloud data (Firebase may require a recent sign-in for security)
+
+APP CHECK — OPTIONAL BEFORE PUBLIC LAUNCH
+-----------------------------------------
+The app includes a placeholder for Firebase App Check. Configure reCAPTCHA Enterprise/App Check in Firebase, then paste the site key into FITNESS_APP_CHECK_SITE_KEY in firebase-config.js. Test Authentication and Firestore after enforcement is enabled.
+
+IMPORTANT
+---------
+Keep the manual Fitness V4 JSON backup feature even after cloud sync is enabled. It gives the user an independent recovery copy.

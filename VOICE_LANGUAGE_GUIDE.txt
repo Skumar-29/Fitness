@@ -1,12 +1,20 @@
-FITNESS V3 — LANGUAGE AND VOICE GUIDE
-=====================================
+FITNESS V4 — ENGLISH/HINDI LANGUAGE & VOICE GUIDE
+=================================================
 
 LANGUAGE
 --------
-Use the EN/हि button in the top-right corner for instant switching, or open:
+Use the EN/हि button for instant switching, or open:
 Settings → App language → English / हिन्दी
 
-The choice is remembered for future launches. Workout history remains unchanged when the language changes.
+The selected language applies to:
+• navigation and settings
+• exercise names and written guidance
+• target-muscle labels
+• benefits and common mistakes
+• meal guidance
+• spoken coaching, countdowns and rest/next-exercise announcements
+
+The choice is stored locally and can also sync to signed-in devices after Firebase is connected.
 
 VOICE MODES
 -----------
@@ -14,29 +22,37 @@ Off
   No spoken coaching.
 
 Essential cues
-  Announces the exercise and short safety/form reminders.
+  Exercise name, countdown and short form/safety reminders.
 
 Full instruction + cues
-  Speaks the exercise name and complete Hindi or English setup guidance, plus selected timing cues.
+  Complete setup guidance before the exercise plus selected coaching cues during the interval.
 
-OTHER CONTROLS
---------------
-• Voice preference: Automatic, female preferred or male preferred.
-• Speaking speed: Slow, normal or fast.
-• Spoken countdown: On/off.
-• Form reminders: On/off.
-• On-screen subtitles: On/off.
-• Repeat instruction: available during every workout.
+CONTROLS
+--------
+• Voice preference: automatic, female preferred or male preferred where available.
+• Speaking speed: slow, normal or fast.
+• Spoken countdown: on/off.
+• Form reminders: on/off.
+• On-screen subtitles: on/off.
+• Repeat instruction: available during workouts.
 • Stop voice: immediately cancels queued speech.
+• Pausing, skipping or leaving a workout cancels old speech so it does not overlap the next exercise.
+
+AUTOMATIC FLOW
+--------------
+When enabled:
+exercise → rest → spoken next-exercise preview → 3, 2, 1 → next exercise
+
+The app speaks in the currently selected language. Full instructions may be used for the first round, while short cues keep later rounds from becoming overloaded.
 
 HINDI VOICE ON IPHONE
 ---------------------
-The app requests a Hindi (India) voice, but the actual voice comes from iOS/Safari. If Hindi is missing or pronunciation is poor:
+The app requests a Hindi (India) voice, but the actual voice comes from iOS/Safari. If Hindi is unavailable or pronunciation is poor:
 
 1. Open iPhone Settings.
 2. Accessibility → Spoken Content → Voices.
 3. Select Hindi and download a preferred voice.
-4. Reopen Fitness V3.
-5. Settings → Preview voice.
+4. Reopen Fitness V4.
+5. Use the voice preview in Settings.
 
-The app still shows Hindi text even if a Hindi voice is unavailable.
+Hindi text remains available even when a Hindi speech voice is not installed.
