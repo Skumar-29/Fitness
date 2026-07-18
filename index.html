@@ -6,20 +6,21 @@
   <meta name="theme-color" content="#0f766e" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Health App" />
-  <meta name="description" content="Six-day guided full-body workouts, exercise videos, vegetarian meals and progress tracking." />
+  <meta name="apple-mobile-web-app-title" content="Fitness V3" />
+  <meta name="description" content="Bilingual English and Hindi anatomy-style guided workouts, vegetarian meal plans and progress tracking." />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="icons/icon-192.png" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
   <link rel="stylesheet" href="styles.css" />
-  <title>Health App V2</title>
+  <link rel="stylesheet" href="v3.css" />
+  <title>Fitness V3</title>
 </head>
 <body>
   <div id="appShell">
     <header class="app-header">
       <button class="brand-button" data-go="home" type="button" aria-label="Open home">
         <span class="brand-mark" aria-hidden="true">♥</span>
-        <span><strong>Health App</strong><small id="headerSubtitle">Complete body training</small></span>
+        <span><strong>Fitness V3</strong><small id="headerSubtitle">Bilingual anatomy workouts</small></span>
       </button>
       <div class="header-actions">
         <span id="networkBadge" class="status-badge">Offline ready</span>
@@ -269,7 +270,7 @@
         </section>
 
         <section class="panel button-stack">
-          <button id="installBtn" class="secondary-btn" type="button">Install Health App</button>
+          <button id="installBtn" class="secondary-btn" type="button">Install Fitness V3</button>
           <button id="updateBtn" class="secondary-btn" type="button">Check for update</button>
           <button id="exportBtn" class="secondary-btn" type="button">Export backup</button>
           <label class="secondary-btn file-label">Import backup<input id="importInput" type="file" accept="application/json" hidden /></label>
@@ -299,7 +300,7 @@
   </dialog>
 
   <dialog id="onboardingDialog" class="onboarding-dialog">
-    <div class="onboarding-head"><span class="brand-mark">♥</span><div><p class="eyebrow">WELCOME TO HEALTH APP V2</p><h1>Build your starting program</h1></div></div>
+    <div class="onboarding-head"><span class="brand-mark">♥</span><div><p class="eyebrow">WELCOME TO FITNESS V3</p><h1>Build your starting program</h1></div></div>
     <p>Choose your current level and main goal. Everything can be changed later.</p>
     <form id="onboardingForm" class="form-grid">
       <label class="full">Display name<input id="onboardName" type="text" autocomplete="name" placeholder="Optional" /></label>
@@ -314,5 +315,6 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
+  <script src="v3.js"></script>
 </body>
 </html>

@@ -1,10 +1,10 @@
 (() => {
 'use strict';
-const APP_VERSION='health-app-v2.0.0';
-const SCHEMA_VERSION=2;
-const STORAGE_KEY='completeHealthAppStateV2';
-const OLD_STORAGE_KEY='completeHealthAppStateV1';
-const MEDIA_CACHE='health-app-v2-media-v1';
+const APP_VERSION='fitness-v3.0.0';
+const SCHEMA_VERSION=3;
+const STORAGE_KEY='completeHealthAppStateV3';
+const OLD_STORAGE_KEY='completeHealthAppStateV2';
+const MEDIA_CACHE='fitness-v3-anatomy-media-v1';
 const EXERCISE_IDS=["march", "armCircles", "stepTouch", "hipCircles", "torsoTwist", "heelDigs", "kneeHugs", "ankleRolls", "squat", "sumoSquat", "squatPulse", "reverseLunge", "sideLunge", "curtsyLunge", "gluteBridge", "singleLegBridge", "calfRaise", "wallSit", "goodMorning", "donkeyKick", "fireHydrant", "inclinePushup", "pushup", "pikePress", "shoulderTap", "tricepsDip", "bentRow", "reverseFly", "floorPress", "superman", "plank", "sidePlank", "deadBug", "birdDog", "heelTap", "bicycle", "crunch", "lowJack", "highKnees", "skater", "mountainClimber", "fastFeet", "squatReach", "reverseLungeKnee", "burpeeStepback", "childPose", "catCow", "cobra", "hamstringStretch", "hipFlexorStretch", "chestOpener", "figure4", "thoracicRotation", "breathing", "downwardDog"];
 const GOALS={"general": {"label": "General fitness", "note": "Build balanced strength, stamina, mobility and consistency.", "steps": ["Train all major muscle groups", "Use moderate cardio", "Keep one recovery day"]}, "fat": {"label": "Reduce body fat", "note": "Combine consistent training, daily movement and a sustainable food pattern. Fat cannot be reduced from only one chosen body area.", "steps": ["Complete strength and cardio days", "Add regular walking", "Use repeatable portions, not crash diets"]}, "stamina": {"label": "Improve stamina", "note": "Progress gradually by moving longer while keeping breathing and technique controlled.", "steps": ["Start with low-impact intervals", "Increase work time slowly", "Record a monthly stamina test"]}, "shape": {"label": "Shape and tone body", "note": "Use controlled repetitions, full movement range and progressive resistance.", "steps": ["Prioritise legs, glutes, back and shoulders", "Slow the lowering phase", "Track waist and strength, not only weight"]}, "strength": {"label": "Build strength", "note": "Use reliable form and increase resistance or difficulty one step at a time.", "steps": ["Choose controlled variations", "Record repetitions or resistance", "Recover before repeating hard muscle work"]}, "mobility": {"label": "Improve mobility", "note": "Combine active movement, strength through comfortable ranges and gentle recovery work.", "steps": ["Move daily without forcing range", "Strengthen around stiff joints", "Use Day 7 for easy mobility"]}};
 const DIET_LABELS={"indian": "Indian vegetarian", "lacto": "Vegetarian with dairy", "ovo": "Vegetarian with eggs", "lactoOvo": "Dairy + eggs", "vegan": "Vegan", "highProtein": "High-protein vegetarian"};
@@ -174,7 +174,7 @@ const $=id=>document.getElementById(id);const $$=s=>[...document.querySelectorAl
 function loadState(){
  try{
   let raw=localStorage.getItem(STORAGE_KEY);
-  if(!raw){const old=localStorage.getItem(OLD_STORAGE_KEY);if(old){const p=JSON.parse(old);raw=JSON.stringify({...DEFAULT_STATE,...p,schema:2,onboardingDone:true,profile:DEFAULT_STATE.profile,duration:60,autoplay:'on',reducedMotion:'off',diet:p.diet==='vegan'?'vegan':'indian'});}}
+  if(!raw){const old=localStorage.getItem(OLD_STORAGE_KEY);if(old){const p=JSON.parse(old);raw=JSON.stringify({...DEFAULT_STATE,...p,schema:3,onboardingDone:true,profile:DEFAULT_STATE.profile,duration:60,autoplay:'on',reducedMotion:'off',diet:p.diet==='vegan'?'vegan':'indian'});}}
   const parsed=raw?JSON.parse(raw):{};
   return{...DEFAULT_STATE,...parsed,profile:{...DEFAULT_STATE.profile,...(parsed.profile||{})},duration:Number(parsed.duration||60)};
  }catch(e){console.warn(e);return structuredClone(DEFAULT_STATE);}
@@ -281,8 +281,8 @@ function updateNetworkBadge(){const b=$('networkBadge');b.textContent=navigator.
 function registerServiceWorker(){if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);}
 async function checkForUpdate(){if(!('serviceWorker'in navigator))return showToast('Update checking is unavailable');const reg=await navigator.serviceWorker.getRegistration();if(reg){await reg.update();showToast('Update check complete');if(reg.waiting&&confirm('An update is ready. Reload now?')){reg.waiting.postMessage({type:'SKIP_WAITING'});location.reload();}}else showToast('App is current');}
 async function installApp(){if(deferredInstallPrompt){deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;}else showToast('On iPhone Safari: Share → Add to Home Screen');}
-function exportBackup(){const blob=new Blob([JSON.stringify({app:'Health App',version:APP_VERSION,schema:SCHEMA_VERSION,exportedAt:new Date().toISOString(),state},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`health-app-backup-${isoDate(new Date())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
-function importBackup(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result),incoming=p.state||p;if(!incoming.workouts||!incoming.checkins)throw new Error('Invalid');state={...DEFAULT_STATE,...incoming,profile:{...DEFAULT_STATE.profile,...(incoming.profile||{})},schema:2,onboardingDone:true};saveState('Backup imported');}catch{showToast('This backup could not be imported');}e.target.value='';};r.readAsText(file);}
+function exportBackup(){const blob=new Blob([JSON.stringify({app:'Fitness V3',version:APP_VERSION,schema:SCHEMA_VERSION,exportedAt:new Date().toISOString(),state},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`fitness-v3-backup-${isoDate(new Date())}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+function importBackup(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const p=JSON.parse(r.result),incoming=p.state||p;if(!incoming.workouts||!incoming.checkins)throw new Error('Invalid');state={...DEFAULT_STATE,...incoming,profile:{...DEFAULT_STATE.profile,...(incoming.profile||{})},schema:3,onboardingDone:true};saveState('Backup imported');}catch{showToast('This backup could not be imported');}e.target.value='';};r.readAsText(file);}
 function resetApp(){if(!confirm('Reset profile, workout history, meals and progress? Downloaded videos will remain.'))return;state=structuredClone(DEFAULT_STATE);localStorage.removeItem(STORAGE_KEY);saveState('App data reset');openOnboarding();}
 function persistOnly(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
 function videoUrl(id){return`assets/videos/${id}.mp4`;}function posterUrl(id){return`assets/posters/${id}.webp`;}

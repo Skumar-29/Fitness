@@ -1,0 +1,55 @@
+FITNESS V3 — AUTOMATED TEST REPORT
+====================================
+Generated: 18 July 2026
+
+IDENTITY
+--------
+Build: fitness-v3.0.0
+Schema: 3
+Shell cache: fitness-v3-shell-v1
+Media cache: fitness-v3-anatomy-media-v1
+
+CONTENT CHECKS
+--------------
+Exercise IDs declared: 55
+MP4 videos present: 55
+WebP posters present: 55
+Hindi exercise coaching entries: 55
+Missing videos: None
+Missing posters: None
+
+VIDEO CHECKS
+------------
+Video dimensions found: [(360, 600)]
+Duration minimum: 3.000 sec
+Duration maximum: 3.000 sec
+Duration average: 3.000 sec
+Files outside 2.8–3.2 sec: None
+All clips were readable by ffprobe: Yes
+
+WORKOUT DURATION CHECKS
+-----------------------
+30-minute plan: 30 minutes (1800 seconds)
+45-minute plan: 45 minutes (2700 seconds)
+60-minute plan: 60 minutes (3600 seconds)
+
+OFFLINE CHECKS
+--------------
+Service-worker shell entries: 64
+Missing shell files: None
+Manifest JSON validation: Passed
+JavaScript syntax: app.js, v3.js and sw.js passed Node syntax checking
+
+KEY FILE HASHES (SHA-256 PREFIX)
+-------------------------------
+index.html: f98549054516d6a9
+styles.css: 1674c21032d08f4b
+v3.css: a3160236d3830f43
+app.js: 75092ac388144601
+v3.js: 948164f079e8f84c
+sw.js: 0d25621005744a08
+manifest.webmanifest: 74b3be500fab46da
+
+LIMITATION
+----------
+Automated checks confirm file completeness, media decoding, syntax and duration calculations. Final exercise-form accuracy and voice pronunciation should still be reviewed on the target iPhone before relying on the app for regular training.

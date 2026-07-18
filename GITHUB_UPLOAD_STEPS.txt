@@ -1,28 +1,41 @@
-HEALTH APP V2 — GITHUB UPLOAD
+FITNESS V3 — GITHUB PAGES UPLOAD
+================================
 
-1. Download and double-click health_app_v2_github_ready.zip.
-2. Open the extracted folder.
-3. Confirm you can immediately see index.html, app.js, styles.css, sw.js, manifest.webmanifest, assets and icons.
-4. In your GitHub repository choose Add file > Upload files.
-5. Select EVERYTHING INSIDE the extracted folder. Do not upload the ZIP file itself.
-6. Drag all selected files and folders into GitHub.
+1. Download and double-click fitness_v3_github_ready.zip.
+2. Open the extracted fitness_v3 folder.
+3. In GitHub, open your repository or create a new public repository, for example fitness-v3.
+4. Choose Add file → Upload files.
+5. Select EVERYTHING INSIDE the extracted folder, including:
+
+   index.html
+   styles.css
+   v3.css
+   app.js
+   v3.js
+   sw.js
+   manifest.webmanifest
+   assets/
+   icons/
+   README.txt
+   GITHUB_UPLOAD_STEPS.txt
+   VOICE_LANGUAGE_GUIDE.txt
+   MEDIA_GUIDE.txt
+   TEST_REPORT.txt
+   SOURCES.txt
+
+6. Do not upload only the ZIP file.
 7. Commit directly to the main branch.
-8. Open Repository Settings > Pages.
-9. Choose Deploy from a branch, main, /(root), then Save.
-10. Open https://YOUR-USERNAME.github.io/YOUR-REPOSITORY/ after deployment finishes.
+8. Check that index.html appears directly on the repository main page. It must not be one folder deeper.
+9. Open Settings → Pages.
+10. Select Deploy from a branch → main → /(root), then Save.
+11. Wait for the deployment to complete and open:
 
-CORRECT REPOSITORY ROOT
-index.html
-app.js
-styles.css
-sw.js
-manifest.webmanifest
-README.txt
-GITHUB_UPLOAD_STEPS.txt
-MEDIA_REPLACEMENT_GUIDE.txt
-assets/
-icons/
+   https://YOUR-USERNAME.github.io/fitness-v3/
 
-WRONG
-health_app_v2/index.html  (one folder too deep)
-health_app_v2_github_ready.zip only  (GitHub Pages does not extract it)
+12. On iPhone Safari: Share → Add to Home Screen.
+
+UPDATING AN EXISTING HEALTH APP REPOSITORY
+------------------------------------------
+Upload the V3 files and choose Replace when GitHub reports matching filenames. Keep index.html at the root. V3 uses a new cache name and can import compatible V2 local data on the same website address.
+
+After updating, open the app and tap Settings → Check for update. If Safari still shows an old build, close the installed app completely, reopen it, and use the update button again.

@@ -1,0 +1,26 @@
+FITNESS V3 — HEALTH AND TECHNOLOGY SOURCES
+==========================================
+Checked: 18 July 2026
+
+Australian Government — adult movement recommendations
+https://www.health.gov.au/topics/physical-activity/24-hour-movement-guidelines-for-all-australians/recommendations-for-adults-18-to-64-years
+
+Eat For Health — vegetarian protein alternatives and food group guidance
+https://www.eatforhealth.gov.au/food-essentials/five-food-groups/lean-meat-and-poultry-fish-eggs-tofu-nuts-and-seeds-and
+
+Eat For Health — iron
+https://www.eatforhealth.gov.au/nutrient-reference-values/nutrients/iron
+
+Eat For Health — vitamin B12
+https://www.eatforhealth.gov.au/nutrient-reference-values/nutrients/vitamin-b12
+
+MDN — SpeechSynthesisUtterance language
+https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/lang
+
+MDN — SpeechSynthesis voice selection
+https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/voice
+
+MDN — speech rate
+https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesisUtterance/rate
+
+These references inform general educational content and implementation. They do not turn the app into personalised medical or dietetic advice.

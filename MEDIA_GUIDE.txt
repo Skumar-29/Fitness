@@ -1,0 +1,36 @@
+FITNESS V3 — EXERCISE MEDIA GUIDE
+=================================
+
+CURRENT FORMAT
+--------------
+• 55 MP4 files in assets/videos/
+• 55 WebP posters in assets/posters/
+• 360 × 600 portrait video
+• approximately 3-second seamless loops
+• muted video; coaching audio is supplied by the app
+• original light anatomy-style body with red working-muscle highlights
+
+REPLACING A VIDEO LATER
+-----------------------
+Keep exactly the same file name.
+Example:
+  assets/videos/squat.mp4
+  assets/posters/squat.webp
+
+Recommended upgraded clip specification:
+• 720 × 1280 or 1080 × 1920 portrait master
+• 6–12 seconds
+• H.264 MP4, yuv420p, fast-start enabled
+• full body visible
+• clean light background
+• safe and accurate movement
+• highlighted target muscles
+• no watermark, username or copied branding
+• muted audio
+• matching poster image
+
+After replacement, change the cache version in sw.js so installed users receive the new files.
+
+COPYRIGHT
+---------
+The user-provided Instagram recording was used only to understand the desired visual direction. It is not included in this package. Do not download or republish third-party exercise clips without permission or a suitable licence.
